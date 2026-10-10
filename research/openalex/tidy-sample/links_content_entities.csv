@@ -1,0 +1,2 @@
+content_id,entity_id,link_id,relation,method,source_record,source_revision,source_field,score,score_kind
+openalex:W3045857161,openalex:F4320333403,link:v2:00d93c66661adc75b02b10c77a1f80f09ccd96fd568f25d51e3c6f6e5c39a44c,funded_by,openalex-import-v3,openalex:W3045857161,record:row-v1:sha256:d3e57a903adf15ca962ba113dc75d69b903eddc38e6269b0ae4b306bf2fb80c3,funders[0],,

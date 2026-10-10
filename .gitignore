@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.paper-rewrite-check-*/
+research/rewrite_benchmark/runs/
+research/paper_corpus/library/
+
+# its own repository
+sciencemadereadable/
+
+# its own repository
+search/
+
+# a worktree of search/ (branch dev): search/dev.sh
+search-dev/

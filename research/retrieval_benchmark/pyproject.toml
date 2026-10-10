@@ -1,0 +1,24 @@
+[project]
+name = "retrieval-benchmark"
+version = "0.1.0"
+description = "Title+abstract retrieval benchmarks for Scholars Reading List"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "torch==2.11.0",
+    "pylate==1.6.0",
+    "bm25s==0.3.12",
+    "PyStemmer",
+    "faiss-cpu==1.15.1",
+    "duckdb",
+    "pyarrow",
+    "numpy",
+    "psutil",
+    "xtr-warp-rs==2.1.0.2110",
+]
+
+[dependency-groups]
+dev = ["pytest", "pytrec-eval-terrier"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

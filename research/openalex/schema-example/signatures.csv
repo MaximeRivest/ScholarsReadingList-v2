@@ -1,0 +1,19 @@
+signature_id,content_id,kind,raw_text,affiliation_text,order,position,is_corresponding,source_path
+S1,P1,author_entry,Y. Taché,"CURE/Gastroenteric Biology Center, Department of Medicine, UCLA 90073, USA
+Brain Research Institute, UCLA, Los Angeles, CA 90073 USA
+CURE/Gastroenteric Biology Center, UCLA, Los Angeles, CA 90073 USA
+Department of Medicine, UCLA, Los Angeles, CA 90073 USA",1,first,True,openalex:W2083027281#authorships[0]
+S2,P1,author_entry,H. Yang,"Brain Research Institute, UCLA, Los Angeles, CA 90073 USA
+CURE/Gastroenteric Biology Center, UCLA, Los Angeles, CA 90073 USA
+Department of Medicine, UCLA, Los Angeles, CA 90073 USA",2,middle,False,openalex:W2083027281#authorships[1]
+S3,P1,author_entry,H. Kaneko,"Brain Research Institute, UCLA, Los Angeles, CA 90073 USA
+CURE/Gastroenteric Biology Center, UCLA, Los Angeles, CA 90073 USA
+Department of Medicine, UCLA, Los Angeles, CA 90073 USA",3,last,False,openalex:W2083027281#authorships[2]
+S4,P1,venue_entry,Peptides,,,,,openalex:W2083027281#primary_location
+S5,P2,author_entry,Andreas Stengel,"Division of Psychosomatic Medicine, Charité Center for Internal Medicine and Dermatology, Charité-Universitätsmedizin BerlinBerlin, Germany
+Division of Psychosomatic Medicine, Charité Center for Internal Medicine and Dermatology, Charité-Universitätsmedizin Berlin, Berlin, Germany",1,first,True,openalex:W2609272741#authorships[0]
+S6,P2,author_entry,Yvette F. Taché,"VA Greater Los Angeles Health Care SystemLos Angeles, CA, USA
+Vatche and Tamar Manoukian Digestive Diseases Division, CURE Digestive Diseases Research Center, G Oppenheimer Center for Neurobiology of Stress and Resilience, Department of Medicine, University of California, Los AngelesLos Angeles, CA, USA
+VA Greater Los Angeles Health Care System, Los Angeles, CA, USA
+Vatche and Tamar Manoukian Digestive Diseases Division, CURE Digestive Diseases Research Center, G Oppenheimer Center for Neurobiology of Stress and Resilience, Department of Medicine, University of California, Los Angeles, Los Angeles, CA, USA",2,last,False,openalex:W2609272741#authorships[1]
+S7,P2,venue_entry,Frontiers in Neuroscience,,,,,openalex:W2609272741#primary_location

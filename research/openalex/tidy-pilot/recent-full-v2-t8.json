@@ -1,0 +1,202 @@
+{
+  "schema_version": "tidy-rows-v2",
+  "adapter_method": "openalex-import-v2",
+  "code_sha256": "f5ce6d4bcd0433d0429e27cd2a2c909345c8188c014695020089bfa80ba1f872",
+  "source": "/mnt/bulk/openalex/works/updated_date=2026-09-23/part_0049.parquet",
+  "source_bytes": 880833916,
+  "source_mtime_ns": 1791122065804443477,
+  "offset": 0,
+  "input_rows": 278801,
+  "threads": 8,
+  "read_seconds": 1.0785322410229128,
+  "native_seconds": 74.69703816299443,
+  "phases": {
+    "prepare": 8.212780000001658,
+    "content_and_references": 24.295296772994334,
+    "signatures_and_entities": 19.077683898009127,
+    "classifications": 6.341781959985383,
+    "locations": 2.5407430630002636,
+    "reduce_and_keys": 14.22768144501606
+  },
+  "validation_seconds": 19.515711132000433,
+  "write_seconds": 13.648472481989302,
+  "peak_process_bytes": 18232635392,
+  "cpu_user_seconds": 264.546209,
+  "cpu_system_seconds": 65.116615,
+  "raw_estimated_bytes": 3052387437,
+  "output_estimated_bytes": {
+    "content": 354034421,
+    "signatures": 915385333,
+    "entities": 258967561,
+    "classifications": 24940322,
+    "links_content_signatures": 845847448,
+    "links_signatures_entities": 1436411371,
+    "links_content_classifications": 1099656147,
+    "links_classifications_classifications": 473820381,
+    "links_content_content": 1570947652
+  },
+  "output_parquet_bytes": 2130313353,
+  "write_directory": "/mnt/bulk/openalex/_tidy_pilot/recent-full-v2-t8",
+  "rows": {
+    "content": 278801,
+    "signatures": 2326250,
+    "entities": 1171170,
+    "classifications": 106376,
+    "links_content_signatures": 2326250,
+    "links_signatures_entities": 4059182,
+    "links_content_classifications": 3616844,
+    "links_classifications_classifications": 1787488,
+    "links_content_content": 5863538
+  },
+  "checks": {
+    "external_reference_targets": 4593069
+  },
+  "notes": [
+    {
+      "code": "aggregate_institutions_only",
+      "count": 562,
+      "detail": "Aggregate organizations retained, no unsupported signature matches",
+      "examples": [
+        {
+          "content_id": "openalex:W7074558368",
+          "source_field": "authorships[190].institutions"
+        },
+        {
+          "content_id": "openalex:W7074558368",
+          "source_field": "authorships[138].institutions"
+        },
+        {
+          "content_id": "openalex:W7017670492",
+          "source_field": "authorships[13].institutions"
+        },
+        {
+          "content_id": "openalex:W4308287330",
+          "source_field": "authorships[0].institutions"
+        },
+        {
+          "content_id": "openalex:W7047019264",
+          "source_field": "authorships[0].institutions"
+        }
+      ]
+    },
+    {
+      "code": "deferred_scheme",
+      "count": 275748,
+      "detail": "Not included by the first adapter; retained in raw input",
+      "examples": [
+        {
+          "content_id": "openalex:W2316982243",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W2255268810",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W2323073666",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W2323081207",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W2334931424",
+          "source_field": "concepts"
+        }
+      ]
+    },
+    {
+      "code": "deferred_scheme",
+      "count": 72407,
+      "detail": "Not included by the first adapter; retained in raw input",
+      "examples": [
+        {
+          "content_id": "openalex:W2323081207",
+          "source_field": "mesh"
+        },
+        {
+          "content_id": "openalex:W2294317377",
+          "source_field": "mesh"
+        },
+        {
+          "content_id": "openalex:W2298629235",
+          "source_field": "mesh"
+        },
+        {
+          "content_id": "openalex:W2302397264",
+          "source_field": "mesh"
+        },
+        {
+          "content_id": "openalex:W2314046651",
+          "source_field": "mesh"
+        }
+      ]
+    },
+    {
+      "code": "deferred_scheme",
+      "count": 145234,
+      "detail": "Not included by the first adapter; retained in raw input",
+      "examples": [
+        {
+          "content_id": "openalex:W2316982243",
+          "source_field": "sustainable_development_goals"
+        },
+        {
+          "content_id": "openalex:W2255268810",
+          "source_field": "sustainable_development_goals"
+        },
+        {
+          "content_id": "openalex:W2321768316",
+          "source_field": "sustainable_development_goals"
+        },
+        {
+          "content_id": "openalex:W2294317377",
+          "source_field": "sustainable_development_goals"
+        },
+        {
+          "content_id": "openalex:W2324331130",
+          "source_field": "sustainable_development_goals"
+        }
+      ]
+    },
+    {
+      "code": "location_without_source_id",
+      "count": 21228,
+      "detail": "No venue classification invented",
+      "examples": [
+        {
+          "content_id": "openalex:W2245550940",
+          "source_field": "locations[1]"
+        },
+        {
+          "content_id": "openalex:W2267906763",
+          "source_field": "locations[1]"
+        },
+        {
+          "content_id": "openalex:W2299428021",
+          "source_field": "locations[2]"
+        },
+        {
+          "content_id": "openalex:W2315639547",
+          "source_field": "locations[0]"
+        },
+        {
+          "content_id": "openalex:W2245426375",
+          "source_field": "locations[1]"
+        }
+      ]
+    },
+    {
+      "code": "catalog_variation",
+      "count": 7,
+      "table": "classifications",
+      "detail": "Latest whole observation selected with deterministic tie-break"
+    }
+  ],
+  "reference_comparison": {
+    "rows": 500,
+    "seconds": 1.4514071409939788,
+    "all_nine_tables_equal": true
+  }
+}

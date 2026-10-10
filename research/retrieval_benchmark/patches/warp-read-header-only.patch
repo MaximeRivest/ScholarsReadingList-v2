@@ -1,0 +1,49 @@
+diff --git a/rust/search/loader.rs b/rust/search/loader.rs
+index 4606b36..d63c6ff 100644
+--- a/rust/search/loader.rs
++++ b/rust/search/loader.rs
+@@ -1,6 +1,7 @@
+ use anyhow::{anyhow, Context, Result};
+ use memmap2::Mmap;
+ use std::fs::File;
++use std::io::Read;
+ use std::path::{Path, PathBuf};
+ use std::sync::Arc;
+ use tch::{Device, Kind, Tensor};
+@@ -11,8 +12,13 @@ use crate::utils::types::{
+ 
+ /// Parse a NPY file header, returning (data_offset, shape, tch_kind).
+ fn parse_npy_header(path: &Path) -> Result<(u64, Vec<i64>, Kind)> {
+-    let data =
+-        std::fs::read(path).with_context(|| format!("Failed to read NPY file {:?}", path))?;
++    // Read only the header. Reading the payload here defeats mmap: it allocates
++    // and reads the entire index before mapping it, even on low-memory servers.
++    let mut file = File::open(path)
++        .with_context(|| format!("Failed to open NPY file {:?}", path))?;
++    let mut data = vec![0u8; 10];
++    file.read_exact(&mut data)
++        .with_context(|| format!("Truncated NPY prefix {:?}", path))?;
+ 
+     // Magic: \x93NUMPY
+     anyhow::ensure!(
+@@ -29,14 +35,19 @@ fn parse_npy_header(path: &Path) -> Result<(u64, Vec<i64>, Kind)> {
+         header_len = u16::from_le_bytes([data[8], data[9]]) as usize;
+         header_start = 10;
+     } else if major == 2 {
+-        anyhow::ensure!(data.len() >= 12, "NPY v2 header too short");
++        data.resize(12, 0);
++        file.read_exact(&mut data[10..12]).context("NPY v2 header too short")?;
+         header_len = u32::from_le_bytes([data[8], data[9], data[10], data[11]]) as usize;
+         header_start = 12;
+     } else {
+         anyhow::bail!("Unsupported NPY version {}", major);
+     }
+ 
++    anyhow::ensure!(header_len <= 1024 * 1024, "NPY header exceeds 1 MiB");
+     let data_offset = (header_start + header_len) as u64;
++    anyhow::ensure!(data_offset <= file.metadata()?.len(), "Truncated NPY header");
++    data.resize(data_offset as usize, 0);
++    file.read_exact(&mut data[header_start..]).context("Failed to read NPY header")?;
+     let header_str = std::str::from_utf8(&data[header_start..header_start + header_len])
+         .context("NPY header is not valid UTF-8")?;
+ 

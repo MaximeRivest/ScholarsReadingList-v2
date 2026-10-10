@@ -1,0 +1,10 @@
+cluster_id,kind,name,source_id,scheme
+SC1,person,Yvette Taché,openalex:A5010241733,openalex
+SC2,institution,"University of California, Los Angeles",openalex:I161318765,openalex
+SC3,person,Hong Yang,openalex:A5101668198,openalex
+SC4,person,Hiroshi Kaneko,openalex:A5101580572,openalex
+SC5,venue,Peptides,openalex:S120382301,openalex
+SC6,person,Andreas Stengel,openalex:A5015430705,openalex
+SC7,institution,Charité - Universitätsmedizin Berlin,openalex:I7877124,openalex
+SC8,institution,VA Greater Los Angeles Healthcare System,openalex:I4210156876,openalex
+SC9,venue,Frontiers in Neuroscience,openalex:S115201632,openalex

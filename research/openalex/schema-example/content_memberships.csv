@@ -1,0 +1,7 @@
+member_id,cluster_id,relation,evidence,method,score,is_primary
+P1,CC1,about,primary_topic,openalex imported assignment,0.9987999796867371,True
+P1,CC2,about,keywords[5],openalex imported assignment,0.5099250078201294,
+P1,CC3,about,keywords[10],openalex imported assignment,0.37380754947662354,
+P2,CC4,about,primary_topic,openalex imported assignment,0.9995999932289124,True
+P2,CC3,about,keywords[2],openalex imported assignment,0.5037197470664978,
+P2,CC2,about,keywords[5],openalex imported assignment,0.4117320775985718,

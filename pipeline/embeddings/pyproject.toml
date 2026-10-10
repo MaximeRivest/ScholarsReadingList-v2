@@ -1,0 +1,19 @@
+[project]
+name = "scholarsreadinglist-content-embeddings"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "torch==2.11.0",
+  "sentence-transformers==5.3.0",
+  "transformers==5.3.0",
+  "huggingface-hub==1.33.0",
+  "pyarrow==25.0.1",
+  "numpy==2.5.3",
+]
+
+[dependency-groups]
+dev = ["pytest==9.1.1"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

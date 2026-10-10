@@ -1,0 +1,16 @@
+member_id,cluster_id,relation,evidence,method,score,is_primary
+S1,SC1,identifies_person,authorships[0].raw_author_name,openalex imported assignment,,
+S1,SC2,identifies_institution,authorships[0].affiliations[3].raw_affiliation_string,openalex imported assignment,,
+S2,SC3,identifies_person,authorships[1].raw_author_name,openalex imported assignment,,
+S2,SC2,identifies_institution,authorships[1].affiliations[2].raw_affiliation_string,openalex imported assignment,,
+S3,SC4,identifies_person,authorships[2].raw_author_name,openalex imported assignment,,
+S3,SC2,identifies_institution,authorships[2].affiliations[2].raw_affiliation_string,openalex imported assignment,,
+S4,SC5,identifies_venue,primary_location.raw_source_name,openalex imported assignment,,
+S5,SC6,identifies_person,authorships[0].raw_author_name,openalex imported assignment,,
+S5,SC7,identifies_institution,"authorships[0].affiliations[0].raw_affiliation_string
+authorships[0].affiliations[1].raw_affiliation_string",openalex imported assignment,,
+S6,SC1,identifies_person,authorships[1].raw_author_name,openalex imported assignment,,
+S6,SC8,identifies_institution,"authorships[1].affiliations[0].raw_affiliation_string
+authorships[1].affiliations[2].raw_affiliation_string",openalex imported assignment,,
+S6,SC2,identifies_institution,authorships[1].affiliations[3].raw_affiliation_string,openalex imported assignment,,
+S7,SC9,identifies_venue,primary_location.raw_source_name,openalex imported assignment,,

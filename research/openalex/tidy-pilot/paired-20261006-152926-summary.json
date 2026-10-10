@@ -1,0 +1,13 @@
+{
+  "run": "paired-20261006-152926",
+  "parallel_jobs": 2,
+  "threads_per_job": 8,
+  "elapsed_seconds": 112.93380397200235,
+  "sampled_combined_peak_bytes": 21173137408,
+  "reports": [
+    "/home/maxime/Projects/scholarsreadinglist/research/openalex/tidy-pilot/paired-20261006-152926-middle.json",
+    "/home/maxime/Projects/scholarsreadinglist/research/openalex/tidy-pilot/paired-20261006-152926-recent.json"
+  ],
+  "input_rows": 579969,
+  "note": "0.25s RSS sampling; use individual ru_maxrss as well. Warm-cache pilot, not a disk throughput guarantee."
+}

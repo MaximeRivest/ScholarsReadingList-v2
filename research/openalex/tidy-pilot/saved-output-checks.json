@@ -1,0 +1,67 @@
+[
+  {
+    "report": "middle-full-t8.json",
+    "tables": 9,
+    "rows": 6175211
+  },
+  {
+    "report": "middle-full-v2-t8.json",
+    "tables": 9,
+    "rows": 6175211
+  },
+  {
+    "report": "paired-20261006-144803-middle.json",
+    "tables": 9,
+    "rows": 6175211
+  },
+  {
+    "report": "paired-20261006-144803-recent.json",
+    "tables": 9,
+    "rows": 21535899
+  },
+  {
+    "report": "paired-20261006-152926-middle.json",
+    "tables": 9,
+    "rows": 6175211
+  },
+  {
+    "report": "paired-20261006-152926-recent.json",
+    "tables": 9,
+    "rows": 21535899
+  },
+  {
+    "report": "recent-100000-offset100000-t8.json",
+    "tables": 9,
+    "rows": 7603828
+  },
+  {
+    "report": "recent-25000-offset50000-t16.json",
+    "tables": 9,
+    "rows": 2064685
+  },
+  {
+    "report": "recent-25000-offset50000-t4-repeat.json",
+    "tables": 9,
+    "rows": 2064685
+  },
+  {
+    "report": "recent-25000-offset50000-t4.json",
+    "tables": 9,
+    "rows": 2064685
+  },
+  {
+    "report": "recent-25000-offset50000-t8.json",
+    "tables": 9,
+    "rows": 2064685
+  },
+  {
+    "report": "recent-full-t8.json",
+    "tables": 9,
+    "rows": 21535899
+  },
+  {
+    "report": "recent-full-v2-t8.json",
+    "tables": 9,
+    "rows": 21535899
+  }
+]

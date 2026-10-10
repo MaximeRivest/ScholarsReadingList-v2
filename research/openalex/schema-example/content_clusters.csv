@@ -1,0 +1,5 @@
+cluster_id,kind,name,source_id,scheme
+CC1,topic,Gastrointestinal motility and disorders,openalex:T10365,openalex topics
+CC2,keyword,Endocrinology,openalex:keywords/endocrinology,openalex keywords
+CC3,keyword,Neuroscience,openalex:keywords/neuroscience,openalex keywords
+CC4,topic,Stress Responses and Cortisol,openalex:T10529,openalex topics

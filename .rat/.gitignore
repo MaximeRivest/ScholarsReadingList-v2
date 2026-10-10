@@ -1,0 +1,10 @@
+# Created by rat. Libraries and environments are rebuilt from the
+# lock files, which belong in Git with the notebooks.
+*
+!.gitignore
+!r.lock
+!python.lock
+!julia/
+julia/*
+!julia/Project.toml
+!julia/Manifest.toml

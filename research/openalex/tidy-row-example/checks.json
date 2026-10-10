@@ -1,0 +1,71 @@
+{
+  "schema_version": "tidy-rows-v3",
+  "source": "/home/maxime/Projects/scholarsreadinglist/research/openalex/schema-review-examples.parquet",
+  "engine": "native",
+  "rows": {
+    "content": 2,
+    "signatures": 16,
+    "entities": 19,
+    "classifications": 80,
+    "links_content_signatures": 16,
+    "links_signatures_entities": 24,
+    "links_content_classifications": 75,
+    "links_classifications_classifications": 24,
+    "links_classifications_entities": 19,
+    "links_content_entities": 9,
+    "links_content_content": 248
+  },
+  "validation": {
+    "external_reference_targets": 248
+  },
+  "notes": [
+    {
+      "code": "mesh_duplicate_entry",
+      "count": 24,
+      "detail": "Exact duplicate MeSH entry collapsed",
+      "examples": [
+        {
+          "content_id": "openalex:W2083027281",
+          "source_field": "mesh[1]"
+        },
+        {
+          "content_id": "openalex:W2083027281",
+          "source_field": "mesh[2]"
+        },
+        {
+          "content_id": "openalex:W2083027281",
+          "source_field": "mesh[4]"
+        },
+        {
+          "content_id": "openalex:W2083027281",
+          "source_field": "mesh[5]"
+        },
+        {
+          "content_id": "openalex:W2083027281",
+          "source_field": "mesh[7]"
+        }
+      ]
+    },
+    {
+      "code": "deferred_scheme",
+      "count": 2,
+      "detail": "Deprecated OpenAlex concepts not extracted; retained in raw input",
+      "examples": [
+        {
+          "content_id": "openalex:W2609272741",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W2083027281",
+          "source_field": "concepts"
+        }
+      ]
+    },
+    {
+      "code": "catalog_variation",
+      "table": "entities",
+      "count": 7,
+      "detail": "Several observed profiles; one chosen by the documented rank"
+    }
+  ]
+}

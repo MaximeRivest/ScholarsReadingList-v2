@@ -1,0 +1,111 @@
+{
+  "schema_version": "tidy-rows-v2",
+  "source": "/mnt/bulk/openalex/works/updated_date=2026-08-13/part_0012.parquet",
+  "source_bytes": 96874864,
+  "offset": 0,
+  "input_rows": 5000,
+  "threads": 4,
+  "read_seconds": 0.6513298919890076,
+  "native_seconds": 0.6089415320020635,
+  "phases": {
+    "prepare": 0.15898178101633675,
+    "content_and_references": 0.11241668299771845,
+    "signatures_and_entities": 0.15500130999134853,
+    "classifications": 0.0589881380146835,
+    "locations": 0.029546266014222056,
+    "reduce_and_keys": 0.09348676801891997
+  },
+  "validation_seconds": 0.08725420199334621,
+  "write_seconds": 0.0,
+  "peak_process_bytes": 390893568,
+  "cpu_user_seconds": 1.24299,
+  "cpu_system_seconds": 0.31321,
+  "raw_estimated_bytes": 25202204,
+  "output_estimated_bytes": {
+    "content": 2136957,
+    "signatures": 7187525,
+    "entities": 15427,
+    "classifications": 389639,
+    "links_content_signatures": 7137309,
+    "links_signatures_entities": 7388835,
+    "links_content_classifications": 9596558,
+    "links_classifications_classifications": 2219693,
+    "links_content_content": 2249943
+  },
+  "output_parquet_bytes": 0,
+  "rows": {
+    "content": 5000,
+    "signatures": 19537,
+    "entities": 70,
+    "classifications": 1789,
+    "links_content_signatures": 19537,
+    "links_signatures_entities": 20146,
+    "links_content_classifications": 32426,
+    "links_classifications_classifications": 8373,
+    "links_content_content": 8429
+  },
+  "checks": {
+    "external_reference_targets": 214
+  },
+  "notes": [
+    {
+      "code": "deferred_scheme",
+      "count": 4909,
+      "detail": "Not included by the first adapter; retained in raw input",
+      "examples": [
+        {
+          "content_id": "openalex:W6951268989",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W6951216757",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W6951335615",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W6951252964",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W6951313202",
+          "source_field": "concepts"
+        }
+      ]
+    },
+    {
+      "code": "deferred_scheme",
+      "count": 1368,
+      "detail": "Not included by the first adapter; retained in raw input",
+      "examples": [
+        {
+          "content_id": "openalex:W6951216757",
+          "source_field": "sustainable_development_goals"
+        },
+        {
+          "content_id": "openalex:W6951252964",
+          "source_field": "sustainable_development_goals"
+        },
+        {
+          "content_id": "openalex:W6951313202",
+          "source_field": "sustainable_development_goals"
+        },
+        {
+          "content_id": "openalex:W6951234250",
+          "source_field": "sustainable_development_goals"
+        },
+        {
+          "content_id": "openalex:W6951343090",
+          "source_field": "sustainable_development_goals"
+        }
+      ]
+    }
+  ],
+  "reference_comparison": {
+    "rows": 200,
+    "seconds": 0.196669485012535,
+    "all_nine_tables_equal": true
+  }
+}

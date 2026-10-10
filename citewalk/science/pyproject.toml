@@ -1,0 +1,13 @@
+[project]
+name = "science-atlas"
+version = "0.1.0"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "numpy>=2.0",
+  "pyarrow>=18",
+  "scikit-learn>=1.6",
+  "umap-learn>=0.5.7",
+  "opentsne>=1.0.2",
+  "faiss-cpu>=1.9",
+  "pillow>=12.3.0",
+]

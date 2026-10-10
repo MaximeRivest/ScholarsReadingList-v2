@@ -1,0 +1,111 @@
+{
+  "schema_version": "tidy-rows-v2",
+  "source": "/mnt/bulk/openalex/works/updated_date=2016-06-24/part_0000.parquet",
+  "source_bytes": 1014006,
+  "offset": 0,
+  "input_rows": 1578,
+  "threads": 4,
+  "read_seconds": 0.0464715659909416,
+  "native_seconds": 0.24132663500495255,
+  "phases": {
+    "prepare": 0.05928175899316557,
+    "content_and_references": 0.06793603498954326,
+    "signatures_and_entities": 0.02418033900903538,
+    "classifications": 0.04526051599532366,
+    "locations": 0.017606720997719094,
+    "reduce_and_keys": 0.026531616982538253
+  },
+  "validation_seconds": 0.03140365798026323,
+  "write_seconds": 0.0,
+  "peak_process_bytes": 225304576,
+  "cpu_user_seconds": 0.424176,
+  "cpu_system_seconds": 0.184214,
+  "raw_estimated_bytes": 4948389,
+  "output_estimated_bytes": {
+    "content": 698033,
+    "signatures": 488823,
+    "entities": 205401,
+    "classifications": 359685,
+    "links_content_signatures": 627259,
+    "links_signatures_entities": 660218,
+    "links_content_classifications": 3155590,
+    "links_classifications_classifications": 2954678,
+    "links_content_content": 295831
+  },
+  "output_parquet_bytes": 0,
+  "rows": {
+    "content": 1578,
+    "signatures": 1904,
+    "entities": 1005,
+    "classifications": 1607,
+    "links_content_signatures": 1904,
+    "links_signatures_entities": 1927,
+    "links_content_classifications": 10731,
+    "links_classifications_classifications": 11162,
+    "links_content_content": 1106
+  },
+  "checks": {
+    "external_reference_targets": 1099
+  },
+  "notes": [
+    {
+      "code": "deferred_scheme",
+      "count": 1578,
+      "detail": "Not included by the first adapter; retained in raw input",
+      "examples": [
+        {
+          "content_id": "openalex:W414088417",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W416029425",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W398685085",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W412110403",
+          "source_field": "concepts"
+        },
+        {
+          "content_id": "openalex:W591526923",
+          "source_field": "concepts"
+        }
+      ]
+    },
+    {
+      "code": "location_without_source_id",
+      "count": 13,
+      "detail": "No venue classification invented",
+      "examples": [
+        {
+          "content_id": "openalex:W1592621418",
+          "source_field": "locations[0]"
+        },
+        {
+          "content_id": "openalex:W1582567060",
+          "source_field": "locations[1]"
+        },
+        {
+          "content_id": "openalex:W267694256",
+          "source_field": "locations[0]"
+        },
+        {
+          "content_id": "openalex:W638959101",
+          "source_field": "locations[0]"
+        },
+        {
+          "content_id": "openalex:W1527317952",
+          "source_field": "locations[0]"
+        }
+      ]
+    }
+  ],
+  "reference_comparison": {
+    "rows": 200,
+    "seconds": 0.19130788199254312,
+    "all_nine_tables_equal": true
+  }
+}

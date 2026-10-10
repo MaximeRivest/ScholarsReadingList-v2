@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>body{margin:0;font-family:system-ui,sans-serif}</style></head><body>
+<style>
+.dp{font:13px system-ui,sans-serif;color:inherit}
+.dp .bar{display:flex;gap:8px;align-items:center;margin:2px 0 4px;flex-wrap:wrap}
+.dp .bar .info{opacity:.7;margin-right:auto}
+.dp button,.dp select{font:inherit;padding:1px 8px}
+.dp .wrap{max-height:560px;overflow:auto;border:1px solid #8884}
+.dp table{border-collapse:collapse}
+.dp th,.dp td{border-bottom:1px solid #8883;padding:4px 8px;vertical-align:top;text-align:left;
+  min-width:70px;max-width:380px;white-space:pre-wrap;overflow-wrap:anywhere}
+.dp th{position:sticky;top:0;z-index:1;background:Canvas;white-space:normal}
+.dp .t{font-weight:normal;opacity:.55;font-size:11px}
+.dp .na{opacity:.4}
+.dp .nested{font:11px ui-monospace,monospace}
+.dp details summary{cursor:pointer;list-style:none}
+.dp details[open] summary{display:none}
+.dp a{color:#3b82f6}
+</style><div class="dp">
+<div class="bar"><span class="info"></span>
+<button class="prev">‹ prev</button><span class="pg"></span><button class="next">next ›</button>
+<select class="size"><option>10</option><option selected>25</option><option>50</option><option>100</option></select></div>
+<div class="wrap"><table><thead><tr></tr></thead><tbody></tbody></table></div>
+<script type="application/json">{"cols": [["id", "str", "Str"], ["title", "str", "Str"], ["year", "int64", "Int64"], ["type", "str", "Str"], ["citations", "int64", "Int64"], ["topic", "str", "Str"], ["abstract", "str", "Str"]], "rows": [["https://openalex.org/W1931253619", "PENGARUH TINGKAT INTENSIFIKASI TERHADAP PRODUKTIVITAS TEBU PETANI BINAAN PABRIK GULA (PG) GONDANG BARU KABUPATEN KLATEN PROVINSI JAWA TENGAH DALAM UPAYA PENCAPAIAN SWASEMBADA GULA", 2020, "article", 0, "Agricultural Research and Practices", "The influence of the level of intensification of productivication as a small scale farmers sugar mill cane Gondang Baru in Klaten of Central Java Province in the farmwork of the athainment of self sugar suffiency. Guided by SITI HAMIDAH and VANDRIAS DEWANTORO\r\nThe research purposes of this study was : (1) Analyze the level of tntensification to performed on each shoot. (2) Analyze the determine the level of intensification about the production of sugar cane. (3) Find out what are the obstacles and how to overcome these problems. The research carried out using a survey method. The analitical method used the method of linier regression analysis. Intake of respondents using purposive sampling with 75 people, who contribute the maximum to the sugar mill with the diffrent buds condition. The results showed level of intensification in the first shoots were in both shoots and the third and fourth in the high and low categories. The influence on the productivity level of intensification shows the first buds will productivity of 36, 615 qu/he without the influence of the intensification. The productivity of the second shoots as much as 91,324 qu/he and 11.934,684 qu/he without the influence of the intensification. The third and fourth shoots will be descreased by of variable degree\r\nKey words : The influence of the level of intensification, sugar cane production, ratoon cane, GondangBaru sugar mill."]], "total": 1}</script></div><script>
+const root = document.currentScript.previousElementSibling;
+const {cols, rows, total} = JSON.parse(root.querySelector('script[type="application/json"]').textContent);
+const URL_RE = /(https?:\/\/[^\s<>"']+)/g, LONG = 300;
+let page = 0, size = 25;
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const linkify = s => esc(s).replace(URL_RE, u => `<a href="${u}" target="_blank" rel="noopener">${u}</a>`);
+function cell(v) {
+  if (v === null) return '<span class="na">null</span>';
+  const nested = typeof v === 'object';
+  const s = nested ? JSON.stringify(v, null, 1) : String(v);
+  const cls = nested ? ' class="nested"' : '';
+  if (s.length <= LONG) return `<div${cls}>${linkify(s)}</div>`;
+  return `<details${cls}><summary>${linkify(s.slice(0, LONG))}…</summary>${linkify(s)}</details>`;
+}
+function render() {
+  const pages = Math.max(1, Math.ceil(rows.length / size));
+  page = Math.min(page, pages - 1);
+  const slice = rows.slice(page * size, page * size + size);
+  root.querySelector('tbody').innerHTML = slice.map(r => '<tr>' + r.map(v => `<td>${cell(v)}</td>`).join('') + '</tr>').join('');
+  const first = rows.length ? page * size + 1 : 0, last = page * size + slice.length;
+  root.querySelector('.info').textContent =
+    `rows ${first}–${last} of ${rows.length.toLocaleString()} loaded` + (total === null ? ' (total unknown)' : ` · ${total.toLocaleString()} in table`);
+  root.querySelector('.pg').textContent = `page ${page + 1} / ${pages}`;
+  root.querySelector('.prev').disabled = page === 0;
+  root.querySelector('.next').disabled = page >= pages - 1;
+  root.querySelector('.wrap').scrollTop = 0;
+}
+root.querySelector('thead tr').innerHTML = cols.map(([n, short, full]) =>
+  `<th title="${esc(n + ': ' + full)}">${esc(n)}<div class="t">${esc(short)}</div></th>`).join('');
+root.querySelector('.prev').onclick = () => { page--; render(); };
+root.querySelector('.next').onclick = () => { page++; render(); };
+root.querySelector('.size').onchange = e => { size = +e.target.value; page = 0; render(); };
+render();
+</script>
+</body></html>

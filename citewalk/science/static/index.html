@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:,">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Atlas of science — pilot</title>
+<style>
+  :root { --bg:#05070c; --panel:rgba(14,18,28,.92); --line:#273042; --text:#e7ebf3; --dim:#97a1b5; --accent:#ffd166; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); color:var(--text);
+    font:14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow:hidden; }
+  #gl, #overlay { position:fixed; inset:0; width:100%; height:100%; touch-action:none; }
+  #overlay { pointer-events:none; }
+  .panel { position:fixed; background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    backdrop-filter:blur(6px); }
+  #top { top:12px; left:12px; padding:10px 12px; width:min(420px, calc(100vw - 24px)); }
+  #top h1 { margin:0 0 2px; font-size:16px; font-weight:650; letter-spacing:.2px; }
+  #top .sub { color:var(--dim); font-size:12px; }
+  #search { margin-top:8px; display:flex; gap:6px; }
+  #search input { flex:1; min-width:0; background:#0b0f18; color:var(--text); border:1px solid var(--line);
+    border-radius:7px; padding:7px 9px; font:inherit; }
+  button, select { background:#141a27; color:var(--text); border:1px solid var(--line); border-radius:7px;
+    padding:6px 10px; font:inherit; cursor:pointer; }
+  button:hover, select:hover { border-color:#3c4a66; }
+  button.on { background:#2a3550; border-color:#56688f; }
+  #side { top:12px; right:12px; width:min(380px, calc(100vw - 24px)); max-height:calc(100vh - 190px);
+    overflow:auto; padding:12px 14px; display:none; }
+  #side h2 { font-size:15px; margin:0 0 6px; line-height:1.3; }
+  #side .meta { color:var(--dim); font-size:12.5px; margin-bottom:8px; }
+  #side .close { float:right; margin:-4px -6px 0 8px; padding:2px 8px; }
+  #side ol { padding-left:20px; margin:6px 0; }
+  #side li { margin:3px 0; cursor:pointer; }
+  #side li:hover { color:var(--accent); }
+  #side li .y { color:var(--dim); font-size:12px; }
+  #side li.off { opacity:.55; }
+  .score { background:#0b0f18; border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin:8px 0;
+    font-size:13px; }
+  a { color:#8cc8ff; }
+  #bottom { left:12px; right:12px; bottom:12px; padding:8px 12px 10px; }
+  #controls { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  #controls > button, #controls > select { flex:0 0 auto; }
+  #play { flex:0 0 40px; width:40px; padding-inline:0; } /* ▶ and ❚❚ must occupy the same slot */
+  #year { font-size:28px; font-weight:700; font-variant-numeric:tabular-nums; flex:0 0 76px; color:var(--accent); }
+  /* Updating counts must not alter the wrapping of the controls above them. */
+  #count { color:var(--dim); font-size:12.5px; font-variant-numeric:tabular-nums;
+    flex:0 0 100%; min-width:0; line-height:1.4; min-height:1.4em; }
+  #timeline { width:100%; height:64px; display:block; margin-top:6px; cursor:pointer; touch-action:none; }
+  #legend { position:fixed; left:12px; top:122px; padding:8px 10px; max-height:calc(100vh - 320px); overflow:auto;
+    font-size:12px; width:250px; }
+  #legend .dom { color:var(--dim); margin:6px 0 2px; font-size:11px; text-transform:uppercase; letter-spacing:.6px; }
+  #legend .f { display:flex; align-items:center; gap:6px; cursor:pointer; padding:1px 2px; border-radius:4px; }
+  #legend .f:hover { background:#1b2232; }
+  #legend .f.dim { opacity:.35; }
+  #legend.hidden { display:none; }
+  #legend .sw { width:10px; height:10px; border-radius:50%; flex:none; }
+  #legend .hint { color:var(--dim); font-size:11px; margin-top:6px; }
+  #tip { position:fixed; pointer-events:none; background:rgba(8,11,18,.95); border:1px solid var(--line);
+    border-radius:6px; padding:5px 8px; font-size:12.5px; max-width:340px; display:none; z-index:5; }
+  #about { display:none; }
+  #race { display:none; top:12px; right:12px; width:min(460px, calc(100vw - 24px)); padding:10px 12px 12px;
+    max-height:calc(100vh - 250px); overflow:hidden; --race-dur:.55s; --race-ease:cubic-bezier(.2,.8,.2,1); }
+  #race .rhead { font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #raceSub { font-variant-numeric:tabular-nums; }
+  #race .rnote { margin:3px 0 4px; line-height:1.35; height:2.7em; overflow:hidden; }
+  #raceRows { position:relative; overflow:hidden; }
+  #raceEmpty { display:none; margin-top:6px; }
+  .rrow, .raxis { display:flex; align-items:center; gap:7px; }
+  .raxis { height:18px; font-size:11px; color:var(--dim); }
+  .raxis .track { background:none; height:18px; overflow:visible; }
+  .tick { position:absolute; top:0; height:calc(16 * 25px + 20px); border-left:1px dashed #ffffff22; pointer-events:none;
+    transition: left var(--race-dur) var(--race-ease), opacity var(--race-dur) linear; }
+  .tick span { position:absolute; top:2px; left:3px; font-size:10.5px; color:var(--dim); }
+  .rrow { position:absolute; left:0; right:0; top:0; height:24px; cursor:pointer;
+    transition: transform var(--race-dur) var(--race-ease), opacity var(--race-dur) linear; will-change:transform; }
+  .ico { flex:none; width:22px; height:22px; border-radius:50%; border:1.5px solid transparent; display:flex; align-items:center;
+    justify-content:center; font-size:13px; line-height:1; }
+  .track { position:relative; flex:1; min-width:0; height:20px; }
+  .rrow .bar { position:absolute; left:0; top:0; bottom:0; width:0; border-radius:3px; opacity:.6;
+    transition: width var(--race-dur) var(--race-ease); }
+  .rrow .nm { position:absolute; left:6px; right:4px; top:0; font-size:11.5px; line-height:20px; white-space:nowrap; overflow:hidden;
+    text-overflow:ellipsis; text-shadow:0 0 3px #000, 0 0 2px #000; }
+  .val { flex:none; width:42px; text-align:right; font-variant-numeric:tabular-nums; font-size:12px; font-weight:650; }
+  .chg { flex:none; width:50px; text-align:right; font-variant-numeric:tabular-nums; font-size:11px; color:var(--dim); }
+  .chg.up { color:#ff7a5c; } .chg.down { color:#5aa8ff; }
+  .rrow:hover .bar { opacity:.85; }
+  .rrow.entering { transition:none; } .rrow.entering .bar { transition:none; }
+  .rrow.leaving { pointer-events:none; }
+  #growthKey { display:none; right:12px; bottom:132px; padding:8px 10px; width:250px; font-size:12px; }
+  #growthKey .bar { height:10px; border-radius:5px;
+    background:linear-gradient(90deg, rgb(56,150,255), rgba(56,150,255,.15) 45%, rgba(255,255,255,.08) 50%, rgba(255,92,56,.15) 55%, rgb(255,92,56)); }
+  #growthKey .ticks { display:flex; justify-content:space-between; color:var(--dim); margin:3px 0 2px; }
+  #about p { margin:6px 0; }
+  .small { font-size:12px; color:var(--dim); }
+  #loading { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; color:var(--dim);
+    font-size:15px; }
+  @media (max-width: 760px) {
+    #legend { display:none; } #legend.show { display:block; top:auto; bottom:170px; max-height:40vh; }
+    #side { top:auto; bottom:170px; max-height:45vh; }
+    #race { top:auto; bottom:170px; max-height:48vh; overflow-y:auto; scrollbar-gutter:stable; } #race .rnote { display:none; }
+    #year { font-size:22px; flex-basis:60px; }
+    #count { min-height:2.8em; } /* reserve both lines, including the incomplete-year notice */
+  }
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<canvas id="overlay"></canvas>
+<div id="loading">Loading the atlas…</div>
+
+<div id="top" class="panel">
+  <h1>Atlas of science <span class="small">· pilot</span></h1>
+  <div class="sub" id="subtitle">One dot ≈ 100 English publications with an abstract. Nearby dots have similar content.</div>
+  <form id="search"><input id="q" placeholder="Find a topic, or start a walk: W… / DOI" autocomplete="off">
+    <button type="submit">Find</button></form>
+</div>
+
+<div id="legend" class="panel"></div>
+
+<div id="side" class="panel"></div>
+
+<div id="race" class="panel">
+  <div class="rhead"><b>Largest subfields</b> <span class="small" id="raceSub"></span></div>
+  <div class="small rnote">Bar = share of all publications in these years. Gridlines every 1 %.
+    Chip = change in share vs the comparison period. Hover to locate, click to fly.</div>
+  <div class="raxis"><span class="ico"></span><span class="track" id="raceGrid"></span><span class="val">share</span><span class="chg" id="raceChgHead"></span></div>
+  <div id="raceRows"></div>
+  <div class="small" id="raceEmpty">Too few papers in these years.</div>
+</div>
+
+<div id="bottom" class="panel">
+  <div id="controls">
+    <button id="play" title="Play (space)">▶</button>
+    <div id="year">2026</div>
+    <select id="mode" title="What the year shows">
+      <option value="0">Everything up to this year</option>
+      <option value="1">Published this year</option>
+      <option value="5" selected>Last 5 years</option>
+      <option value="10">Last 10 years</option>
+    </select>
+    <select id="show" title="What the colours show">
+      <option value="terr" selected>Show: field territories</option>
+      <option value="dots">Show: papers only</option>
+      <option value="growth">Show: growth vs earlier</option>
+    </select>
+    <select id="lag" title="Growth compared with">
+      <option value="5">vs 5 years earlier</option>
+      <option value="10" selected>vs 10 years earlier</option>
+      <option value="20">vs 20 years earlier</option>
+    </select>
+    <select id="colour" title="Colour">
+      <option value="field">Colour: field</option>
+      <option value="age">Colour: publication year</option>
+    </select>
+    <button id="eq" class="on" title="Keep early years visible by brightening when few papers are shown">Equalize brightness</button>
+    <button id="legendBtn">Fields</button>
+    <button id="aboutBtn">About this map</button>
+    <span id="count"></span>
+  </div>
+  <canvas id="timeline"></canvas>
+</div>
+<div id="tip"></div>
+<div id="growthKey" class="panel">
+  <div class="bar"></div>
+  <div class="ticks"><span>¼× share</span><span>same</span><span>4× share</span></div>
+  <div class="small" id="growthNote"></div>
+</div>
+<script src="icons.js"></script>
+<script src="layers.js"></script>
+<script src="app.js"></script>
+<script src="walk.js"></script>
+</body>
+</html>

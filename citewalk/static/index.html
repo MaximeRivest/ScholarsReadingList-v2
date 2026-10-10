@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Citation walk</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root { --red:#c62828; --red-bg:#fdecea; --pink:#f4b4b4; --pink-bg:#fdf5f5; --blue:#2463a8; --blue-bg:#eef4fb;
+          --gray:#8b949e; --ink:#1f2328; --muted:#656d76; --line:#d8dee4; --bg:#f6f8fa; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--bg);
+         height:100vh; display:flex; flex-direction:column; }
+  header { padding:10px 16px; background:#fff; border-bottom:1px solid var(--line); display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  header h1 { font-size:16px; margin:0 6px 0 0; }
+  input[type=text] { width:320px; padding:7px 9px; border:1px solid var(--line); border-radius:6px; font:inherit; }
+  input[type=number] { width:64px; padding:4px 6px; border:1px solid var(--line); border-radius:5px; font:inherit; }
+  button { padding:7px 13px; border:1px solid var(--line); border-radius:6px; background:#fff; font:inherit; cursor:pointer; }
+  button.primary { background:var(--ink); color:#fff; border-color:var(--ink); }
+  details.settings { position:relative; }
+  details.settings summary { cursor:pointer; color:var(--muted); list-style:none; padding:6px 10px; border:1px solid var(--line); border-radius:6px; }
+  details.settings .panel { position:absolute; z-index:20; top:38px; left:0; width:420px; background:#fff; border:1px solid var(--line);
+         border-radius:8px; padding:12px 14px; box-shadow:0 8px 24px rgba(0,0,0,.12); display:grid; gap:10px; }
+  .panel label { display:flex; gap:8px; align-items:center; }
+  .panel small { color:var(--muted); display:block; margin:-6px 0 0 0; }
+  .examples { color:var(--muted); font-size:13px; }
+  a { color:var(--blue); cursor:pointer; }
+  #crumbs { padding:6px 16px; font-size:12.5px; color:var(--muted); background:#fff; border-bottom:1px solid var(--line); white-space:nowrap; overflow-x:auto; }
+  #summary { padding:14px 18px; background:#fff; border-bottom:1px solid var(--line); font-size:15.5px; line-height:1.5; }
+  #summary .red { color:var(--red); font-weight:650; cursor:pointer; }
+  #summary .x { font-weight:600; }
+  #summary .muted { color:var(--muted); font-size:13px; }
+  main { flex:1; display:flex; min-height:0; }
+  #wrap { flex:1; overflow:auto; min-width:0; }
+  #board { position:relative; display:flex; gap:62px; padding:16px 18px 40px; min-width:max-content; align-items:flex-start; }
+  #wires { position:absolute; left:0; top:0; pointer-events:none; overflow:visible; }
+  .col { position:relative; z-index:1; }
+  .col.x { width:180px; } .col.refs { width:260px; } .col.similar { width:260px; } .col.candidates { width:290px; }
+  .col h3 { margin:0 0 2px; font-size:14px; }
+  .col .explain { margin:0 0 10px; color:var(--muted); font-size:12.5px; min-height:36px; }
+  .col .more { color:var(--muted); font-size:12.5px; margin:8px 2px; }
+  .col .outs { margin-top:16px; padding-top:8px; border-top:1px dashed var(--line); }
+  .col .outs h4 { margin:0 0 6px; font-size:12.5px; color:var(--muted); font-weight:600; }
+  .card { position:relative; background:#fff; border:1px solid var(--line); border-left:4px solid var(--gray); border-radius:6px;
+          padding:6px 8px 6px 9px; margin-bottom:7px; cursor:pointer; transition:opacity .12s, box-shadow .12s; }
+  .card:hover { box-shadow:0 2px 8px rgba(0,0,0,.12); }
+  .card .t { font-size:12.5px; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .card .m { font-size:11.5px; color:var(--muted); margin-top:3px; display:flex; flex-wrap:wrap; gap:4px; align-items:center; }
+  .pill { font-weight:700; font-size:11.5px; border-radius:9px; padding:0 7px; color:#fff; background:var(--gray); }
+  .tag { font-size:10.5px; border-radius:8px; padding:0 6px; background:#eef1f4; color:var(--muted); }
+  .card.focus { border-left-color:var(--ink); border-width:1px 1px 1px 5px; }
+  .card.focus .t { font-weight:650; -webkit-line-clamp:5; font-size:13.5px; }
+  .card.similar { border-left-color:var(--blue); } .card.similar .pill { background:var(--blue); }
+  .card.candidate { border-left-color:var(--pink); background:var(--pink-bg); } .card.candidate .pill { background:#d98585; }
+  .card.answer { border:2px solid var(--red); border-left-width:6px; background:var(--red-bg); }
+  .card.answer .t { color:var(--red); font-weight:650; -webkit-line-clamp:3; } .card.answer .pill { background:var(--red); }
+  .card.out { opacity:.62; border-style:dashed; border-left-style:dashed; background:#fafafa; }
+  .card.out .pill { background:#b9bec4; }
+  .card .walk { position:absolute; right:4px; top:4px; padding:0 6px; font-size:12px; display:none; border-radius:5px; }
+  .card:hover .walk { display:block; }
+  #board.focusing .card { opacity:.28; }
+  #board.focusing .card.lit { opacity:1; }
+  #board.focusing .card.out.lit { opacity:.8; }
+  .card.sel { box-shadow:0 0 0 3px #f0b400; }
+  path.w { fill:none; stroke-width:1.2; opacity:0; }
+  path.w.on { opacity:.75; }
+  path.x-ref { stroke:#9aa3ad; } path.y-ref, path.yo-ref, path.y-sim { stroke:#7aa7d8; } path.yo-ref { stroke-dasharray:4 3; }
+  path.y-cand { stroke:#e3a0a0; } path.y-cand.to-answer { stroke:var(--red); stroke-width:1.6; }
+  path.w.idle { opacity:.22; } path.y-cand.to-answer.idle { opacity:.55; }
+  aside { width:320px; background:#fff; border-left:1px solid var(--line); overflow-y:auto; padding:14px 16px; font-size:13.5px; }
+  aside h2 { font-size:12px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); margin:16px 0 6px; }
+  aside h2:first-child { margin-top:0; }
+  aside .title { font-weight:650; font-size:14.5px; }
+  aside .meta { color:var(--muted); font-size:12.5px; margin:3px 0 8px; }
+  aside .note { color:var(--muted); font-size:12.5px; }
+  aside ul { margin:4px 0; padding-left:18px; }
+  .err { color:var(--red); }
+  .seg { display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; }
+  .seg button { border:0; border-radius:0; padding:6px 11px; }
+  .seg button.on { background:var(--ink); color:#fff; }
+  #isoBox { flex:1; position:relative; min-width:0; display:none; background:#fbfcfd; }
+  #mapBox { flex:1; position:relative; min-width:0; display:none; background:#e4eef5; }
+  #map { width:100%; height:100%; display:block; cursor:grab; user-select:none; }
+  .vbox .tools { position:absolute; left:12px; top:10px; display:flex; gap:12px; align-items:center; font-size:12.5px; color:var(--muted);
+              background:rgba(255,255,255,.92); padding:5px 9px; border-radius:6px; border:1px solid var(--line); }
+  .vbox .tools button { padding:2px 8px; font-size:12px; }
+  #map .land { fill:#f5f1e6; }
+  #map .land.uncharted { fill:#e9e6de; }
+  #map .district { opacity:.92; }
+  #map .district-name { font:700 11px system-ui,sans-serif; letter-spacing:1.5px; text-anchor:middle; paint-order:stroke; stroke:rgba(255,255,255,.88); stroke-width:4px; pointer-events:none; }
+  #map.focusing .names { opacity:.25; }
+  #map .district-name.uncharted { fill:#8b949e; font-size:10px; }
+  #map .river { fill:none; stroke:#4a90d9; stroke-width:3; stroke-linecap:round; opacity:.9; }
+  #map .river.mouth { stroke:#3b82c4; opacity:.9; }
+  #map .road-case { fill:none; stroke:#fff; stroke-width:4.5; stroke-linecap:round; opacity:.9; }
+  #map .road { fill:none; stroke:#8a929b; stroke-width:1.8; stroke-linecap:round; opacity:.9; }
+  #map .street { fill:none; stroke:#6a7480; stroke-width:1.1; stroke-dasharray:3 3; opacity:0; }
+  #map.all .street { opacity:.35; }
+  #map .blk { cursor:pointer; transition:opacity .12s; }
+  #map .blk polygon { stroke:rgba(0,0,0,.25); stroke-width:.6; stroke-linejoin:round; }
+  #map .blk.out { opacity:.45; } #map .blk.drift .roof { stroke-dasharray:2 2; stroke:#333; stroke-width:.9; }
+  #map.focusing .blk { opacity:.18; } #map.focusing .blk.lit { opacity:1; }
+  #map.focusing .road, #map.focusing .road-case, #map.focusing .river { opacity:.12; }
+  #map .street.on { opacity:.95 !important; stroke-dasharray:none; stroke-width:1.8; stroke:#2f6fb3; }
+  #map .road.on, #map .road-case.on, #map .river.on { opacity:1 !important; }
+  #map .blk.future, #map .future { opacity:.07 !important; }
+  #map .lbl { font-size:12px; paint-order:stroke; stroke:#fff; stroke-width:4px; stroke-linejoin:round; }
+  #map .lx { font-weight:700; fill:#1f2328; } #map .la { font-weight:700; fill:#c62828; } #map .lh { font-weight:600; fill:#1f2328; }
+  #map .lead { stroke:#6e7781; stroke-width:1; }
+  #iso { width:100%; height:100%; display:block; cursor:grab; user-select:none; }
+  #isoTools { position:absolute; left:12px; top:10px; display:flex; gap:12px; align-items:center; font-size:12.5px; color:var(--muted);
+              background:rgba(255,255,255,.9); padding:5px 9px; border-radius:6px; border:1px solid var(--line); }
+  #isoTools button { padding:2px 8px; font-size:12px; }
+  #tip { position:fixed; pointer-events:none; z-index:50; max-width:340px; background:#fff; border:1px solid var(--line); border-radius:6px;
+         padding:7px 9px; box-shadow:0 6px 18px rgba(0,0,0,.15); font-size:12.5px; display:none; }
+  #tip .tt { font-weight:600; } #tip .tm { color:var(--muted); margin-top:3px; }
+  #iso .plane { fill:rgba(140,155,175,.012); stroke:#eef0f3; stroke-width:.7; } #iso .plane.unknown { stroke-dasharray:3 3; }
+  #iso .axis-name.novec { fill:#9aa1a9; font-style:italic; } #iso .blk.novec .front { stroke-dasharray:2 2; stroke:#555; }
+  #iso .yline { stroke:#d9dee4; stroke-width:1; } #iso .yline.unknown { stroke-dasharray:3 3; } #iso .yline.sub { stroke:#f0f2f5; }
+  #iso .year { font-size:11px; fill:#656d76; }
+  #iso .gap { font-size:15px; fill:#8b949e; }
+  #iso .axis { stroke:#8b949e; stroke-width:1.2; }
+  #iso .axis-name { font-size:11.5px; fill:#656d76; }
+  #iso .blk { cursor:pointer; transition:opacity .12s; }
+  #iso .blk polygon { stroke:rgba(0,0,0,.22); stroke-width:.6; stroke-linejoin:round; }
+  #iso .blk.out { opacity:.38; } #iso .blk.out .front { stroke-dasharray:3 2; stroke:#444; }
+  #iso .halo { fill:none; stroke:#fff; stroke-width:4.5; opacity:0; stroke-linecap:round; }
+  #iso .lk { fill:none; stroke-width:1.2; opacity:0; }
+  #iso .lk.x-ref { stroke:#7d8792; opacity:.35; } #iso .lk.y-ref, #iso .lk.yo-ref, #iso .lk.y-sim { stroke:#2f6fb3; }
+  #iso .lk.yo-ref { stroke-dasharray:4 3; } #iso .lk.y-cand { stroke:#d47c7c; }
+  #iso .lk.to-answer { stroke:#c62828; stroke-width:2; opacity:.85; } #iso .halo.to-answer { opacity:.9; }
+  #iso.all .lk { opacity:.3; }
+  #iso.focusing .blk { opacity:.16; } #iso.focusing .blk.lit { opacity:1; }
+  #iso.focusing .lk, #iso.focusing .halo { opacity:0; }
+  #iso .lk.on { opacity:1 !important; stroke-width:2; } #iso .halo.on { opacity:.95 !important; }
+  #iso .lbl { font-size:12px; paint-order:stroke; stroke:#fff; stroke-width:4px; stroke-linejoin:round; }
+  #iso .lx { font-weight:700; fill:#1f2328; } #iso .la { font-weight:700; fill:#c62828; } #iso .lh { font-weight:600; fill:#1f2328; }
+  #iso .lead { stroke:#6e7781; stroke-width:1; }
+  #iso.focusing .labels { opacity:.35; }
+  #status { color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Citation walk</h1>
+  <input id="q" type="text" placeholder="OpenAlex ID (W…) or DOI" autocomplete="off">
+  <button class="primary" id="go">Analyze</button>
+  <details class="settings"><summary>Settings ▾</summary><div class="panel">
+    <label>Similar papers to use <input id="k" type="number" min="5" max="200" value="30"></label>
+    <label>Leave out papers with more than <input id="maxrefs" type="number" min="0" value="300"> references</label>
+    <label>… or more than <input id="maxcites" type="number" min="0" value="500"> citations</label>
+    <small>Left-out papers (outliers) take no part in the calculation; they are still shown, faded and dashed. 0 = no limit.</small>
+    <label><input id="norm" type="checkbox"> Rank similar papers by share of their reference list</label>
+    <small>Instead of the raw number of shared references, which favors long review papers.</small>
+    <label><input id="dups" type="checkbox"> Include copies of X</label>
+    <small>Records titled after X (commentaries, other versions) copy its references and are left out by default.</small>
+  </div></details>
+  <span class="seg"><button data-view="map">Map</button><button data-view="iso">Timeline</button><button data-view="cards">Cards</button></span>
+  <span class="examples">Try: <a data-ex="W3045885187">COVID steroid trial</a> · <a data-ex="doi:10.1038/s41586-021-03819-2">AlphaFold</a> · <a data-ex="doi:10.1016/j.isci.2022.103823">cyclin C</a></span>
+  <span id="status"></span>
+</header>
+<div id="crumbs">Walk: <span id="path">—</span></div>
+<div id="summary">Enter a paper. The page finds the papers that share the most references with it, and shows which paper
+  <b>they</b> cite most often that <b>it</b> does not — in <span style="color:var(--red);font-weight:650">red</span>.</div>
+<main>
+  <div id="wrap"><div id="board"></div></div>
+  <div id="mapBox" class="vbox"><svg id="map"></svg>
+    <div class="tools"><label><input type="checkbox" id="mapAll"> all citations</label><button id="mapFit">fit</button>
+      <label>up to <input type="range" id="mapYear" min="1900" max="2026" value="2026"> <b id="mapYearOut"></b></label>
+      <span id="mapInfo"></span><span>drag = pan · scroll = zoom</span></div></div>
+  <div id="isoBox"><svg id="iso"></svg>
+    <div id="isoTools"><label><input type="checkbox" id="allLinks"> show all links</label>
+      <button id="view3d">3-D</button><button id="viewFlat">flat (time × citations)</button><button id="fitBtn">fit</button>
+      <span id="isoInfo"></span><span>drag = rotate · shift-drag = pan · scroll = zoom</span></div></div>
+  <aside id="side"></aside>
+</main>
+<div id="tip"></div>
+<script src="iso.js"></script>
+<script src="map.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt = n => (n ?? -1) >= 0 ? n.toLocaleString() : '?';
+const short = (s, n) => (s && s.length > n) ? s.slice(0, n - 1) + '…' : (s || '(untitled)');
+let data = null, path = [], pinned = null, linkIndex = {};
+let view = new URLSearchParams(location.search).get('view') || localStorage.getItem('citewalk-view') || 'map';
+
+function query() {
+  return `k=${$('k').value}&normalize=${+$('norm').checked}&dups=${+$('dups').checked}`
+       + `&max_refs=${$('maxrefs').value || 0}&max_cites=${$('maxcites').value || 0}`;
+}
+
+async function analyze(q, opts = {}) {
+  q = (q || '').trim(); if (!q) return;
+  if (q.startsWith('doi:')) q = q.slice(4);
+  $('q').value = q; $('status').textContent = 'Working…';
+  let d;
+  try { const r = await fetch(`/api/analyze?id=${encodeURIComponent(q)}&${query()}`); d = await r.json(); if (!r.ok && !d.error) throw new Error(r.statusText); }
+  catch (e) { $('status').innerHTML = `<span class="err">${esc(e.message)}</span>`; return; }
+  if (d.error) { $('status').innerHTML = `<span class="err">${esc(d.error)}</span>`; return; }
+  data = d; pinned = null;
+  if (opts.reset) path = [];
+  const f = data.nodes[data.focus];
+  if (!opts.keepPath && (!path.length || path[path.length - 1].id !== f.id)) path.push({id: f.id, title: f.title});
+  history.replaceState(null, '', '#' + f.id);
+  $('status').textContent = `${data.stats.seconds}s`;
+  renderPath(); render(); side();
+  const sel = new URLSearchParams(location.search).get('select');
+  if (sel && data.nodes[sel]) { select(sel); scrollToCard(sel); }
+}
+
+function renderPath() {
+  $('path').innerHTML = path.map((p, i) => `<a data-i="${i}" title="${esc(p.title)}">${esc(short(p.title, 40))}</a>`).join(' → ');
+  $('path').querySelectorAll('a').forEach(a => a.onclick = () => { path = path.slice(0, +a.dataset.i + 1); analyze(path.at(-1).id, {keepPath: true}); });
+}
+
+function card(id) {
+  const n = data.nodes[id], k = data.stats.k, out = n.column.endsWith('_out');
+  const role = n.column === 'x' ? 'focus' : n.column.startsWith('refs') ? 'ref' : n.column.startsWith('similar') ? 'similar'
+             : n.answer ? 'answer' : 'candidate';
+  let pill = '', pillTitle = '';
+  if (role === 'ref') { pill = `${n.ref_support}/${k}`; pillTitle = `cited by ${n.ref_support} of the ${k} papers most like X`; }
+  if (role === 'similar') { pill = n.shared; pillTitle = `cites ${n.shared} of the papers X cites`; }
+  if (role === 'candidate' || role === 'answer') { pill = `${n.support}/${k}`; pillTitle = `cited by ${n.support} of the ${k} papers most like X`; }
+  const tags = [];
+  if (n.x_cites && role !== 'ref' && role !== 'focus') tags.push('X cites it');
+  if (n.also_similar) tags.push(`also one of the ${k} most like X`);
+  if (n.records.length > 1) tags.push(`${n.records.length} records`);
+  if (out) tags.push(`left out: ${esc(n.outlier)}`);
+  else if (role === 'focus' && n.outlier) tags.push(`outlier (${esc(n.outlier)}), analyzed anyway`);
+  return `<div class="card ${role}${out ? ' out' : ''}" data-id="${id}">
+    ${role !== 'focus' ? '<button class="walk" title="Walk here: make this the new X">walk →</button>' : ''}
+    <div class="t" title="${esc(n.title)}">${esc(n.title || '(untitled)')}</div>
+    <div class="m">${pill !== '' ? `<span class="pill" title="${esc(pillTitle)}">${pill}</span>` : ''}
+      <span>${n.year ?? 'year ?'} · cited by ${fmt(n.cited_by)}</span>${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div></div>`;
+}
+
+function column(cls, title, explain, ids, outIds, outTitle, more) {
+  return `<div class="col ${cls}"><h3>${title}</h3><p class="explain">${explain}</p>${ids.map(card).join('')}
+    ${more ? `<div class="more">${more}</div>` : ''}
+    ${outIds.length ? `<div class="outs"><h4>${outTitle}</h4>${outIds.map(card).join('')}</div>` : ''}</div>`;
+}
+
+function render() {
+  document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('on', b.dataset.view === view));
+  $('wrap').style.display = view === 'cards' ? '' : 'none';
+  $('isoBox').style.display = view === 'iso' ? 'block' : 'none';
+  $('mapBox').style.display = view === 'map' ? 'block' : 'none';
+  summary();
+  if (view === 'map') {
+    const r = MAP.render($('map'), data, {
+      hover: (id, ev) => { highlight(id); tip(id, ev); }, move: ev => tip(null, ev),
+      leave: () => { $('tip').style.display = 'none'; highlight(pinned); },
+      select: id => select(id), walk: id => analyze(id)});
+    $('mapYear').min = r.minYear; $('mapYear').max = r.maxYear; $('mapYear').value = r.maxYear; $('mapYearOut').textContent = r.maxYear;
+    $('mapInfo').textContent = `${r.withVector}/${r.nodes} placed by meaning` + (r.drift ? ` · ${r.drift} placed by citations (no meaning vector)` : '');
+    highlight(pinned);
+  } else if (view === 'iso') {
+    const r = ISO.render($('iso'), data, {
+      hover: (id, ev) => { highlight(id); tip(id, ev); }, move: ev => tip(null, ev),
+      leave: () => { $('tip').style.display = 'none'; highlight(pinned); },
+      select: id => select(id), walk: id => analyze(id)});
+    $('isoInfo').textContent = `meaning vectors: ${r.withVector}/${r.nodes} papers · crossing links: ${r.crossings.toLocaleString()} (${r.before.toLocaleString()} at random positions)`;
+    highlight(pinned);
+  } else renderCards();
+}
+
+function summary() {
+  const s = data.stats, k = s.k, N = data.nodes, x = N[data.focus];
+  const answers = data.answers.map(id => N[id]);
+  const red = answers.map(a => `<span class="red" data-id="${a.id}">${esc(a.title)}</span>`).join(answers.length === 2 ? ' and ' : ', ');
+  const hint = view === 'map' ? 'A map of meaning: similar papers are neighbours, colored areas are research areas, buildings are papers (taller = more cited). Blue rivers: the citations flowing into the answer. Hover a building for its roads; double-click to walk there.'
+    : view === 'iso' ? 'Newest at the top, oldest at the bottom; papers that cite each other are pulled side by side. Hover a cube to see its links; click to select; double-click to walk there.'
+                              : 'Hover a card to see its links. Click to select; “walk →” makes it the new X.';
+  $('summary').innerHTML = `The ${k} papers that share the most references with <span class="x">${esc(short(x.title, 120))}</span>
+    most often also cite ${red} — <b>${answers[0].support} of the ${k}</b> do${answers.length > 1 ? ' (tie)' : ''}; X does not.
+    <div class="muted">${hint}</div>`;
+  document.querySelectorAll('#summary .red').forEach(el => el.onclick = () => { select(el.dataset.id); scrollToCard(el.dataset.id); });
+}
+
+function tip(id, ev) {
+  const t = $('tip');
+  if (id) {
+    const n = data.nodes[id], k = data.stats.k;
+    t.innerHTML = `<div class="tt">${esc(n.title)}</div><div class="tm">${n.year ?? 'year ?'} · cited by ${fmt(n.cited_by)}</div>
+      ${n.topic ? `<div class="tm">Topic: ${esc(n.topic)}</div>` : ''}
+      <div class="tm">${esc(roleSentence(n))}${n.outlier && n.column !== 'x' ? ` (${esc(n.outlier)})` : ''}${n.records.length > 1 ? ` · ${n.records.length} records` : ''}</div>`;
+    t.style.display = 'block';
+  }
+  if (ev) { t.style.left = Math.min(ev.clientX + 14, innerWidth - 360) + 'px'; t.style.top = (ev.clientY + 14) + 'px'; }
+}
+
+function renderCards() {
+  const s = data.stats, c = data.columns, k = s.k, N = data.nodes, x = N[data.focus];
+  const limits = `more than ${s.max_refs || '∞'} references or ${s.max_cites || '∞'} citations`;
+  const refsMore = [s.refs_shared_hidden ? `+ ${s.refs_shared_hidden} more shared references not shown` : '',
+                    s.refs_not_shared ? `X also cites ${s.refs_not_shared} papers that none of the ${k} cite` : ''].filter(Boolean).join('<br>');
+  $('board').innerHTML = '<svg id="wires"></svg>'
+    + column('x', 'Paper X', 'The paper you are exploring.', [data.focus], [], '', '')
+    + column('refs', 'Papers X cites', `Only those the papers on the right also cite. Number = how many of the ${k} cite it.`,
+             c.refs, c.refs_out, `Left out (${limits})`, refsMore)
+    + column('similar', `The ${k} papers most like X`, 'They cite the most of the same papers as X. Number = how many they share with X.',
+             c.similar, c.similar_out, `Left out, would otherwise be here (${limits})`,
+             s.similar_outliers_skipped > c.similar_out.length ? `+ ${s.similar_outliers_skipped - c.similar_out.length} more left out` : '')
+    + column('candidates', "What they cite that X doesn't", `Number = how many of the ${k} cite it. <b style="color:var(--red)">Red</b> = the most.`,
+             c.candidates, c.candidates_out, 'Left out, would rank at or above red', '');
+  linkIndex = {};
+  data.links.forEach((l, i) => { (linkIndex[l.s] ||= []).push(i); (linkIndex[l.t] ||= []).push(i); });
+  document.querySelectorAll('#board .card').forEach(el => {
+    el.onmouseenter = () => highlight(el.dataset.id);
+    el.onmouseleave = () => highlight(pinned);
+    el.onclick = () => select(el.dataset.id);
+    el.ondblclick = () => analyze(el.dataset.id);
+    const w = el.querySelector('.walk'); if (w) w.onclick = e => { e.stopPropagation(); analyze(el.dataset.id); };
+  });
+  requestAnimationFrame(drawWires);
+}
+
+function drawWires() {
+  if (!data || view !== 'cards') return;
+  const board = $('board'), svg = $('wires'), b = board.getBoundingClientRect();
+  svg.setAttribute('width', board.scrollWidth); svg.setAttribute('height', board.scrollHeight);
+  const box = {};
+  board.querySelectorAll('.card').forEach(el => { const r = el.getBoundingClientRect();
+    box[el.dataset.id] = {l: r.left - b.left, r: r.right - b.left, y: r.top - b.top + Math.min(r.height / 2, 22)}; });
+  const answers = new Set(data.answers);
+  svg.innerHTML = data.links.map((l, i) => {
+    const s = box[l.s], t = box[l.t]; if (!s || !t) return '';
+    let x1, x2; if (s.r <= t.l) { x1 = s.r; x2 = t.l; } else { x1 = s.l; x2 = t.r; }
+    const dx = Math.abs(x2 - x1) / 2, dir = x2 > x1 ? 1 : -1;
+    const cls = `w ${l.kind}${l.kind === 'y-cand' && answers.has(l.t) ? ' to-answer' : ''}`;
+    return `<path id="w${i}" class="${cls}" d="M${x1},${s.y} C${x1 + dir * dx},${s.y} ${x2 - dir * dx},${t.y} ${x2},${t.y}"/>`;
+  }).join('');
+  highlight(pinned);
+}
+
+function highlight(id) {
+  if (view === 'map') return MAP.highlight(id, $('mapAll').checked);
+  if (view === 'iso') return ISO.highlight(id, $('allLinks').checked);
+  const board = $('board');
+  board.querySelectorAll('path.w').forEach(p => p.classList.remove('on', 'idle'));
+  board.querySelectorAll('.card').forEach(c => c.classList.remove('lit'));
+  if (!id) {   // resting view: X's references and the links into the red answer
+    board.classList.remove('focusing');
+    board.querySelectorAll('path.x-ref, path.to-answer').forEach(p => p.classList.add('idle'));
+    return;
+  }
+  board.classList.add('focusing');
+  const lit = new Set([id]);
+  (linkIndex[id] || []).forEach(i => { const l = data.links[i]; lit.add(l.s); lit.add(l.t); const p = $('w' + i); if (p) p.classList.add('on'); });
+  lit.forEach(n => { const el = board.querySelector(`.card[data-id="${n}"]`); if (el) el.classList.add('lit'); });
+}
+
+function select(id) {
+  pinned = id;
+  document.querySelectorAll('#board .card').forEach(c => c.classList.toggle('sel', c.dataset.id === id));
+  highlight(id); side(id);
+}
+
+function scrollToCard(id) { if (view === 'iso') return; const el = document.querySelector(`#board .card[data-id="${id}"]`); if (el) el.scrollIntoView({block: 'center', inline: 'center', behavior: 'smooth'}); }
+
+function roleSentence(n) {
+  const k = data.stats.k;
+  if (n.column === 'x') return 'This is paper X.';
+  if (n.column.startsWith('refs')) return `X cites it, and ${n.ref_support} of the ${k} papers most like X cite it too.`;
+  if (n.column.startsWith('similar')) return `It cites ${n.shared} of the papers X cites` + (n.column === 'similar_out' ? ', but it is an outlier, so it is left out.' : ` — one of the ${k} papers most like X.`);
+  return `${n.support} of the ${k} papers most like X cite it; X does not.` + (n.answer ? ' No other paper is cited by more of them.' : '')
+       + (n.column === 'candidates_out' ? ' It is an outlier, so it is left out.' : '');
+}
+
+function side(id) {
+  if (!data) { $('side').innerHTML = '<h2>How it works</h2><p class="note">Pick a paper X. The page finds the papers that cite the most of the same papers as X, then the paper those cite most often that X does not.</p>'; return; }
+  const s = data.stats, n = id ? data.nodes[id] : null;
+  let h = '';
+  if (n) {
+    h += `<h2>Selected</h2><div class="title">${esc(n.title)}</div>
+      <div class="meta">${n.year ?? 'year ?'} · cited by ${fmt(n.cited_by)} · ${n.refs_indexed} references in the snapshot${n.type && n.type !== 'article' ? ' · ' + esc(n.type) : ''}</div>
+      <div>${esc(roleSentence(n))}${n.outlier && n.column !== 'x' ? ` (${esc(n.outlier)})` : ''}</div>
+      <div style="margin:10px 0">${n.column !== 'x' ? `<button class="primary" onclick="analyze('${n.id}')">Walk here →</button> ` : ''}
+      <a href="https://openalex.org/${n.id}" target="_blank" rel="noopener">OpenAlex ↗</a></div>
+      ${n.records.length > 1 ? `<div class="note">${n.records.length} OpenAlex records of this publication, counted as one: ${n.records.map(r => `<a href="https://openalex.org/${r}" target="_blank" rel="noopener">${r}</a>`).join(', ')}</div>` : ''}`;
+  } else {
+    h += view === 'map' ? `<h2>How to read this map</h2><ul style="padding-left:18px;margin:0">
+      <li><b>Land = meaning.</b> Papers whose titles and abstracts are similar are neighbours; distance on the map follows distance in meaning (near neighbours most faithfully).</li>
+      <li><b>Colored areas</b> are research areas: groups of papers close in meaning, named after their most common OpenAlex topic.</li>
+      <li><b>Buildings</b> are papers; taller = more cited. <b>X</b> is the black tower, the <b style="color:var(--red)">red</b> building is the answer, blue = the ${s.k} papers most like X, gray = X's references, pink = what the ${s.k} cite that X does not.</li>
+      <li><b style="color:#3b82c4">Rivers</b> are the citations flowing into the answer: the more papers cite it, the wider the river. <b>Gray roads</b> leave X's tower to the papers it cites.</li>
+      <li>Hover a building to light up all its citations. “Up to” fades papers published later, to watch the area grow.</li>
+      <li>Buildings with a dashed outline have no meaning vector yet; they stand next to the papers they are linked to.</li></ul>`
+    : view === 'iso' ? `<h2>How to read this</h2><ol style="padding-left:18px;margin:0">
+      <li>Each cube is a publication; bigger = more cited. <b>Up = newer</b>, down = older (one row per year).</li>
+      <li>Left–right position comes only from citations: papers linked by citations are pulled together, all others push apart.</li>
+      <li><b>Depth</b> = distance in meaning from X (title + abstract vectors). Drag to rotate around the time axis and see it; papers without a vector yet sit on the far “no meaning vector” strip.</li>
+      <li>Colors: <b>X</b> black, papers X cites gray, the <b style="color:var(--blue)">${s.k} most like X</b> blue, what they cite that X does not pink, <b style="color:var(--red)">red</b> = cited by the most of them.</li></ol>
+      <p class="note">Gray links: X's citations. Red links: who cites the answer. Hover a cube for all its links; “show all links” draws every one. Faded cubes are outliers, left out of the calculation.</p>`
+    : `<h2>How to read this</h2><ol style="padding-left:18px;margin:0">
+      <li><b>Paper X</b> cites the papers in the second column.</li>
+      <li>The <b style="color:var(--blue)">blue</b> column: the ${s.k} papers that cite the most of those same papers.</li>
+      <li>The last column: what those ${s.k} cite that X does not. <b style="color:var(--red)">Red</b> = cited by the most of them.</li></ol>
+      <p class="note">Hover any card to see its links; the others fade. Click to select it; “walk →” moves X there.</p>`;
+  }
+  h += `<h2>How this was computed</h2><ul class="note">
+    <li>X cites ${s.ref_publications} publications in the snapshot; ${s.refs_outliers} are outliers (${s.max_refs ? '>' + s.max_refs + ' refs' : ''}${s.max_refs && s.max_cites ? ' or ' : ''}${s.max_cites ? '>' + s.max_cites + ' citations' : ''}${!s.max_refs && !s.max_cites ? 'no limits set' : ''}) and were not used.</li>
+    <li>${s.papers_sharing_a_reference.toLocaleString()} papers cite at least one of the other ${s.refs_used}; the ${s.k} citing the most were kept${s.normalize ? ' (ranked by share of their reference list)' : ''}. ${s.similar_outliers_skipped} outliers among them were skipped.</li>
+    ${s.records_merged ? `<li>${s.records_merged} duplicate OpenAlex records (same title) were merged into the publications shown.</li>` : ''}
+    ${s.duplicates_skipped.length ? `<li>Left out as copies of X: ${s.duplicates_skipped.map(p => esc(short(p.title, 60))).join('; ')}.</li>` : ''}
+    ${s.refs_skipped ? `<li>${s.refs_skipped} very highly cited references were skipped for speed.</li>` : ''}
+    ${s.semantic ? `<li>Depth: ${esc(s.semantic.method)}; ${s.semantic.with_vector} of ${s.semantic.nodes} papers have a meaning vector (${esc(s.semantic.model)}; ${s.semantic.indexed.toLocaleString()} vectors so far — the backfill is still running).</li>` : ''}
+    <li>Only citations between papers in the OpenAlex snapshot count. ${s.citing_links_scanned.toLocaleString()} links read in ${s.seconds}s.</li></ul>`;
+  $('side').innerHTML = h;
+}
+
+document.querySelectorAll('.seg button').forEach(b => b.onclick = () => { view = b.dataset.view; localStorage.setItem('citewalk-view', view); if (data) render(); });
+$('allLinks').onchange = () => highlight(pinned);
+$('fitBtn').onclick = () => ISO.fit();
+$('mapFit').onclick = () => MAP.fit();
+$('mapAll').onchange = () => highlight(pinned);
+$('mapYear').oninput = () => { $('mapYearOut').textContent = $('mapYear').value; MAP.untilYear(+$('mapYear').value); };
+MAP.attachPanZoom($('map'));
+$('view3d').onclick = () => ISO.setView(-0.6, 0.16);
+$('viewFlat').onclick = () => ISO.setView(0, 0);
+ISO.attachPanZoom($('iso'));
+$('go').onclick = () => analyze($('q').value, {reset: true});
+$('q').onkeydown = e => { if (e.key === 'Enter') analyze($('q').value, {reset: true}); };
+document.querySelectorAll('[data-ex]').forEach(a => a.onclick = () => analyze(a.dataset.ex, {reset: true}));
+['k', 'norm', 'dups', 'maxrefs', 'maxcites'].forEach(i => $(i).onchange = () => data && analyze(data.focus, {keepPath: true}));
+window.addEventListener('resize', () => requestAnimationFrame(drawWires));
+document.fonts && document.fonts.ready.then(() => requestAnimationFrame(drawWires));
+const start = decodeURIComponent(location.hash.slice(1));
+if (start) analyze(start, {reset: true}); else side();
+</script>
+</body>
+</html>

@@ -101,6 +101,17 @@ restarts srl-search on it, waits for `/health`, runs a search and a walk, and sw
 the previous release if any of that fails. The search API is down for ~1–3 minutes during the
 restart; the site falls back to Europe PMC meanwhile.
 
+## Daily updates (since 2026-10-11)
+
+OpenAlex's free snapshot comes four times a year; its API every day. `srl-updates.timer` (01:00) runs
+`pipeline/updates/daily.sh`: new English publications with an abstract from the API → a small **updates
+corpus** (details, keyword index, map facts, junk-model facts) beside the base corpus → vectors in daily
+shards beside the backfill's. The nightly release then builds from base + updates: `rows.py` and
+`mapdata.py` take both corpora (`--corpus` twice), the manifest names the updates corpus
+(`paths.updates`), and the search API reads its details, keywords and facts after the base's. The release
+reads shards and corpus under the updates lock, so a daily run never changes them mid-read. Details, costs,
+checks and what is not updated daily: `pipeline/updates/README.md`.
+
 ## First release: 20261009T120544Z (published 2026-10-09)
 
 143.8M embedded rows (backfill at 2011-12) → 76.2M publications → **72.5M searchable** (3.6M exact
@@ -124,7 +135,7 @@ Tiles: 9 levels, 5,018 tiles, at most 32,768 points (256 KB) each.
 
 ### What changes when
 
-- **New embeddings** (nightly, until the backfill ends, then with OpenAlex updates): new rows,
+- **New embeddings** (nightly: the daily updates' shards since 2026-10-11): new rows,
   index, readable collection, tiles. Geography and list centres stay.
 - **List centres**: trained once on the atlas's uniform 1 % sample of all years (1.28M vectors,
   32,768 lists, 18 min). Retrain when the corpus grows by ~30 % or the recall check drops.
@@ -143,7 +154,7 @@ embedding backfill and smr-server/worker have their own files next to it.
 
 ## Known gaps
 
-- Semantic search covers what the backfill has embedded (to ~2012 on 2026-10-09; ~1.5 days to
+- (2026-10-11: the backfill is complete, 203,486,035 rows; search covers every year.) Earlier: semantic search covered what the backfill had embedded (to ~2012 on 2026-10-09; ~1.5 days to
   go). Keyword search and details already cover all 203.5M.
 - The site's page does not use `/api/data/` yet: that is the design work in progress.
 - **Map positions of new shards need GPU room.** The nightly job uses GPU 1 only if 2 GB are free
@@ -157,7 +168,8 @@ embedding backfill and smr-server/worker have their own files next to it.
   100–500 ms on broad words, so it is used only when the top hits are mostly non-publications.
   Proper fix: a publications flag in the keyword index at its next rebuild.
 - A new citation walk takes ~2.3 s in the citewalk engine (repeats are cached).
-- No automatic OpenAlex snapshot or PMC refresh yet (see above).
+- No automatic OpenAlex *snapshot* refresh (the quarterly base) or PMC refresh yet (see above). New papers
+  arrive daily (pipeline/updates); changes to papers already held wait for the next base.
 - The citation walk's own local map (`atlas` in citewalk's answer) is dropped by `/walk`;
   positions come from the atlas instead.
 

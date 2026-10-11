@@ -105,7 +105,8 @@ def read_corpus(corpus: Path, fields: list[str], subfields: list[str], types: li
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, required=True)
-    ap.add_argument("--corpus", type=Path, required=True)
+    ap.add_argument("--corpus", type=Path, required=True, action="append",
+                    help="a details corpus; repeat it for the base and the daily updates corpus (pipeline/updates)")
     ap.add_argument("--atlas", type=Path, required=True, help="atlas build directory (its field/subfield lists)")
     ap.add_argument("--threads", type=int, default=16)
     a = ap.parse_args()
@@ -137,13 +138,19 @@ def main() -> None:
         list(ex.map(load, shards))
     log("shard ids and text hashes read")
 
-    cid, cyear, ctype, cfield, csub, csmr = read_corpus(a.corpus, fields, subfields, types, a.threads)
+    cols = [read_corpus(c, fields, subfields, types, a.threads) for c in a.corpus]
+    cols = [np.concatenate([c[k] for c in cols]) for k in range(6)]
+    o = np.argsort(cols[0], kind="stable")
+    cid, cyear, ctype, cfield, csub, csmr = [c[o] for c in cols]
+    del cols, o
+    if np.any(cid[1:] == cid[:-1]):
+        raise SystemExit("a work id is in two corpora")
     log(f"corpus read: {len(cid):,} works")
     j = np.searchsorted(cid, work)
     j[j >= len(cid)] = 0
     found = cid[j] == work
     if not found.all():
-        raise SystemExit(f"{int((~found).sum()):,} embedded works missing from the corpus {a.corpus}")
+        raise SystemExit(f"{int((~found).sum()):,} embedded works missing from the corpora {a.corpus}")
     year, typ, field, sub, smr = cyear[j], ctype[j], cfield[j], csub[j], csmr[j]
     sch_codes = [types.index(t) for t in scope.SCHOLARLY_TYPES if t in types]
     all_pub = np.isin(ctype, sch_codes) & (cyear >= 1800) & (cyear <= 2026)
@@ -179,7 +186,8 @@ def main() -> None:
            "smr_kept": int((smr & keep).sum()),
            "oldest_kept_year_with_100k": int(1800 + np.flatnonzero(years >= 100_000)[0]) if (years >= 100_000).any() else None,
            "types": types, "scholarly_types": sorted(scope.SCHOLARLY_TYPES),
-           "fields": fields, "subfields": subfields, "atlas": atlas["id"], "corpus": str(a.corpus),
+           "fields": fields, "subfields": subfields, "atlas": atlas["id"], "corpus": str(a.corpus[0]),
+           "corpora": [str(c) for c in a.corpus],
            "last_commit_utc": shards[-1]["committed_utc"], "seconds": round(time.time() - T0)}
     (a.out / "meta.json.tmp").write_text(json.dumps(doc, indent=1))
     os.replace(a.out / "meta.json.tmp", a.out / "meta.json")

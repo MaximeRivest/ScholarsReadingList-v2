@@ -435,7 +435,8 @@ def main() -> None:
     ap.add_argument("--rows", type=Path, required=True)
     ap.add_argument("--xy", type=Path, required=True, help="the release's position table (tiles.py's xy.npy)")
     ap.add_argument("--atlas", type=Path, required=True)
-    ap.add_argument("--corpus", type=Path, required=True)
+    ap.add_argument("--corpus", type=Path, required=True, action="append",
+                    help="a details corpus; repeat it for the base and the daily updates corpus (pipeline/updates)")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--procs", type=int, default=16)
     ap.add_argument("--only", choices=["density", "points", "labels", "compact", "split"], help="rebuild one part (development)")
@@ -454,13 +455,31 @@ def main() -> None:
     sub = np.load(a.rows / "subfield.npy")[rows].astype(np.uint8)
     work = np.load(a.rows / "work.npy")[rows].astype(np.int64)
     log(f"{len(rows):,} papers on the map")
-    mm = a.corpus / "map-meta"
-    cid = np.load(mm / "id.npy", mmap_mode="r")
-    j = np.searchsorted(cid, work).clip(0, len(cid) - 1)
-    found = np.asarray(cid[j]) == work
-    cites = np.where(found, np.load(mm / "citations.npy", mmap_mode="r")[j], 0).astype(np.int64)
-    topic = np.where(found, np.load(mm / "topic.npy", mmap_mode="r")[j], 0).astype(np.uint16)
-    topic_names = json.loads((mm / "topics.json").read_text())
+    # per-paper facts from each corpus' map-meta; topic codes are per corpus: the first corpus' names, then the
+    # names only later corpora use, appended
+    found = np.zeros(len(work), bool)
+    cites = np.zeros(len(work), np.int64)
+    topic = np.zeros(len(work), np.uint16)
+    topic_names: list[str] = []
+    for c in a.corpus:
+        mm = c / "map-meta"
+        cid = np.load(mm / "id.npy", mmap_mode="r")
+        names = json.loads((mm / "topics.json").read_text())
+        if not topic_names:
+            topic_names = list(names)
+        known = {n: i for i, n in enumerate(topic_names)}
+        code = []
+        for n in names:
+            if n not in known:
+                known[n] = len(topic_names)
+                topic_names.append(n)
+            code.append(known[n])
+        code = np.array(code, np.uint16)
+        j = np.searchsorted(cid, work).clip(0, len(cid) - 1)
+        f = (np.asarray(cid[j]) == work) & ~found
+        cites[f] = np.load(mm / "citations.npy", mmap_mode="r")[j[f]]
+        topic[f] = code[np.load(mm / "topic.npy", mmap_mode="r")[j[f]]]
+        found |= f
     log(f"corpus facts for {found.mean():.4%} of them")
     doc = json.loads((out / "map.json").read_text()) if a.only and (out / "map.json").exists() else {}
     doc.update({"format": 2, "atlas": atlas["id"], "papers": int(len(rows)),
@@ -479,7 +498,7 @@ def main() -> None:
         doc["points"] = points(p.astype(np.float32), work, np.load(a.rows / "year.npy")[rows],
                                np.load(a.rows / "smr.npy")[rows], sub, cites, out, a.procs)
     if a.only in (None, "labels"):
-        lab = labels(p, sub, field_of, topic, topic_names, cites, work, atlas, a.corpus, out / "label-candidates.json")
+        lab = labels(p, sub, field_of, topic, topic_names, cites, work, atlas, a.corpus[0], out / "label-candidates.json")
         (out / "labels.json").write_text(json.dumps(lab, ensure_ascii=False, separators=(",", ":")))
         split_labels(out, lab)
         doc["labels"] = len(lab)

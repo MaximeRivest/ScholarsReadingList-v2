@@ -36,6 +36,8 @@ CORPUS = Path("/mnt/fast/scholarsreadinglist/search/corpus-2026-10-05")
 ATLAS = Path("/mnt/fast/science-atlas/build/20261009T190750-tsne-mode")
 CITATIONS = Path("/mnt/fast/citewalk/20261007T003120Z-50ce3865")
 API = "http://127.0.0.1:8810"
+sys.path.insert(0, str(REPO / "pipeline" / "updates"))
+import common as updates  # noqa: E402  the daily updates (pipeline/updates): their corpus and lock
 
 
 def log(msg: str) -> None:
@@ -89,8 +91,16 @@ def build(gpu_wait: bool, resume: str | None = None) -> str:
                 log(f"{script}: finished before, kept")
                 return 0
             return run(py, script, *args, **kw)
-    secs["rows"] = step(SEARCH_PY, "pipeline/release/rows.py", "--out", str(rows), "--corpus", str(CORPUS),
-                       "--atlas", str(ATLAS))
+    # the base corpus, and the newest daily updates corpus (pipeline/updates) when there is one. Rows read the
+    # shards and the corpora under the updates lock: a daily run never swaps its corpus or adds shards meanwhile.
+    if (rows / "meta.json").exists():
+        corpora = [Path(c) for c in json.loads((rows / "meta.json").read_text()).get("corpora", [str(CORPUS)])]
+        secs["rows"] = 0
+    else:
+        with updates.locked("release rows"):
+            corpora = [CORPUS] + ([updates.latest_corpus()] if updates.latest_corpus() else [])
+            secs["rows"] = step(SEARCH_PY, "pipeline/release/rows.py", "--out", str(rows), "--atlas", str(ATLAS),
+                               *[x for c in corpora for x in ("--corpus", str(c))])
     try:   # GPU step: best effort unless asked to wait (the map then shows what is placed)
         args = ["--atlas", str(ATLAS)] + ([] if gpu_wait else ["--min-free-mib", "2048", "--no-wait"])
         secs["positions"] = step(EMBED_PY, "pipeline/release/positions.py", *args, cwd=REPO / "pipeline" / "embeddings")
@@ -103,7 +113,8 @@ def build(gpu_wait: bool, resume: str | None = None) -> str:
                         "--atlas", str(ATLAS), "--out", str(tiles))
     try:   # the map engine's data (mapdata.py): best effort, the site falls back to its images without it
         secs["mapdata"] = step(SEARCH_PY, "pipeline/release/mapdata.py", "--rows", str(rows), "--xy", str(tiles / "xy.npy"),
-                              "--atlas", str(ATLAS), "--corpus", str(CORPUS), "--out", str(tiles / "v2"))
+                              "--atlas", str(ATLAS), *[x for c in corpora for x in ("--corpus", str(c))],
+                              "--out", str(tiles / "v2"))
     except subprocess.CalledProcessError as e:
         log(f"map data skipped ({e})")
     rm = json.loads((rows / "meta.json").read_text())
@@ -111,7 +122,8 @@ def build(gpu_wait: bool, resume: str | None = None) -> str:
     doc = {"id": rid, "built_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "state": "built",
            "paths": {"rows": str(rows), "index": str(index), "smr": str(smr), "tiles": str(tiles),
                      "positions": str(positions), "corpus": str(CORPUS), "atlas": str(ATLAS),
-                     "citations": str(CITATIONS), "quantizer": str(quantizer())},
+                     "citations": str(CITATIONS), "quantizer": str(quantizer()),
+                     **({"updates": str(corpora[1])} if len(corpora) > 1 else {})},
            "embeddings": {"plan": rm["embedding_plan"], "rows": rm["rows"], "last_commit_utc": rm["last_commit_utc"]},
            "counts": {"publications": rm["publications"], "searchable": rm["kept"], "readable_on_site": rm["smr_kept"],
                       "on_map": tm["papers"], "kept_without_position": tm["kept_without_position"]},
@@ -128,6 +140,8 @@ def check(rid: str) -> dict:
     need = [p["rows"] / "meta.json", p["index"] / "manifest.json", p["index"] / "ivf.faiss",
             p["smr"] / "manifest.json", p["tiles"] / "index.json", p["corpus"] / "works.sqlite",
             p["atlas"] / "reference.npz", p["citations"] / "meta.json"]
+    if "updates" in p:
+        need += [p["updates"] / "DONE.json", p["updates"] / "works.sqlite", p["updates"] / "keywords" / "DONE.json"]
     missing = [str(f) for f in need if not f.exists()]
     if missing:
         raise SystemExit(f"release {rid} incomplete: {missing}")

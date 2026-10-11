@@ -81,6 +81,8 @@ class Client:
         self.lock = threading.Lock()
 
     def can_spend(self, usd: float) -> bool:
+        if self.left is None:          # not heard from the API yet: one cheap call tells today's budget
+            self.get(filter=FILTER, per_page=1, select="id")
         with self.lock:
             if self.spent + usd > self.max_usd:
                 return False

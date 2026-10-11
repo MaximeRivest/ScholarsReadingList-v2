@@ -125,6 +125,8 @@ def gc() -> None:
         u = json.loads(m.read_text())["paths"].get("updates")
         if u:
             named.add(Path(u).name)
+    for m in RELEASES.parent.glob("rows/*/meta.json"):      # a release still being built names its corpora here
+        named.update(Path(c).name for c in json.loads(m.read_text()).get("corpora", [])[1:])
     done = sorted(p.parent.name for p in C.CORPUS.glob("*/DONE.json"))
     for name in done[:-2]:
         if name not in named:

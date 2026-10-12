@@ -9,6 +9,9 @@ const S = { year: 2026, window: 5, colour: 'field', eq: true, focus: -1, selecte
             t: 2026, target: 2026 };   // continuous time: dots of year Y appear while t goes from Y-1 to Y
 let M, N, XY, YEAR, TIME, FIELD, SUB, gl, prog, quad, fbo, canvas, overlay, octx, dirty = true;
 let fieldPrefix, subPrefix, grid;
+// Exact counts of every publication (server /api/full, citewalk/science/full_counts.py): the territories, growth
+// map, bar race and timeline use them; dots stay a 1 % sample (drawing). FULL = null: everything from the dots.
+let FULL = null, PER_YEAR = null;
 const GRID = 512;
 
 // ---------- loading ----------
@@ -30,6 +33,17 @@ async function load() {
   const prefix = (list) => list.map((l) => { const a = new Int32Array(l.per_year.length + 1);
     l.per_year.forEach((c, i) => a[i + 1] = a[i] + c); return a; });
   fieldPrefix = prefix(M.fields); subPrefix = prefix(M.subfields);
+  try {
+    const r = await fetch('/api/full');
+    if (r.ok) {
+      const f = await r.json();
+      if (f.years[0] !== M.years[0] || f.years[1] !== M.years[M.years.length - 1]) throw new Error('years differ');
+      const pre = (arr) => { const a = new Float64Array(arr.length + 1); arr.forEach((c, i) => a[i + 1] = a[i] + c); return a; };
+      FULL = { tot: pre(f.papers_per_year), sub: f.sub_per_year.map(pre), papers: f.papers, release: f.release };
+      PER_YEAR = f.papers_per_year;
+    }
+  } catch (e) { console.warn('full counts unavailable; using the sample', e); FULL = null; }
+  PER_YEAR = PER_YEAR || M.eligible_per_year;
   buildGrid();
   readHash();
   setupGL(); layerSetup(); setupUI(); resize();
@@ -325,10 +339,10 @@ function drawTimeline() {
   const W = c.clientWidth, H = c.clientHeight;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
   const ys = M.years, n = ys.length, bw = W / n;
-  const lmax = Math.log10(Math.max(...M.eligible_per_year)), lmin = 1;   // 10 .. max papers
+  const lmax = Math.log10(Math.max(...PER_YEAR)), lmin = 1;   // 10 .. max papers
   const [a, b] = yearSpan();
   for (let i = 0; i < n; i++) {
-    const c = M.eligible_per_year[i];
+    const c = PER_YEAR[i];
     const v = c > 10 ? (Math.log10(c) - lmin) / (lmax - lmin) : 0, hh = Math.max(c ? 1 : 0, v * (H - 16));
     const inside = ys[i] >= a && ys[i] <= b;
     const base = S.show === 'growth' && ys[i] >= a - S.lag && ys[i] <= b - S.lag;
@@ -342,7 +356,8 @@ function drawTimeline() {
     const x = (y - ys[0] + .5) * bw; ctx.fillRect(x, H - 13, 1, 3);
     if (x > 16 && x < W - 16) ctx.fillText(String(y), x - 13, H);
   }
-  ctx.textBaseline = 'top'; ctx.fillText('publications per year in the corpus (log scale: each step up = 10× more)' +
+  ctx.textBaseline = 'top'; ctx.fillText((FULL ? 'publications per year, every one counted' : 'publications per year in the corpus') +
+    ' (log scale: each step up = 10× more)' +
     (S.show === 'growth' ? ` · grey: the period compared against (${S.lag} years earlier)` : ''), 4, 0);
 }
 
@@ -350,7 +365,7 @@ function updateText() {
   $('year').textContent = S.year;
   const [start, end] = range(), [a, b] = yearSpan();
   let corpus = 0;
-  for (let y = a; y <= b; y++) corpus += M.eligible_per_year[yi(y)] || 0;
+  for (let y = a; y <= b; y++) corpus += PER_YEAR[yi(y)] || 0;
   const span = a === b ? `${b}` : `${a}–${b}`;
   $('count').textContent = `${(end - start).toLocaleString()} dots for ${span} · ${corpus.toLocaleString()} papers in the corpus` +
     (b >= 2026 ? ' · 2026 is incomplete' : '');
@@ -649,6 +664,14 @@ function layerSetup() {
     worker.postMessage({ type: 'init', XY, FIELD, ...layerArgs });
   } catch (e) { worker = null; }
 }
+// with full counts, a keyframe comes from the server (/api/layer), computed from every publication
+async function fetchJob(j) {
+  const q = j.kind === 'terr' ? `kind=terr&a=${j.a}&b=${j.b}` : `kind=growth&a0=${j.a0}&a1=${j.a1}&b0=${j.b0}&b1=${j.b1}`;
+  const r = await (await fetch('/api/layer?' + q)).json();
+  let rgba = null;
+  if (r.rgba) { const bin = atob(r.rgba); rgba = new Uint8ClampedArray(bin.length); for (let i = 0; i < bin.length; i++) rgba[i] = bin.charCodeAt(i); }
+  return { key: j.key, rgba, size: r.size || 0, anchor: r.anchor || null };
+}
 function runJob(j) {
   return j.kind === 'terr' ? computeTerritory(XY, FIELD, j.s, j.e, layerArgs.NF, layerArgs.uncl, layerArgs.rgb)
                            : computeGrowth(XY, j.a0, j.a1, j.b0, j.b1);
@@ -666,15 +689,33 @@ function pump() {
   if (busy) return;
   const job = wanted.find((j) => !keyframes.has(j.key));
   if (!job) return;
+  if (FULL) {
+    busy = true;
+    fetchJob(job).then(store).catch((e) => { console.warn('layer', e); store({ key: job.key, rgba: null, size: 0, anchor: null }); })
+      .finally(() => { busy = false; pump(); changed(); });
+    return;
+  }
   if (worker) { busy = true; worker.postMessage(job); return; }
   const r = runJob(job);
   store({ key: job.key, rgba: r ? r.rgba : null, size: r ? r.size : 0, anchor: r ? r.anchor : null });
   changed();
 }
-function terrJob(Y) { const [s, e] = rangeFor(Y, win()); return { kind: 'terr', key: `t|${s}|${e}`, s, e }; }
+function terrJob(Y) {
+  if (FULL) { const w = win(), a = Y - w + 1, b = Y; return { kind: 'terr', key: `T|${a}|${b}`, a, b }; }
+  const [s, e] = rangeFor(Y, win()); return { kind: 'terr', key: `t|${s}|${e}`, s, e };
+}
 function growthJob(Y) {
-  const w = win(), [a0, a1] = rangeFor(Y, w), [b0, b1] = rangeFor(Y - S.lag, w);
+  const w = win();
+  if (FULL) { const a0 = Y - w + 1, a1 = Y, b0 = a0 - S.lag, b1 = Y - S.lag;
+              return { kind: 'growth', key: `G|${a0}|${a1}|${b0}|${b1}`, a0, a1, b0, b1, full: true }; }
+  const [a0, a1] = rangeFor(Y, w), [b0, b1] = rangeFor(Y - S.lag, w);
   return { kind: 'growth', key: `g|${a0}|${a1}|${b0}|${b1}`, a0, a1, b0, b1 };
+}
+// papers (FULL) or dots in the w years ending at Y
+function papersIn(Y, w) {
+  if (!FULL) { const [s, e] = rangeFor(Y, w); return e - s; }
+  if (Y < M.years[0]) return 0;
+  return FULL.tot[yi(Y) + 1] - FULL.tot[yi(Math.max(M.years[0], Y - w + 1))];
 }
 // keyframes of the two years around the current moment, and how far we are between them
 function layerFrames(make) {
@@ -707,8 +748,9 @@ function drawLayer(kind, make, size) {
 function drawGrowth() {
   const key = $('growthKey');
   key.style.display = 'block'; key.style.bottom = ($('bottom').offsetHeight + 22) + 'px';
-  const j = growthJob(S.year), ok = j.a1 - j.a0 >= 200 && j.b1 - j.b0 >= 200;
-  $('growthNote').textContent = ok ? `${yearSpan().join('–')} vs ${yearSpan()[0] - S.lag}–${S.year - S.lag}. Grey = no clear change.`
+  const ok = papersIn(S.year, win()) >= 200 && papersIn(S.year - S.lag, win()) >= 200;
+  $('growthNote').textContent = ok ? `${yearSpan().join('–')} vs ${yearSpan()[0] - S.lag}–${S.year - S.lag}. Grey = no clear change` +
+                                     (FULL ? ' (less than ±15 %, or too few papers).' : '.')
                                    : 'Not enough papers in one of the two periods to compare';
   drawLayer('growth', growthJob, HG);
 }
@@ -747,17 +789,20 @@ let raceKey = '', raceTicks = null;
 function shareChange(Y) {        // per subfield: share now, change in share {r} (NaN = too few dots)
   const w = win(), key = `${Y}|${w}|${S.lag}`;
   if (changeCache.has(key)) return changeCache.get(key);
-  const [a0, a1] = rangeFor(Y, w), [b0, b1] = rangeFor(Y - S.lag, w), A = a1 - a0, B = b1 - b0;
+  const count = (p, y) => { const s = Math.max(M.years[0], y - w + 1); return y < M.years[0] ? 0 : p[yi(y) + 1] - p[yi(s)]; };
+  // exact counts (FULL) or the sample's dots; the rules (prior 10, hidden below 40) then count papers, not dots
+  const A = FULL ? count(FULL.tot, Y) : (() => { const [a0, a1] = rangeFor(Y, w); return a1 - a0; })();
+  const B = FULL ? count(FULL.tot, Y - S.lag) : (() => { const [b0, b1] = rangeFor(Y - S.lag, w); return b1 - b0; })();
+  const subP = FULL ? FULL.sub : subPrefix;
   let out = null;
   if (A >= 200) {
     const n = M.subfields.length, r = new Float64Array(n).fill(NaN), share = new Float64Array(n), av = new Float64Array(n);
-    const count = (p, y) => { const s = Math.max(M.years[0], y - w + 1); return y < M.years[0] ? 0 : p[yi(y) + 1] - p[yi(s)]; };
     M.subfields.forEach((sf, i) => {
       if (sf.name === 'Unclassified') return;
-      const a = count(subPrefix[i], Y);
+      const a = count(subP[i], Y);
       av[i] = a; share[i] = a / A;
       if (B >= 200) {
-        const e = count(subPrefix[i], Y - S.lag) * A / B;
+        const e = count(subP[i], Y - S.lag) * A / B;
         if (a + e >= 40) r[i] = Math.log2((a + RACE_PRIOR) / (e + RACE_PRIOR));
       }
     });
@@ -812,7 +857,7 @@ function updateRace() {
   race.style.setProperty('--race-ease', S.playing ? 'linear' : 'cubic-bezier(.2,.8,.2,1)');
   const [s1, e1] = yearSpan();
   let corpus = 0;
-  for (let y = s1; y <= e1; y++) corpus += M.eligible_per_year[yi(y)] || 0;
+  for (let y = s1; y <= e1; y++) corpus += PER_YEAR[yi(y)] || 0;
   $('raceSub').textContent = `${s1 === e1 ? e1 : s1 + '–' + e1} · ${corpus.toLocaleString()} publications`;
   $('raceChgHead').textContent = `vs ${S.lag}y`;
 
@@ -848,7 +893,7 @@ function updateRace() {
     }
     const est = Math.round(sh * corpus / 100) * 100;
     row.el.title = `${M.subfields[i].name} (${M.subfields[i].field})\n${(100 * sh).toFixed(2)} % of all publications in ${s1}–${e1}` +
-      ` (≈ ${est.toLocaleString()} publications; ${cur.a[i]} dots)` +
+      (FULL ? ` (${cur.a[i].toLocaleString()} publications)` : ` (≈ ${est.toLocaleString()} publications; ${cur.a[i]} dots)`) +
       (isNaN(r) ? '' : `\nShare vs ${S.lag} years earlier: ${Math.pow(2, r) >= 1 ? '×' + Math.pow(2, r).toFixed(2) : '÷' + Math.pow(2, -r).toFixed(2)} (estimate)`) +
       `\nClick to fly there`;
   }

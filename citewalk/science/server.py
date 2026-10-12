@@ -29,6 +29,9 @@ import pyarrow.parquet as pq
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import placement  # noqa: E402
+import full_layers  # noqa: E402
+
+COUNTS = Path('/mnt/fast/science-atlas/counts')      # full_counts.py: every publication, per year/place/field
 
 PLAN = Path('/mnt/fast/openalex-embeddings/denseon-english-abstracts')
 DATA_FILES = ('meta.json', 'points.f32', 'year.u16', 'field.u8', 'subfield.u16')
@@ -58,6 +61,16 @@ class Atlas:
             raise ValueError('Build was made with different placement parameters')
         self.encoder = None
         self.encoder_lock = threading.Lock()
+        # exact counts of every publication for this geography (newest release counted), if built
+        done = sorted(p for p in COUNTS.glob(f'{build.name}--*') if (p / 'meta.json').exists())
+        self.full = None
+        if done:
+            f = self.meta['fields']
+            self.full = full_layers.FullCounts(
+                done[-1], [tuple(int(x['colour'][o:o + 2], 16) for o in (1, 3, 5)) for x in f],
+                [x['name'] for x in f].index('Unclassified'), float(self.meta['display_rate']))
+            self.full_summary = gzip.compress(json.dumps(self.full.summary()).encode(), 5)
+            print(f'full counts {done[-1].name}: {self.full.meta["papers"]:,} papers', flush=True)
         print(f'atlas {build.name}: {len(self.xy):,} papers loaded in {time.time() - t:.0f}s', flush=True)
 
     def paper(self, i):
@@ -156,6 +169,21 @@ def make_handler(atlas: Atlas):
                     if not 0 <= i < n:
                         return self.send(400, {'error': 'bad index'})
                     return self.send(200, atlas.paper(i) if u.path == '/api/paper' else atlas.similar(i))
+                if u.path in ('/api/full', '/api/layer') and atlas.full is None:
+                    return self.send(404, {'error': 'no full counts for this build (citewalk/science/full_counts.py)'})
+                if u.path == '/api/full':         # per year: papers, papers per subfield (bar race, timeline)
+                    return self.send(200, gzip.decompress(atlas.full_summary), gz=atlas.full_summary,
+                                     cache='public, max-age=3600')
+                if u.path == '/api/layer':        # one keyframe of the territory or growth map, from full counts
+                    yr = lambda k: int(q[k])
+                    if q.get('kind') == 'terr':
+                        layer = atlas.full.territory(yr('a'), yr('b'))
+                    elif q.get('kind') == 'growth':
+                        layer = atlas.full.growth(yr('a0'), yr('a1'), yr('b0'), yr('b1'))
+                    else:
+                        return self.send(400, {'error': 'kind = terr or growth'})
+                    body = json.dumps(full_layers.as_json(layer)).encode()
+                    return self.send(200, body, gz=gzip.compress(body, 3), cache='public, max-age=3600')
                 if u.path == '/api/walk':        # citation walk, computed by the citewalk server on this build
                     return self.walk(q)
                 if u.path == '/api/search':

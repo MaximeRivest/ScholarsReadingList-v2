@@ -34,6 +34,27 @@ against the PCA baseline, one frozen projection, a year-sliced viewer.
 - **Search:** the text is encoded with DenseOn's `query:` prompt, placed by the frozen map
   function, and its 20 most similar dots are listed.
 
+## Every publication counted (since 2026-10-12)
+
+The dots are still the 1 % sample (a browser cannot draw 125 million), but **the territories, the growth map,
+the bar race and the timeline now count every publication** of the current data release: 123,372,666 papers
+dated 1800-2026, each at its position under this atlas (1,577,498 with no date in that range are left out).
+
+- `full_counts.py` counts papers per year x field x cell (territory grid), per year x cell (growth grid) and
+  per year x subfield (1 minute, 1.6 GB, `/mnt/fast/science-atlas/counts/<atlas>--<release>/`). It needs
+  every paper's position under this atlas build: `pipeline/release/positions.py --atlas <this build>`
+  (17 min on GPU 1 for the 58.6M not placed before).
+- `full_layers.py` draws the territory and growth keyframes from those counts on the server (`/api/layer`,
+  under 0.1 s each); `/api/full` gives the per-year counts. Without counts the viewer falls back to the
+  sample, as before. `check_full_layers.py`: on the sample, the server's drawing equals the browser's
+  (99.98-100 % of coloured cells within 2/255, every label anchor identical).
+- What the exact counts change: territories are firm almost everywhere there are papers (the significance
+  rule was hiding 1 % sampling noise); faint colouring of sparse places is still by sample-equivalent size.
+  Growth: with exact counts almost any change is "significant", so a place is coloured only when its share
+  changed by more than 15 % (the bar race's "=" band), full colour by ~40 %. Bar race chips use real counts.
+- Not automatic yet: rerun `positions.py --atlas` (new shards) and `full_counts.py` after a release, then
+  restart `science-atlas`; it serves the newest counts for its build.
+
 ## Seeing macro shifts (option A: fixed ground, moving activity)
 
 All computed in the browser from the same frozen positions; no position ever moves.

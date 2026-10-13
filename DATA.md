@@ -45,6 +45,8 @@ test page) is exposed.
 | list centres (quantizer) | `quantizer/<id>/` | `pipeline/release/train_quantizer.py` | rarely (see below) |
 | paper details, keyword index | `search/corpus-2026-10-05/` | `search/build_corpus.py` | new OpenAlex snapshot |
 | citation index | `/mnt/fast/citewalk/<generation>/` | `citewalk/build_index.py` | new OpenAlex snapshot |
+| authorship index (who wrote each paper, position; for topic maps' experts) | `/mnt/fast/citewalk/<generation>/authors/` | `citewalk/build_authors.py` (~45 min) | new OpenAlex snapshot |
+| topic-map answers (cache) | `/mnt/fast/scholarsreadinglist/search/topics-cache/<release>/` | srl-search on request | every release (old ones deleted) |
 | atlas geography | `/mnt/fast/science-atlas/build/<id>/` | `citewalk/science/` | deliberately only (versioned) |
 | release manifest | `releases/<id>/manifest.json` | `release.py build` | every release |
 
@@ -139,7 +141,7 @@ Tiles: 9 levels, 5,018 tiles, at most 32,768 points (256 KB) each.
   index, readable collection, tiles. Geography and list centres stay.
 - **List centres**: trained once on the atlas's uniform 1 % sample of all years (1.28M vectors,
   32,768 lists, 18 min). Retrain when the corpus grows by ~30 % or the recall check drops.
-- **New OpenAlex snapshot**: rebuild the details/keyword corpus and the citation index, then
+- **New OpenAlex snapshot**: rebuild the details/keyword corpus, the citation index and its authorship index, then
   point `CORPUS` / `CITATIONS` in `release.py` at them. Not automated yet.
 - **New atlas geography** (new reference set or method): a new atlas id; positions are
   recomputed for every shard (~45 min GPU) and old releases keep the old map. Never silently.

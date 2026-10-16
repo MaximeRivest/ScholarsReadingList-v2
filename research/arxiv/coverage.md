@@ -55,6 +55,26 @@ and 19 of 20 from 2018-19; OpenAlex had them for 3 of the 60 and 10 of the 20.
 - **Metadata does not need parsing**: titles, abstracts, authors, dates, published-version DOIs are all in arXiv's
   metadata.
 
+## Decision 2026-10-16: no Semantic Scholar key; unarXive + our own extraction
+
+Semantic Scholar's bulk data needs a key we do not have; we do not wait for it.
+
+- **unarXive 2024** (Zenodo 10.5281/zenodo.17431595, CC BY 4.0, 100 GB, released 2025-10-24, no key): arXiv full
+  texts parsed from the LaTeX source, every bibliography entry already linked to OpenAlex (23 of 24 in its preview
+  paper). Downloading to `/mnt/bulk/arxiv/unarxive-2024`; its folder name suggests it runs to December 2024 (to be
+  confirmed from the data).
+- **2025 onwards: our own**, `pipeline/arxiv/refs.py`: the PDF from Kaggle's free bucket -> GROBID 0.9.1 (CPU image,
+  `pipeline/arxiv/grobid.sh`) -> TEI kept in `/mnt/bulk/arxiv/grobid/tei/` -> references -> OpenAlex works by arXiv id,
+  DOI, title (+ year and first author), or volume + first page + year (`research/arxiv/pilot/match.py`; lookup tables
+  `/mnt/bulk/arxiv/match/`, built by `build_lookup.sql` there from our OpenAlex table). ~11 papers/s.
+
+Pilot (500 random papers, `research/arxiv/pilot/`): 24,837 references, 83% linked to an OpenAlex work (title 51%,
+DOI 17%, arXiv id 9%, volume/page 6%). Against OpenAlex's own lists for 99 papers of 2019-21: 2,403 links in both,
+898 only ours (14 of 14 sampled were correct references OpenAlex lacks), 866 only OpenAlex's, of which 291 point to
+works no longer in the snapshot, 261 are the same work under another OpenAlex record, 164 are references GROBID found
+that our title matching missed (hyphens, extra words: fuzzy matching to add), 150 not found in the PDF. So about 89%
+of OpenAlex's valid links, plus ~27% more.
+
 ## Next steps (proposed, not started)
 
 1. Titles and abstracts from arXiv's metadata for every work with an arXiv DOI whose text differs (1,601), re-embed

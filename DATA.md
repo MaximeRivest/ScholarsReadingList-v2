@@ -46,6 +46,9 @@ test page) is exposed.
 | paper details, keyword index | `search/corpus-2026-10-05/` | `search/build_corpus.py` | new OpenAlex snapshot |
 | citation index | `/mnt/fast/citewalk/<generation>/` | `citewalk/build_index.py` | new OpenAlex snapshot |
 | authorship index (who wrote each paper, position; for topic maps' experts) | `/mnt/fast/citewalk/<generation>/authors/` | `citewalk/build_authors.py` (~45 min) | new OpenAlex snapshot |
+| each author's papers + per-author figures (author pages) | `/mnt/fast/citewalk/<generation>/authors/` (by_*.npy, a_*.npy) | `citewalk/build_author_works.py` (~20 min, 7.5 GB) | new OpenAlex snapshot, after build_authors |
+| institution index (a paper's organisations, an organisation's papers, each author's affiliations) | `/mnt/fast/citewalk/<generation>/institutions/` | `citewalk/build_institutions.py` (~30 min, 8.6 GB) | new OpenAlex snapshot, after build_authors |
+| names index (authors and institutions by name) | `/mnt/fast/scholarsreadinglist/search/names-index/<generation>[-institutions]/` | `search/build_names_index.py [--institutions]` (~15 min, 2.2 GB) | after the two above |
 | topic-map answers (cache) | `/mnt/fast/scholarsreadinglist/search/topics-cache/<release>/` | srl-search on request | every release (old ones deleted) |
 | atlas geography | `/mnt/fast/science-atlas/build/<id>/` | `citewalk/science/` | deliberately only (versioned) |
 | release manifest | `releases/<id>/manifest.json` | `release.py build` | every release |
@@ -141,8 +144,9 @@ Tiles: 9 levels, 5,018 tiles, at most 32,768 points (256 KB) each.
   index, readable collection, tiles. Geography and list centres stay.
 - **List centres**: trained once on the atlas's uniform 1 % sample of all years (1.28M vectors,
   32,768 lists, 18 min). Retrain when the corpus grows by ~30 % or the recall check drops.
-- **New OpenAlex snapshot**: rebuild the details/keyword corpus, the citation index and its authorship index, then
-  point `CORPUS` / `CITATIONS` in `release.py` at them. Not automated yet.
+- **New OpenAlex snapshot**: rebuild the details/keyword corpus, the citation index and its authorship index (then
+  `build_author_works.py`, `build_institutions.py`, `build_names_index.py` with and without `--institutions`: the
+  author and institution pages), then point `CORPUS` / `CITATIONS` in `release.py` at them. Not automated yet.
 - **New atlas geography** (new reference set or method): a new atlas id; positions are
   recomputed for every shard (~45 min GPU) and old releases keep the old map. Never silently.
 - **PMC mirror** (readable papers): daily NCBI inventory diff, not automated yet

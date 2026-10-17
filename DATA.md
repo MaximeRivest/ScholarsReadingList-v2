@@ -48,6 +48,7 @@ test page) is exposed.
 | authorship index (who wrote each paper, position; for topic maps' experts) | `/mnt/fast/citewalk/<generation>/authors/` | `citewalk/build_authors.py` (~45 min) | new OpenAlex snapshot |
 | each author's papers + per-author figures (author pages) | `/mnt/fast/citewalk/<generation>/authors/` (by_*.npy, a_*.npy) | `citewalk/build_author_works.py` (~20 min, 7.5 GB) | new OpenAlex snapshot, after build_authors |
 | institution index (a paper's organisations, an organisation's papers, each author's affiliations) | `/mnt/fast/citewalk/<generation>/institutions/` | `citewalk/build_institutions.py` (~30 min, 8.6 GB) | new OpenAlex snapshot, after build_authors |
+| per-authorship affiliations (who signed from which organisation on each paper; a paper's page) | `/mnt/fast/citewalk/<generation>/institutions/authorships/` | `citewalk/build_authorships.py` (~36 min, 44 GB peak, 8.8 GB) | new OpenAlex snapshot, after build_institutions |
 | names index (authors and institutions by name) | `/mnt/fast/scholarsreadinglist/search/names-index/<generation>[-institutions]/` | `search/build_names_index.py [--institutions]` (~15 min, 2.2 GB) | after the two above |
 | topic-map answers (cache) | `/mnt/fast/scholarsreadinglist/search/topics-cache/<release>/` | srl-search on request | every release (old ones deleted) |
 | atlas geography | `/mnt/fast/science-atlas/build/<id>/` | `citewalk/science/` | deliberately only (versioned) |

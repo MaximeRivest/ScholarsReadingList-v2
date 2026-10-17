@@ -212,6 +212,18 @@ def publish(rid: str) -> None:
     m["previous"] = prev["id"] if prev else None
     (ROOT / "releases" / rid / "manifest.json").write_text(json.dumps(m, indent=1))
     log(f"published {rid}: {json.dumps(h.get('semantic', {}))[:300]}")
+    warm_people()
+
+
+def warm_people() -> None:
+    """The big institutions' and authors' pages (srl_search/people.py warm), computed once per snapshot and kept
+    on disk, so the first visitor does not wait seconds: a detached job at low priority, skipping what is there."""
+    search = Path(__file__).resolve().parents[2] / "search"
+    cmd = ["systemd-run", "--user", "-q", "--collect", "--unit", f"srl-people-warm-{int(time.time())}",
+           "-p", "Nice=15", "-p", "CPUWeight=50", "-p", f"WorkingDirectory={search}",
+           str(search / ".venv" / "bin" / "python"), "-m", "srl_search.people", "warm"]
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    log("people pages warming in the background" if r.returncode == 0 else f"people warm not started: {r.stderr.strip()}")
 
 
 def gc(keep: int, yes: bool) -> None:

@@ -292,7 +292,7 @@ def main() -> None:
         last = latest_commit()
         if cur and cur["embeddings"]["last_commit_utc"] >= last:
             log("no new embeddings since the current release; nothing to do"); return
-        publish(build(gpu_wait=False))
+        publish(build(gpu_wait=False, identity=True))    # paper versions, rescued abstracts, author identity (2026-10-19)
         gc(keep=2, yes=True)        # current + previous stay; ~30-50 GB per release
     elif a.cmd == "status":
         cur = current()

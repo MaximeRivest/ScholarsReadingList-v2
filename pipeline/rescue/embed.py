@@ -9,7 +9,7 @@ carry the backfill's plan_id; task.source says they come from the rescue.
 Shards: <backfill>/shards/year=Y/rescue-<rescue run>/part-<start>, 10,000 works each. The group name does not start
 with 'rg-': every existing reader of shards (the nightly release, positions, the smr collection) looks for
 'year=*/rg-*/part-*' and does not see them; a release takes them only when asked to (rows.py --extra-groups).
-Resumable: works already in a committed rescue shard are skipped. GPU: only one with 3 GiB free and under 50 % busy,
+Resumable: works already in a committed rescue shard are skipped. --limit N embeds the N most cited of the rest. GPU: only one with 3 GiB free and under 50 % busy,
 GPU 1 first (GPU 0 is the site's rewriter and training); with --device cpu it runs on the CPU (slow).
 """
 from __future__ import annotations
@@ -55,13 +55,16 @@ def main() -> None:
     done = set()
     for c in (BASE / "shards").glob(f"year=*/{group}/part-*/commit.json"):
         done.update(np.load(c.parent / "work_ids.npy").tolist())
-    t = pa.concat_tables([pq.read_table(p, columns=["id", "title", "abstract", "year"])
-                          for p in sorted((corpus / "parts").glob("*.parquet")) if pq.ParquetFile(p).metadata.num_rows])
+    parts = [p for p in sorted((corpus / "parts").glob("*.parquet")) if pq.ParquetFile(p).metadata.num_rows]
+    # choose from the small columns first (7.8M abstracts do not fit beside the model): most cited first
+    t = pa.concat_tables([pq.read_table(p, columns=["id", "year", "citations"]).append_column(
+        "part", pa.array(np.full(pq.ParquetFile(p).metadata.num_rows, i, np.int32))) for i, p in enumerate(parts)])
     if done:
         t = t.filter(pc.invert(pc.is_in(t["id"], value_set=pa.array(sorted(done), pa.int64()))))
-    t = t.sort_by([("year", "descending"), ("id", "ascending")])
+    t = t.sort_by([("citations", "descending"), ("id", "ascending")])
     if a.limit:
         t = t.slice(0, a.limit)
+    t = t.sort_by([("year", "descending"), ("id", "ascending")])
     if t.num_rows == 0:
         log(f"every work of {a.rescue} has a vector")
         return
@@ -72,13 +75,28 @@ def main() -> None:
     enc = ec.DenseEncoder(doc["embedding"], device, a.batch_size, cpu_threads=8,
                           allocation_gib=3 if device.startswith("cuda") else None)
     years = t["year"].to_pylist()
+
+    # one pass over the parts: the chosen works' titles and abstracts (2M abstracts: ~3 GB)
+    want = pa.array(t["id"].to_numpy())
+    held = []
+    for p in parts:
+        for b in pq.ParquetFile(p).iter_batches(batch_size=200_000, columns=["id", "title", "abstract"]):
+            x = pa.Table.from_batches([b])
+            held.append(x.filter(pc.is_in(x["id"], value_set=want)))
+    held = pa.concat_tables(held)
+    where = {int(w): i for i, w in enumerate(held["id"].to_pylist())}
+    log(f"texts read: {held.num_rows:,}")
+
+    def texts_of(ids: np.ndarray) -> pa.Table:
+        return held.take(pa.array([where[int(w)] for w in ids]))
+
     t0, n, start = time.time(), 0, 0
     while start < t.num_rows:
         y = years[start]
         end = start
         while end < t.num_rows and years[end] == y and end - start < SHARD_ROWS:
             end += 1
-        chunk = t.slice(start, end - start)
+        chunk = texts_of(t["id"].slice(start, end - start).to_numpy())
         rec = pa.table({"id": pc.binary_join_element_wise(pa.scalar("W"), pc.cast(chunk["id"], pa.string()), ""),
                         "title": chunk["title"], "abstract": chunk["abstract"]})
         ids, texts, hashes = ec.records(rec)

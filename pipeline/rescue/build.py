@@ -20,6 +20,7 @@ Writes DIR (default /mnt/fast/scholarsreadinglist/rescue/<snapshot>/<run>/):
 from __future__ import annotations
 
 import argparse
+import re
 import json
 import os
 import shutil
@@ -30,6 +31,7 @@ from pathlib import Path
 
 import duckdb
 import numpy as np
+import pyarrow as pa
 import pyarrow.parquet as pq
 
 HERE = Path(__file__).resolve().parent
@@ -68,8 +70,22 @@ def main() -> None:
     tmp = out / "tmp"
     tmp.mkdir(exist_ok=True)
     srcs = set(a.sources.split(","))
+    # the working database is on disk: a stopped run resumes after its last finished table
+    files = [str(f) for f in sorted(CONTENT.glob(f"year={a.years or '*'}/data.parquet")) if pq.ParquetFile(f).metadata.num_rows]
+    if (out / "sources.parquet").exists() and any((out / "content").glob("*.parquet")):   # the selection is done
+        return make_corpus(out, files)
     con = duckdb.connect(str(tmp / "work.duckdb"))
     con.execute(f"SET threads={a.threads}; SET memory_limit='32GB'; SET preserve_insertion_order=false; SET temp_directory='{tmp}'")
+    have = lambda t: con.execute("SELECT count(*) FROM information_schema.tables WHERE table_name = ?", [t]).fetchone()[0] > 0  # noqa: E731
+    _ex = con.execute
+
+    def run(sql, *args):
+        m_ = re.match(r"\s*CREATE TABLE (\w+)", sql)
+        if m_ and have(m_.group(1)):
+            return con
+        if re.match(r"\s*INSERT INTO want", sql) and have("rows"):
+            return con
+        return _ex(sql, *args)
     types = tuple(sorted(SCHOLARLY_TYPES))
     files = [str(f) for f in sorted(CONTENT.glob(f"year={a.years or '*'}/data.parquet")) if pq.ParquetFile(f).metadata.num_rows]
 
@@ -84,23 +100,24 @@ def main() -> None:
     log(f"held by base + updates: {len(held):,}")
 
     # candidate targets by source
-    con.execute("CREATE TABLE want (id UBIGINT, src VARCHAR, ref VARCHAR, rank INT)")
-    con.execute("CREATE TABLE pm (pmid BIGINT, doi VARCHAR)")
+    run("CREATE TABLE want (id UBIGINT, src VARCHAR, ref VARCHAR, rank INT)")
+    run("CREATE TABLE pm (pmid BIGINT, doi VARCHAR)")
     if "pubmed" in srcs:
-        con.execute("DROP TABLE pm")
+        if not have("rows") and con.execute("SELECT count(*) FROM pm").fetchone()[0] == 0:
+            con.execute("DROP TABLE pm")
         # ids only: the abstracts are read from the file for the works picked, at the end
-        con.execute(f"""CREATE TABLE pm AS SELECT pmid, any_value(doi) AS doi FROM '{PUBMED}'
+        run(f"""CREATE TABLE pm AS SELECT pmid, any_value(doi) AS doi FROM '{PUBMED}'
                         WHERE language = 'eng' AND length(abstract) >= {MIN_ABSTRACT} GROUP BY 1""")
         tidy = json.loads(TIDY.read_text())["tables"]["content"]["files"]
-        con.execute(f"""CREATE TABLE oa_pmid AS SELECT CAST(substr(content_id, 11) AS UBIGINT) AS id,
+        run(f"""CREATE TABLE oa_pmid AS SELECT CAST(substr(content_id, 11) AS UBIGINT) AS id,
                         TRY_CAST(regexp_extract(pmid, '(\\d+)$', 1) AS BIGINT) AS pmid
                         FROM read_parquet({tidy!r}) WHERE pmid IS NOT NULL""")
-        con.execute("INSERT INTO want SELECT o.id, 'pubmed', CAST(o.pmid AS VARCHAR), 0 FROM oa_pmid o JOIN pm USING (pmid)")
+        run("INSERT INTO want SELECT o.id, 'pubmed', CAST(o.pmid AS VARCHAR), 0 FROM oa_pmid o JOIN pm USING (pmid)")
         log(f"PubMed records with an English abstract: {con.execute('SELECT count(*) FROM pm').fetchone()[0]:,}; "
             f"OpenAlex works with such a PMID: {con.execute('SELECT count(*) FROM want').fetchone()[0]:,}")
     if "versions" in srcs:
         m = VERSIONS / "members.parquet"
-        con.execute(f"""INSERT INTO want SELECT c.work, 'version', CAST(d.work AS VARCHAR), 1 FROM '{m}' c
+        run(f"""INSERT INTO want SELECT c.work, 'version', CAST(d.work AS VARCHAR), 1 FROM '{m}' c
             JOIN (SELECT cluster, arg_min(work, rank) AS work FROM '{m}' WHERE has_abstract AND (language = 'en' OR language IS NULL)
                   AND rank > 0 GROUP BY 1) d USING (cluster)
             WHERE c.rank = 0 AND NOT c.has_abstract""")
@@ -108,7 +125,7 @@ def main() -> None:
         log(f"canonical records without an abstract whose version has one: {nv:,}")
     # one pass over the content snapshot: publications without an abstract, English or unknown, that a source can fill
     cols = ", ".join(bc.COLUMNS)
-    con.execute(f"""CREATE TABLE rows AS SELECT CAST(substr(id, 23) AS UBIGINT) AS wid, {cols},
+    run(f"""CREATE TABLE rows AS SELECT CAST(substr(id, 23) AS UBIGINT) AS wid, {cols},
         lower(regexp_replace(doi, '^https://doi.org/', '')) AS doi_l FROM read_parquet({files!r})
         WHERE (abstract IS NULL OR trim(abstract) = '') AND type IN {types!r} AND (language = 'en' OR language IS NULL)
           AND title IS NOT NULL AND trim(title) <> ''
@@ -116,26 +133,26 @@ def main() -> None:
                OR lower(regexp_replace(doi, '^https://doi.org/', '')) IN (SELECT doi FROM pm WHERE doi IS NOT NULL))""")
     log(f"publications without an abstract that a source covers: {con.execute('SELECT count(*) FROM rows').fetchone()[0]:,}")
     # every candidate (work, source), best first: PubMed by PMID, PubMed by DOI, another version
-    con.execute("""CREATE TABLE pick AS SELECT id, src, ref FROM (
+    run("""CREATE TABLE pick AS SELECT id, src, ref FROM (
         SELECT w.id, w.src, w.ref, CASE w.src WHEN 'pubmed' THEN 0 ELSE 2 END AS pr FROM want w JOIN rows r ON r.wid = w.id
         UNION ALL
         SELECT r.wid, 'pubmed_doi', CAST(p.pmid AS VARCHAR), 1 FROM rows r JOIN pm p ON p.doi = r.doi_l) x
         ANTI JOIN held h ON h.id = x.id
         QUALIFY row_number() OVER (PARTITION BY x.id ORDER BY pr, ref) = 1""")
     log(f"picked: {con.execute('SELECT src, count(*) FROM pick GROUP BY 1 ORDER BY 1').fetchall()}")
-    con.execute(f"""CREATE TABLE pmtext AS SELECT pmid, arg_max(abstract, length(abstract)) AS abstract,
+    run(f"""CREATE TABLE pmtext AS SELECT pmid, arg_max(abstract, length(abstract)) AS abstract,
         arg_max(abstract_copyright, length(abstract)) AS abstract_copyright FROM '{PUBMED}'
         WHERE pmid IN (SELECT TRY_CAST(ref AS BIGINT) FROM pick WHERE src LIKE 'pubmed%') AND language = 'eng' GROUP BY 1""")
     # a version's abstract: the donor is English with an abstract, so the base corpus holds it (fast disk)
     base_parts = [str(p) for p in sorted((BASE_CORPUS / "parts").glob("*.parquet")) if pq.ParquetFile(p).metadata.num_rows]
-    con.execute(f"""CREATE TABLE dtext AS SELECT CAST(id AS UBIGINT) AS wid, abstract FROM read_parquet({base_parts!r}, union_by_name=true)
+    run(f"""CREATE TABLE dtext AS SELECT CAST(id AS UBIGINT) AS wid, abstract FROM read_parquet({base_parts!r}, union_by_name=true)
         WHERE CAST(id AS UBIGINT) IN (SELECT TRY_CAST(ref AS UBIGINT) FROM pick WHERE src = 'version')""")
-    con.execute(f"""CREATE TABLE fill AS SELECT p.id, p.src, p.ref,
-        CASE WHEN p.src LIKE 'pubmed%' THEN pt.abstract ELSE d.abstract END AS abstract,
-        CASE WHEN p.src LIKE 'pubmed%' THEN pt.abstract_copyright END AS abstract_copyright
-        FROM pick p LEFT JOIN pmtext pt ON p.src LIKE 'pubmed%' AND pt.pmid = TRY_CAST(p.ref AS BIGINT)
-        LEFT JOIN dtext d ON p.src = 'version' AND d.wid = TRY_CAST(p.ref AS UBIGINT)
-        WHERE coalesce(length(trim(CASE WHEN p.src LIKE 'pubmed%' THEN pt.abstract ELSE d.abstract END)), 0) >= {MIN_ABSTRACT}""")
+    con.execute("""CREATE OR REPLACE TABLE fill AS
+        WITH k AS (SELECT id, src, ref, CASE WHEN src LIKE 'pubmed%' THEN TRY_CAST(ref AS BIGINT) END AS ref_pmid,
+                          CASE WHEN src = 'version' THEN TRY_CAST(ref AS UBIGINT) END AS ref_w FROM pick)
+        SELECT k.id, k.src, k.ref, coalesce(pt.abstract, d.abstract) AS abstract, pt.abstract_copyright
+        FROM k LEFT JOIN pmtext pt ON pt.pmid = k.ref_pmid LEFT JOIN dtext d ON d.wid = k.ref_w""")
+    con.execute(f"DELETE FROM fill WHERE coalesce(length(trim(abstract)), 0) < {MIN_ABSTRACT}")
     stats = con.execute("SELECT src, count(*) FROM fill GROUP BY 1 ORDER BY 1").fetchall()
     log(f"rescued: {stats}")
     sel = ", ".join(f"f.abstract AS abstract" if c == "abstract" else ("'en' AS language" if c == "language" else f"r.{c}")
@@ -146,6 +163,48 @@ def main() -> None:
                     abstract_copyright FROM fill ORDER BY id) TO '{out / 'sources.parquet'}' (FORMAT PARQUET, COMPRESSION ZSTD)""")
     con.close()
     shutil.rmtree(tmp, ignore_errors=True)   # the working database too
+
+    make_corpus(out, files)
+
+
+def make_corpus(out: Path, files: list[str]) -> None:
+    stats = duckdb.sql(f"SELECT split_part(abstract_source, ':', 1), count(*) FROM '{out / 'sources.parquet'}' GROUP BY 1 ORDER BY 1").fetchall()
+    # PubMed's title must be this paper's: OpenAlex sometimes holds a wrong PMID (measured on 181k: 98.9 % of titles
+    # agree >= 0.9, 0.05 % are another paper). Kept: folded-title Jaro-Winkler >= 0.7, or one title inside the other.
+    if not (out / "title_check.json").exists():
+        con = duckdb.connect()
+        con.execute("SET threads=8; SET memory_limit='24GB'")
+        k = "lower(regexp_replace(strip_accents({}), '[^a-zA-Z0-9]', '', 'g'))"
+        bad = con.execute(f"""SELECT s.id FROM '{out / 'sources.parquet'}' s
+            JOIN (SELECT CAST(substr(id, 23) AS UBIGINT) AS wid, title FROM read_parquet('{out}/content/*.parquet')) r ON r.wid = s.id
+            JOIN '{PUBMED}' p ON p.pmid = TRY_CAST(split_part(s.abstract_source, ':', 2) AS BIGINT)
+            WHERE s.abstract_source LIKE 'pubmed%'
+              AND jaro_winkler_similarity({k.format('r.title')}, {k.format('p.title')}) < 0.7
+              AND NOT contains({k.format('r.title')}, {k.format('p.title')}) AND NOT contains({k.format('p.title')}, {k.format('r.title')})""").fetchnumpy()["id"]
+        import pyarrow.compute as pc
+        drop = pa.array(np.asarray(bad, np.uint64))
+        for f in sorted((out / "content").glob("*.parquet")):
+            t = pq.read_table(f)
+            wid = pc.cast(pc.replace_substring(t["id"], "https://openalex.org/W", ""), pa.uint64())
+            t = t.filter(pc.invert(pc.is_in(wid, value_set=drop)))
+            pq.write_table(t, f.with_suffix(".tmp"), compression="zstd", row_group_size=100_000)
+            os.replace(f.with_suffix(".tmp"), f)
+        src = pq.read_table(out / "sources.parquet")
+        src = src.filter(pc.invert(pc.is_in(src["id"], value_set=pa.array(np.asarray(bad, np.uint64)).cast(src["id"].type))))
+        pq.write_table(src, out / "sources.parquet.tmp", compression="zstd")
+        os.replace(out / "sources.parquet.tmp", out / "sources.parquet")
+        (out / "title_check.json").write_text(json.dumps({"dropped_title_mismatch": int(len(bad))}))
+        log(f"PubMed title is another paper's: {len(bad):,} dropped")
+        stats = duckdb.sql(f"SELECT split_part(abstract_source, ':', 1), count(*) FROM '{out / 'sources.parquet'}' GROUP BY 1 ORDER BY 1").fetchall()
+
+    # the snapshot's exact column types (DuckDB writes text as string; the corpus builder expects large_string)
+    snap = pq.read_schema(files[0])
+    want_schema = pa.schema([snap.field(c) for c in bc.COLUMNS])
+    for f in sorted((out / "content").glob("*.parquet")):
+        t = pq.read_table(f)
+        if t.schema != want_schema:
+            pq.write_table(t.select(bc.COLUMNS).cast(want_schema), f.with_suffix(".tmp"), compression="zstd", row_group_size=100_000)
+            os.replace(f.with_suffix(".tmp"), f)
 
     # the corpus, exactly as the daily updates corpus is built
     corpus = out / "corpus"

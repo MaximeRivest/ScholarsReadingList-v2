@@ -46,11 +46,29 @@ ROOT = Path(f"/mnt/fast/scholarsreadinglist/identity/{SNAPSHOT}")
 PUB = ('article', 'review', 'conference-paper', 'conference-abstract', 'preprint', 'book', 'book-chapter',
        'dissertation', 'report', 'letter', 'editorial', 'data-paper', 'software-paper')
 TEST = "hash(u.raw_orcid) % 10 = 0"
+SMALL, DOMINANT = 3, 0.25          # a record joins its ORCID's person whole when it has <= 3 papers or >= 25 % carry the ORCID
 T0 = time.time()
 
 
 def log(msg: str) -> None:
     print(f"{time.time() - T0:7.0f}s {msg}", flush=True)
+
+
+def reflag(out: Path) -> None:
+    """Recompute records.parquet's not_person columns with the current rule (names.is_person_name changed)."""
+    con = duckdb.connect()
+    con.execute("SET threads=8; SET memory_limit='24GB'")
+    f = out / "records.parquet"
+    con.execute(f"""COPY (SELECT * EXCLUDE (not_person, not_person_why),
+        (NOT {N.sql_is_person('name')}) OR (works >= 3000 AND year1 - year0 >= 60) AS not_person,
+        CASE WHEN NOT {N.sql_is_person('name')} THEN 'name' WHEN works >= 3000 AND year1 - year0 >= 60 THEN 'size_span' END AS not_person_why
+        FROM '{f}') TO '{f}.tmp' (FORMAT PARQUET, COMPRESSION ZSTD)""")
+    os.replace(f"{f}.tmp", f)
+    m = json.loads((out / "meta.json").read_text())
+    m["not_person"] = list(con.execute(f"""SELECT count(*) FILTER (WHERE not_person), sum(works) FILTER (WHERE not_person),
+        count(*) FILTER (WHERE not_person_why = 'size_span') FROM '{f}'""").fetchone())
+    (out / "meta.json").write_text(json.dumps(m, indent=1, default=str))
+    log(f"not people: {m['not_person']}")
 
 
 def main() -> None:
@@ -59,7 +77,10 @@ def main() -> None:
     ap.add_argument("--memory", default="64GB")
     ap.add_argument("--authorships", type=Path, default=ROOT / "authorships")
     ap.add_argument("--out", type=Path, default=ROOT / "authors")
+    ap.add_argument("--reflag", action="store_true", help="only recompute the not-people flags of a finished run")
     a = ap.parse_args()
+    if a.reflag:
+        return reflag(a.out)
     if (a.out / "meta.json").exists():
         raise SystemExit(f"{a.out} is finished")
     if not (a.authorships / "DONE.json").exists() and "trial" not in str(a.out):
@@ -77,29 +98,40 @@ def main() -> None:
     if not have("rec2") and not have("records"):
         con.execute(f"""CREATE OR REPLACE TABLE rec AS SELECT author, any_value(author_name) AS name, upper(any_value(author_orcid)) AS orcid,
             count(*) FILTER (WHERE type IN {PUB}) AS works, min(year) FILTER (WHERE type IN {PUB} AND year > 0) AS year0,
-            max(year) FILTER (WHERE type IN {PUB}) AS year1
+            max(year) FILTER (WHERE type IN {PUB}) AS year1,
+            count(*) FILTER (WHERE type IN {PUB} AND raw_orcid = upper(author_orcid)) AS orcid_hits,
+            count(*) FILTER (WHERE type IN {PUB} AND raw_orcid IS NOT NULL AND raw_orcid <> upper(author_orcid)) AS orcid_other
             FROM au WHERE author IS NOT NULL GROUP BY 1""")
-        # anchor of each ORCID: its record with most publications; compatible names merge into it
-        con.execute("""CREATE OR REPLACE TABLE anchor AS SELECT orcid, arg_max(author, (works, -author)) AS person,
-            arg_max(name, (works, -author)) AS pname, count(*) AS nrec FROM rec WHERE orcid IS NOT NULL GROUP BY 1""")
+                # anchor of each ORCID: its record with most ORCID-printed papers (then most papers): the biggest record can be
+        # a mixture of namesakes
+        con.execute("""CREATE OR REPLACE TABLE anchor AS SELECT orcid, arg_max(author, (orcid_hits, works, -author)) AS person,
+            arg_max(name, (orcid_hits, works, -author)) AS pname, count(*) AS nrec FROM rec WHERE orcid IS NOT NULL GROUP BY 1""")
         # the name test only where an ORCID has several records (2.9M of 128M)
-        con.execute("""CREATE OR REPLACE TABLE multi AS SELECT r.author, x.person, ncompat_orcid(r.name, x.pname) AS ok
+        # A whole record joins only when the ORCID evidence covers it: a quarter of its papers carry that printed ORCID
+        # (or it has at most 3), and none carries another. OpenAlex's own records can be mixtures ('M. Jones', 291
+        # papers from 1975, holding the ORCID of a researcher of the 2000s through a few papers): such a record does
+        # not join; its ORCID-printed papers still move one by one (step 2).
+        con.execute(f"""CREATE OR REPLACE TABLE multi AS SELECT r.author, x.person,
+            ncompat_orcid(r.name, x.pname) AND r.orcid_other = 0 AND (r.works <= {SMALL} OR r.orcid_hits >= {DOMINANT} * r.works) AS ok,
+            ncompat_orcid(r.name, x.pname) AS names_ok
             FROM rec r JOIN anchor x USING (orcid) WHERE x.nrec > 1 AND r.author <> x.person""")
         con.execute("""CREATE OR REPLACE TABLE rec2 AS SELECT r.*,
             CASE WHEN m.ok THEN m.person ELSE r.author END AS person,
-            coalesce(m.ok, false) AS merged_by_orcid, coalesce(NOT m.ok, false) AS orcid_name_conflict
+            coalesce(m.ok, false) AS merged_by_orcid, coalesce(NOT m.names_ok, false) AS orcid_name_conflict,
+            coalesce(m.names_ok AND NOT m.ok, false) AS orcid_too_thin
             FROM rec r LEFT JOIN multi m USING (author)""")
         con.execute("DROP TABLE rec")
     src = "rec2" if have("rec2") else "records"
     M["records"] = con.execute(f"SELECT count(*), count(orcid) FROM {src}").fetchone()
     M["orcid_split"] = con.execute("SELECT count(*) FILTER (WHERE nrec > 1), sum(nrec) FILTER (WHERE nrec > 1) FROM anchor").fetchone()
-    M["merged"] = con.execute(f"SELECT sum(merged_by_orcid::int), sum(orcid_name_conflict::int) FROM {src}").fetchone()
+    M["merged"] = con.execute(f"SELECT sum(merged_by_orcid::int), sum(orcid_name_conflict::int), sum(orcid_too_thin::int) FROM {src}").fetchone()
     log(f"records {M['records'][0]:,} (ORCID {M['records'][1]:,}); ORCIDs on 2+ records {M['orcid_split'][0]:,} "
-        f"({M['orcid_split'][1]:,} records); merged {M['merged'][0]:,}; name conflicts left alone {M['merged'][1]:,}")
+        f"({M['orcid_split'][1]:,} records); merged {M['merged'][0]:,}; name conflicts left alone {M['merged'][1]:,}; "
+        f"ORCID evidence too thin to join a whole record {M['merged'][2]:,}")
 
     # 3. not people (recomputed on every run: cheap, and its rule may change)
     con.execute(f"""CREATE OR REPLACE TABLE records2 AS SELECT author, name, orcid, works, year0, year1, person, merged_by_orcid,
-        orcid_name_conflict,
+        orcid_name_conflict, orcid_too_thin, orcid_hits, orcid_other,
         (NOT {N.sql_is_person('name')}) OR (works >= 3000 AND year1 - year0 >= 60) AS not_person,
         CASE WHEN NOT {N.sql_is_person('name')} THEN 'name' WHEN works >= 3000 AND year1 - year0 >= 60 THEN 'size_span' END AS not_person_why
         FROM {src}""")

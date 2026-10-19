@@ -55,7 +55,7 @@ def is_person_name(raw: str) -> bool:
     """False for organisations, placeholders and lists of names printed as one author ('South Carolina Office of
     Resilience', 'Dr A Khan, Dr S Shakir, Dr M Bhutta', 'None Available'). Library-catalogue names stay people
     ('Lubac, Henri de, 1896-1991', 'Gerrard, Martha, editor.'): digits only with a year (a catalogue date)."""
-    raw = re.sub(r"(https?://)?orcid\.org/\S+|\bid_orcid\s*\S+|(?<=[A-Za-z])\d{1,2}\b|\(\s*\d+\s*\)|\b\d{6,}\b|\bNIDN\.?",
+    raw = re.sub(r"https?://\S+|(https?://)?orcid\.org/\S+|\bid_orcid\s*\S+|(?<=[A-Za-z])\d{1,2}\b|\(\s*\d+\s*\)|\b\d{6,}\b|\bNIDN\.?",
                  "", (raw or "")).strip()
     if re.fullmatch(r"[A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+", raw):      # 'Melvin S. Center': a person, whatever the word
         return True
@@ -161,7 +161,7 @@ def sql_title_key(x: str) -> str:
 
 def sql_is_person(x: str) -> str:
     """SQL twin of is_person_name."""
-    x = (f"trim(regexp_replace(regexp_replace(coalesce({x}, ''), '(https?://)?orcid\\.org/\\S+|\\bid_orcid\\s*\\S+|\\(\\s*\\d+\\s*\\)|\\b\\d{{6,}}\\b|\\bNIDN\\.?', '', 'g'), "
+    x = (f"trim(regexp_replace(regexp_replace(coalesce({x}, ''), 'https?://\\S+|(https?://)?orcid\\.org/\\S+|\\bid_orcid\\s*\\S+|\\(\\s*\\d+\\s*\\)|\\b\\d{{6,}}\\b|\\bNIDN\\.?', '', 'g'), "
          f"'([A-Za-z])\\d{{1,2}}\\b', '\\1', 'g'))")
     f = sql_fold(x)
     parts = f"list_filter(string_split({x}, ','), p -> trim(p) <> '')"

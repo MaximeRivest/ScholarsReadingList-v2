@@ -64,7 +64,8 @@ def test_same_orcid_names():
 
 
 def test_person_names():
-    people = ["Melvin S. Center", "Jun Chen (4238)", "A Adiguzel (17270359)", "NIDN. 0021047107 Nurul Hartini",
+    people = ["Russell, Charles Edward,\n    1860-1941\n    http://id.loc.gov/authorities/names/n50022289\n    http://viaf.org/viaf/30419881",
+              "Melvin S. Center", "Jun Chen (4238)", "A Adiguzel (17270359)", "NIDN. 0021047107 Nurul Hartini",
               "Maria Teresa Pitta de Meirelles Sollari Allegro Alves de Sousa", "Pınar Inci", "Stafford Hutchins", "Jörg Staff", "KAN Li-li1", "Martina ; https://orcid.org/0000-0003-4518-8601 Hielscher-Fastabend", "Henri de 1896-1991 Lubac", "Gerrard, Martha, editor.", "Matthew J. Press",
               "Lolkje Theodora Wilhelmina de Jong-van den Berg", "Scott, David, 1964 Jan. 11-", "王伟"]
     orgs = ["CMS Collaboration", "the JT- Team", "Client Advocacy Office", "Hung HF; Kao PF; Lin YS; Chen FC; Liu JC; Chen FC;  Tsai* JC;  Chan P",

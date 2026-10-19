@@ -1,0 +1,159 @@
+
+======== expert test: accuracy by the experts' field (n>=5): 2B / 0.8B / Jev / Sol / Qwen direct
+Clinical Medicine                          n= 52    56    58    60    65    63
+Biomedical Research                        n= 36    72    72    67    69    64
+Physics & Astronomy                        n= 29    69    66    79    79    69
+Enabling & Strategic Technologies          n= 21    57    33    43    62    43
+Chemistry                                  n= 15    67    60    53    67    67
+Biology                                    n=  8    62    75    75    75    75
+Information & Communication Technologies   n=  8    75    62    75    75    62
+Earth & Environmental Sciences             n=  7    57    43    43    57    43
+Engineering                                n=  7    14    57    71    71    29
+Agriculture, Fisheries & Forestry          n=  6    83    33    83    83    83
+
+======== expert test: errors that cross a field boundary (same field / different field)
+srl3-2b-abs        same-field  32  cross-field  44
+srl3-08-abs        same-field  32  cross-field  51
+flat-abs           same-field  41  cross-field  34
+sol61-abs          same-field  31  cross-field  34
+qwen-direct-abs    same-field  42  cross-field  37
+qwen-think-abs     same-field  31  cross-field  38
+
+======== expert test: 'General ...' subfields (gold n=8): how often each method picks one, and hits
+srl3-2b-abs        picks General 2  hits 6/13
+srl3-08-abs        picks General 0  hits 2/13
+flat-abs           picks General 3  hits 5/13
+sol61-abs          picks General 6  hits 8/13
+qwen-direct-abs    picks General 1  hits 5/13
+qwen-think-abs     picks General 6  hits 9/13
+
+======== expert test: accuracy by confidence bin
+srl3-2b-abs {'0.2-0.4': ('22%', 18), '0.4-0.6': ('52%', 67), '0.6-0.8': ('65%', 55), '0.8-1.0': ('82%', 60)}
+srl3-08-abs {'0.2-0.4': ('35%', 31), '0.4-0.6': ('54%', 70), '0.6-0.8': ('54%', 54), '0.8-1.0': ('87%', 45)}
+flat-abs {'0.2-0.4': ('20%', 10), '0.4-0.6': ('40%', 40), '0.6-0.8': ('56%', 39), '0.8-1.0': ('77%', 111)}
+sol61-abs {'0.4-0.6': ('33%', 30), '0.6-0.8': ('61%', 64), '0.8-1.0': ('81%', 106)}
+
+======== expert test: title only vs with abstract
+title only srl3-2b-abs:59 srl3-08-abs:41 flat-abs:49 sol61-abs:71 qwen-think-abs:71
+abstract srl3-2b-abs:63 srl3-08-abs:63 flat-abs:66 sol61-abs:67 qwen-think-abs:64
+
+======== expert test: 2B wrong while Sol AND Jev right
+- Study of the ballistocardiogram signal in non-contact life detection system based on rad [disc, abs=0]
+    experts=Biomedical Engineering | 2B=Electrical & Electronic Engineering (0.5802) | 0.8B=Applied Physics
+- Low prevalence of laboratory-confirmed malaria in clinically diagnosed adult women from  [disc, abs=1]
+    experts=Tropical Medicine | 2B=Epidemiology (0.5213) | 0.8B=Tropical Medicine
+- Design, fabrication and measurement of a broadband polarization-insensitive metamaterial [disc, abs=1]
+    experts=Applied Physics | Networking & Telecommunications | 2B=Electrical & Electronic Engineering (0.5744) | 0.8B=Electrical & Electronic Engineering
+- Prevalence of Toxoplasma gondii in Canadian market-age pigs [disc, abs=1]
+    experts=Mycology & Parasitology | 2B=Veterinary Sciences (0.5558) | 0.8B=Mycology & Parasitology
+- Accelerated formation of bone-like apatite on biodegradable polymer substrates [disc, abs=1]
+    experts=Biomedical Engineering | 2B=Materials (0.5965) | 0.8B=Biomedical Engineering
+- Paper-based CRP Monitoring Devices [mult, abs=1]
+    experts=Biomedical Engineering | 2B=Analytical Chemistry (0.8495) | 0.8B=Biomedical Engineering
+- A giant thunderstorm on Saturn [mult, abs=1]
+    experts=Astronomy & Astrophysics | 2B=Meteorology & Atmospheric Sciences (0.8672) | 0.8B=Meteorology & Atmospheric Sciences
+- Measuring milk fat content by random laser emission [mult, abs=1]
+    experts=Optics | 2B=Dairy & Animal Science (0.5402) | 0.8B=Dairy & Animal Science
+- Novel anti-metastatic action of cidofovir mediated by inhibition of E6/E7, CXCR4 and Rho [mult, abs=1]
+    experts=Oncology & Carcinogenesis | 2B=Virology (0.5086) | 0.8B=Oncology & Carcinogenesis
+- Hypoxia-Induced Modulation of Apoptosis and BCL-2 Family Proteins in Different Cancer Ce [mult, abs=1]
+    experts=Oncology & Carcinogenesis | 2B=Biochemistry & Molecular Biology (0.6013) | 0.8B=Biochemistry & Molecular Biology
+- Thermalization of field driven quantum systems [mult, abs=1]
+    experts=General Physics | 2B=Mathematical Physics (0.3259) | 0.8B=Mathematical Physics
+- Cryptic carbon and sulfur cycling between surface ocean plankton [mult, abs=1]
+    experts=Marine Biology & Hydrobiology | 2B=Microbiology (0.3719) | 0.8B=Marine Biology & Hydrobiology
+- miR-451 deficiency is associated with altered endometrial fibrinogen alpha chain express [mult, abs=1]
+    experts=Obstetrics & Reproductive Medicine | 2B=Biochemistry & Molecular Biology (0.4266) | 0.8B=Biochemistry & Molecular Biology
+- Genomic variants revealed by invariably missing genotypes in Nelore cattle [mult, abs=1]
+    experts=Genetics & Heredity | 2B=Dairy & Animal Science (0.6005) | 0.8B=Dairy & Animal Science
+
+======== v3-0.8B: option-order flips by confidence (2 shuffles x 200 articles)
+confidence 0-0.4: n= 60 flips 0.60  accuracy unshuffled 0.37 shuffled 0.18
+confidence 0.4-0.6: n=142 flips 0.39  accuracy unshuffled 0.54 shuffled 0.42
+confidence 0.6-0.8: n=108 flips 0.12  accuracy unshuffled 0.54 shuffled 0.54
+confidence 0.8-1.01: n= 90 flips 0.00  accuracy unshuffled 0.87 shuffled 0.87
+
+======== v3-0.8B: the 22-field question, confusions
+   39 ('Clinical Medicine',) -> Biomedical Research
+   22 ('Biomedical Research',) -> Biology
+    8 ('Enabling & Strategic Technologies',) -> Chemistry
+    7 ('Enabling & Strategic Technologies',) -> Engineering
+    6 ('Clinical Medicine',) -> Biology
+    4 ('Information & Communication Technologies',) -> Engineering
+field accuracy: asked directly 0.41  read off the subfield pick 0.75
+
+======== v3-2B: option-order flips by confidence (2 shuffles x 200 articles)
+confidence 0-0.4: n= 36 flips 0.58  accuracy unshuffled 0.28 shuffled 0.42
+confidence 0.4-0.6: n=138 flips 0.38  accuracy unshuffled 0.55 shuffled 0.54
+confidence 0.6-0.8: n=106 flips 0.18  accuracy unshuffled 0.66 shuffled 0.62
+confidence 0.8-1.01: n=120 flips 0.02  accuracy unshuffled 0.82 shuffled 0.83
+
+======== v3-2B: the 22-field question, confusions
+   33 ('Clinical Medicine',) -> Biomedical Research
+   21 ('Biomedical Research',) -> Biology
+    8 ('Enabling & Strategic Technologies',) -> Chemistry
+    5 ('Enabling & Strategic Technologies',) -> Engineering
+    3 ('Clinical Medicine',) -> Biology
+    2 ('Enabling & Strategic Technologies',) -> Physics & Astronomy
+field accuracy: asked directly 0.505  read off the subfield pick 0.785
+
+======== yes/no, 8 held-out topics: average precision / AUC  (round2-0.8B, v3-0.8B, v3-2B)
+difference-in-differences with staggered treatment 0.292/0.994 0.338/0.986 0.400/0.992
+CAR-T cell exhaustion                              0.687/0.993 0.802/0.996 0.852/0.997
+transformer inrush currents                        0.932/0.997 0.908/0.997 0.918/0.997
+subglacial drainage networks                       0.889/0.997 0.892/0.997 0.913/0.998
+medieval manuscript stemmatics                     0.651/0.987 0.620/0.988 0.740/0.994
+retrieval-augmented generation attribution         0.496/0.972 0.718/0.992 0.826/0.995
+sulfide solid electrolytes for lithium batteries   0.547/0.958 0.594/0.970 0.764/0.985
+bat white-nose syndrome                            0.981/1.000 0.987/1.000 1.000/1.000
+
+======== yes/no: the 2B's most confident mistakes on its weakest topics (reference labels, not human)
+-- difference-in-differences with staggered treatment
+   says yes p=1.00 (0.8B 0.99) | Efeitos do Programa Nacional de Apoio ao Transporte Escolar sobre os estabelecimentos rurais de educaçã
+   says yes p=0.98 (0.8B 0.34) | Evaluating Rural Clinic Systems in South Africa: A Difference-in-Differences Analysis of Clinical Outco
+   says yes p=0.98 (0.8B 0.92) | The long shadow of an infection: COVID-19 and performance at work
+Abstract: The COVID-19 pandemic has c
+   says yes p=0.95 (0.8B 0.06) | Replication and Methodological Evaluation of Water Treatment Facility Adoption in Kenya: A Difference-i
+   says no  p=0.01 (0.8B 0.00) | Structural mean models for instrumented difference-in-differences
+Abstract: In the standard difference-
+   says no  p=0.02 (0.8B 0.00) | Frontiers: A Simple Forward Difference-in-Differences Method
+Abstract: I propose a simple forward diffe
+   says no  p=0.03 (0.8B 0.00) | Semiparametric Difference-in-Differences with Potentially Many Control Variables
+Abstract: This paper d
+   says no  p=0.03 (0.8B 0.02) | Vis Inertiae and Statistical Inference: A Review of Difference-in-Differences Methods Employed in Econo
+-- medieval manuscript stemmatics
+   says yes p=0.98 (0.8B 0.15) | Chapter Fourteen. Assembling Ælfric: Reconstructing The Rationale Behind Eleventh And Twelfth-Century C
+   says yes p=0.98 (0.8B 0.38) | Forbidden Knowledge? Notes on the Production, Transmission, and Reception of the Major Works of Aḥmad a
+   says yes p=0.98 (0.8B 0.04) | Scribal networks
+Abstract: This paper tests the application of network analysis for the visualization a
+   says yes p=0.98 (0.8B 0.21) | Hidden library: visualizing fragments of medieval manuscripts in early-modern bookbindings with mobile 
+   says no  p=0.05 (0.8B 0.01) | Analysis of Ancient and Medieval Texts and Manuscripts: Digital Approaches ed. by T. L. Andrews and C. 
+   says no  p=0.06 (0.8B 0.05) | The secret life of scribes. Exploring fifteen manuscripts of Jacob van
+Abstract: The article explores w
+   says no  p=0.07 (0.8B 0.02) | Reading and Variant in Petronius: Studies in the French Humanists and Their Manuscript Sources
+Abstract
+   says no  p=0.10 (0.8B 0.21) | Reviewing the bread and butter of CoReMa, cooking recipes of the Middle Ages
+Abstract: CoReMa, Cooking 
+-- sulfide solid electrolytes for lithium batteries
+   says yes p=0.98 (0.8B 1.00) | Solid‐State Electrolytes: Progress and Perspective of Solid‐State Lithium–Sulfur Batteries (Adv. Funct.
+   says yes p=0.97 (0.8B 0.29) | Lithium composite electrolyte FeS{sub 2} bipolar battery
+Abstract: The goals are to develop and charact
+   says yes p=0.96 (0.8B 0.78) | Argonne National Laboratory Reports
+Abstract: A lithium-aluminum/iron sulfide battery which uses a molt
+   says yes p=0.95 (0.8B 0.97) | Effects of LAGP electrolyte on suppressing polysulfide shuttling in Li–S cells
+Abstract: In this work, 
+   says no  p=0.00 (0.8B 0.01) | A kinetically stable anode interface for Li 3 YCl 6 -based all-solid-state lithium batteries
+Abstract: 
+   says no  p=0.00 (0.8B 0.01) | Electrochemical Testing and Benchmarking of Compositionally Complex Lithium Argyrodite Electrolytes for
+   says no  p=0.00 (0.8B 0.01) | Electrochemical Testing and Benchmarking of Compositionally Complex Lithium Argyrodite Electrolytes for
+   says no  p=0.00 (0.8B 0.02) | Bilayer electrolyte design toward high-voltage durable solid-state lithium metal batteries
+Abstract: To
+
+======== unseen schemes vs the teachers: agreement by slice (v3-2B)
+by group: {'invented': (0.799, 1560), 'jel': (0.821, 1200), 'papers': (0.873, 2380)}
+by options: {10: (0.851, 1660), 20: (0.866, 1120), 200: (0.738, 420), 40: (0.804, 500), 5: (0.871, 960), 600: (0.8, 40), 80: (0.784, 440)}
+by teacher's own confidence: {0.5: (0.465, 417), 0.7: (0.637, 1012), 0.9: (0.839, 893), 1.0: (0.965, 2818)}
+title only: {False: (0.841, 4400), True: (0.82, 740)}
+
+======== round-3 training data
+{'pick': 46179, 'yesno': 40000} teacher sure (100% on one option): 0.535  options<=3: 2248  options>100: 5250  'None of these' offered: 15027  broad-level questions: 8987  yes/no share of yes: 0.271  soft yes/no labels: 0

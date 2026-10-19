@@ -107,8 +107,8 @@ def build(gpu_wait: bool, resume: str | None = None, identity: bool = False) -> 
             corpora = [CORPUS] + ([updates.latest_corpus()] if updates.latest_corpus() else [])
             extra = []
             if identity:
-                corpora += [RESCUE / "corpus"]
-                extra = ["--versions", str(IDENTITY / "versions"), "--extra-groups", f"rescue-{RESCUE.name}"]
+                extra = ["--yielding-corpus", str(RESCUE / "corpus"), "--versions", str(IDENTITY / "versions"),
+                         "--extra-groups", f"rescue-{RESCUE.name}"]
             secs["rows"] = step(SEARCH_PY, "pipeline/release/rows.py", "--out", str(rows), "--atlas", str(ATLAS),
                                *[x for c in corpora for x in ("--corpus", str(c))], *extra)
     try:   # GPU step: best effort unless asked to wait (the map then shows what is placed)
@@ -123,7 +123,8 @@ def build(gpu_wait: bool, resume: str | None = None, identity: bool = False) -> 
                         "--atlas", str(ATLAS), "--out", str(tiles))
     try:   # the map engine's data (mapdata.py): best effort, the site falls back to its images without it
         secs["mapdata"] = step(SEARCH_PY, "pipeline/release/mapdata.py", "--rows", str(rows), "--xy", str(tiles / "xy.npy"),
-                              "--atlas", str(ATLAS), *[x for c in corpora for x in ("--corpus", str(c))],
+                              "--atlas", str(ATLAS), *[x for c in corpora + ([RESCUE / "corpus"] if identity else [])
+                                                         for x in ("--corpus", str(c))],
                               "--out", str(tiles / "v2"))
     except subprocess.CalledProcessError as e:
         log(f"map data skipped ({e})")

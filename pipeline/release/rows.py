@@ -137,6 +137,9 @@ def main() -> None:
                     help="a details corpus; repeat it for the base and the daily updates corpus (pipeline/updates)")
     ap.add_argument("--atlas", type=Path, required=True, help="atlas build directory (its field/subfield lists)")
     ap.add_argument("--threads", type=int, default=16)
+    ap.add_argument("--yielding-corpus", type=Path, action="append", default=[],
+                    help="a corpus whose works give way to the --corpus ones (the abstract rescue: once OpenAlex has the "
+                         "abstract itself, the daily updates hold the work and the rescued copy steps aside)")
     ap.add_argument("--extra-groups", default="", help="shard groups beyond rg-*, comma-separated globs (rescue-*)")
     ap.add_argument("--versions", type=Path, help="paper versions (pipeline/identity/build_versions.py): one row per paper")
     a = ap.parse_args()
@@ -169,6 +172,15 @@ def main() -> None:
     log("shard ids and text hashes read")
 
     cols = [read_corpus(c, fields, subfields, types, a.threads) for c in a.corpus]
+    strict_ids = np.sort(np.concatenate([c[0] for c in cols]))
+    yielded = 0
+    for c in a.yielding_corpus:
+        y = read_corpus(c, fields, subfields, types, a.threads)
+        mine = ~np.isin(y[0], strict_ids)
+        yielded += int((~mine).sum())
+        cols.append([x[mine] for x in y])
+    if a.yielding_corpus:
+        log(f"yielding corpora: {yielded:,} works held by an earlier corpus step aside")
     cols = [np.concatenate([c[k] for c in cols]) for k in range(6)]
     o = np.argsort(cols[0], kind="stable")
     cid, cyear, ctype, cfield, csub, csmr = [c[o] for c in cols]
@@ -201,13 +213,25 @@ def main() -> None:
     keep = np.zeros(N, bool)
     keep[o[first]] = True
     log(f"publications {int(scholarly.sum()):,}; distinct texts kept {int(keep.sum()):,}")
+    # a work in a regular shard and in an extra group's (a rescued copy OpenAlex now has itself): the regular row
+    # serves, the extra one is never kept; by_work lists the regular row first, so lookups find it
+    extra = np.zeros(N, bool)
+    for s_ in shards:
+        if not s_["dir"].split("/")[1].startswith("rg-"):
+            extra[s_["first"]:s_["first"] + s_["rows"]] = True
+    shadow = np.zeros(N, bool)
+    if extra.any():
+        shadow[extra] = np.isin(work[extra], work[~extra])
+        keep &= ~shadow
+        log(f"extra-group rows shadowed by a regular row of the same work: {int(shadow.sum()):,}")
     versions_dropped = 0
     if a.versions:
         keep, versions_dropped = one_per_paper(work, keep, a.versions, prefer=smr)
         log(f"versions: {versions_dropped:,} more records of a paper already kept dropped; kept {int(keep.sum()):,}")
 
-    by_work = np.argsort(work, kind="stable").astype(np.uint32 if N < 2**32 else np.uint64)
-    if np.any(work[by_work][1:] == work[by_work][:-1]):
+    by_work = np.lexsort((shadow, work)).astype(np.uint32 if N < 2**32 else np.uint64)
+    dup = work[by_work][1:] == work[by_work][:-1]
+    if np.any(dup & ~shadow[by_work][1:]):
         raise SystemExit("a work id appears in two shards")
     for name, arr in [("work", work), ("year", year), ("type", typ), ("field", field), ("subfield", sub),
                       ("smr", smr), ("keep", keep), ("by_work", by_work)]:
@@ -222,7 +246,8 @@ def main() -> None:
            "oldest_kept_year_with_100k": int(1800 + np.flatnonzero(years >= 100_000)[0]) if (years >= 100_000).any() else None,
            "types": types, "scholarly_types": sorted(scope.SCHOLARLY_TYPES),
            "fields": fields, "subfields": subfields, "atlas": atlas["id"], "corpus": str(a.corpus[0]),
-           "corpora": [str(c) for c in a.corpus], "extra_groups": a.extra_groups or None,
+           "corpora": [str(c) for c in a.corpus + a.yielding_corpus], "yielding_corpora": [str(c) for c in a.yielding_corpus],
+           "yielded_works": yielded, "shadowed_rows": int(shadow.sum()), "extra_groups": a.extra_groups or None,
            "last_commit_utc": max(s_["committed_utc"] for s_ in shards), "seconds": round(time.time() - T0)}
     (a.out / "meta.json.tmp").write_text(json.dumps(doc, indent=1))
     os.replace(a.out / "meta.json.tmp", a.out / "meta.json")

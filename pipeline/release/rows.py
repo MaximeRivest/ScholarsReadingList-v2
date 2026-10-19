@@ -13,7 +13,10 @@ Columns (numpy, aligned, N rows):
   field.npy     uint8   atlas field code                    subfield.npy uint16 atlas subfield code
   smr.npy       bool    ScienceMadeReadable can open it (PMC CC BY research article)
   keep.npy      bool    in the publications index: a publication type (citewalk/science/scope.py)
-                        and the smallest W-number among works with byte-identical title+abstract
+                        and the smallest W-number among works with byte-identical title+abstract;
+                        with --versions (pipeline/identity/build_versions.py), also only the best-ranked
+                        embedded record of each paper's versions (journal article over its preprint, the
+                        original over a mirror copy)
   by_work.npy   uint32  rows sorted by work (lookups by W-number)
   shards.json   [{dir, rows, first, committed_utc}] in row order
   counts.json   exact publications per year and atlas subfield over the WHOLE corpus (203.5M works,
@@ -52,15 +55,21 @@ def log(msg: str) -> None:
     print(f"{time.time() - T0:7.0f}s {msg}", flush=True)
 
 
-def committed_shards(plan_id: str) -> list[dict]:
+def committed_shards(plan_id: str, extra_groups: tuple[str, ...] = ()) -> list[dict]:
+    """Published shards: the backfill's and the daily ones (rg-*), then any extra groups asked for (e.g. rescue-*,
+    pipeline/rescue/embed.py) after all of them, so the regular rows keep their order."""
     out = []
-    for c in SHARDS.glob("year=*/rg-*/part-*/commit.json"):     # published shards only
-        rec = json.loads(c.read_text())
-        if rec["plan_id"] != plan_id:
-            raise SystemExit(f"{c}: another embedding plan")
-        out.append({"dir": str(c.parent.relative_to(SHARDS)), "rows": int(rec["task"]["rows"]),
-                    "committed_utc": rec["committed_utc"]})
-    out.sort(key=lambda s: (s["committed_utc"], s["dir"]))
+    for pats in (["rg-*"], list(extra_groups)):
+        grp = []
+        for pat in pats:
+            for c in SHARDS.glob(f"year=*/{pat}/part-*/commit.json"):     # published shards only
+                rec = json.loads(c.read_text())
+                if rec["plan_id"] != plan_id:
+                    raise SystemExit(f"{c}: another embedding plan")
+                grp.append({"dir": str(c.parent.relative_to(SHARDS)), "rows": int(rec["task"]["rows"]),
+                            "committed_utc": rec["committed_utc"]})
+        grp.sort(key=lambda s: (s["committed_utc"], s["dir"]))
+        out += grp
     first = 0
     for s in out:
         s["first"] = first
@@ -102,6 +111,25 @@ def read_corpus(corpus: Path, fields: list[str], subfields: list[str], types: li
     return cols
 
 
+def one_per_paper(work: np.ndarray, keep: np.ndarray, versions: Path, prefer: np.ndarray | None = None) -> tuple[np.ndarray, int]:
+    """Among kept rows that are versions of one paper, keep one: a `prefer`red row first (readable on the site),
+    then the best-ranked (rank 0 = the group's canonical record)."""
+    vw = np.load(versions / "work.npy")                  # sorted W-numbers of grouped records
+    vc = np.load(versions / "cluster.npy")
+    vr = np.load(versions / "rank.npy")
+    rows = np.flatnonzero(keep)
+    j = np.minimum(np.searchsorted(vw, work[rows]), len(vw) - 1)
+    hit = vw[j] == work[rows]
+    rows, j = rows[hit], j[hit]
+    pref = ~prefer[rows] if prefer is not None else np.zeros(len(rows), bool)
+    o = np.lexsort((vr[j], pref, vc[j]))                   # by group, preferred first, then best rank
+    g = vc[j][o]
+    first = np.r_[True, g[1:] != g[:-1]]
+    out = keep.copy()
+    out[rows[o][~first]] = False
+    return out, int((~first).sum())
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", type=Path, required=True)
@@ -109,6 +137,8 @@ def main() -> None:
                     help="a details corpus; repeat it for the base and the daily updates corpus (pipeline/updates)")
     ap.add_argument("--atlas", type=Path, required=True, help="atlas build directory (its field/subfield lists)")
     ap.add_argument("--threads", type=int, default=16)
+    ap.add_argument("--extra-groups", default="", help="shard groups beyond rg-*, comma-separated globs (rescue-*)")
+    ap.add_argument("--versions", type=Path, help="paper versions (pipeline/identity/build_versions.py): one row per paper")
     a = ap.parse_args()
     if (a.out / "meta.json").exists():
         raise SystemExit(f"{a.out} is finished")
@@ -119,7 +149,7 @@ def main() -> None:
     subfields = [s["name"] for s in atlas["subfields"]]
     types = json.loads((Path("/mnt/fast/citewalk/20261007T003120Z-50ce3865/meta.json")).read_text())["types"]
 
-    shards = committed_shards(plan_id)
+    shards = committed_shards(plan_id, tuple(g for g in a.extra_groups.split(",") if g))
     N = shards[-1]["first"] + shards[-1]["rows"]
     log(f"{len(shards):,} committed shards, {N:,} rows")
 
@@ -171,6 +201,10 @@ def main() -> None:
     keep = np.zeros(N, bool)
     keep[o[first]] = True
     log(f"publications {int(scholarly.sum()):,}; distinct texts kept {int(keep.sum()):,}")
+    versions_dropped = 0
+    if a.versions:
+        keep, versions_dropped = one_per_paper(work, keep, a.versions, prefer=smr)
+        log(f"versions: {versions_dropped:,} more records of a paper already kept dropped; kept {int(keep.sum()):,}")
 
     by_work = np.argsort(work, kind="stable").astype(np.uint32 if N < 2**32 else np.uint64)
     if np.any(work[by_work][1:] == work[by_work][:-1]):
@@ -182,13 +216,14 @@ def main() -> None:
     years = np.bincount(np.clip(year[keep].astype(int) - 1800, 0, 230), minlength=231)
     doc = {"rows": int(N), "shards": len(shards), "embedding_plan": plan_id,
            "publications": int(scholarly.sum()), "kept": int(keep.sum()),
-           "duplicates_dropped": int(scholarly.sum() - keep.sum()), "smr": int(smr.sum()),
+           "duplicates_dropped": int(scholarly.sum() - keep.sum()), "versions_dropped": int(versions_dropped),
+           "versions": str(a.versions) if a.versions else None, "smr": int(smr.sum()),
            "smr_kept": int((smr & keep).sum()),
            "oldest_kept_year_with_100k": int(1800 + np.flatnonzero(years >= 100_000)[0]) if (years >= 100_000).any() else None,
            "types": types, "scholarly_types": sorted(scope.SCHOLARLY_TYPES),
            "fields": fields, "subfields": subfields, "atlas": atlas["id"], "corpus": str(a.corpus[0]),
-           "corpora": [str(c) for c in a.corpus],
-           "last_commit_utc": shards[-1]["committed_utc"], "seconds": round(time.time() - T0)}
+           "corpora": [str(c) for c in a.corpus], "extra_groups": a.extra_groups or None,
+           "last_commit_utc": max(s_["committed_utc"] for s_ in shards), "seconds": round(time.time() - T0)}
     (a.out / "meta.json.tmp").write_text(json.dumps(doc, indent=1))
     os.replace(a.out / "meta.json.tmp", a.out / "meta.json")
     log(json.dumps({k: v for k, v in doc.items() if k not in ("types", "fields", "subfields", "scholarly_types")}))

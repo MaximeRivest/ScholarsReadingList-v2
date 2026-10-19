@@ -1,0 +1,1384 @@
+{
+ "checked": 120,
+ "with_twin_in_corpus": 74,
+ "twin_prefixes": [
+  [
+   "10.1186",
+   15
+  ],
+  [
+   "10.1038",
+   10
+  ],
+  [
+   "10.1016",
+   8
+  ],
+  [
+   "10.1371",
+   6
+  ],
+  [
+   "10.3389",
+   4
+  ],
+  [
+   "10.1007",
+   3
+  ],
+  [
+   "10.21203",
+   3
+  ],
+  [
+   "10.1109",
+   2
+  ],
+  [
+   "10.1136",
+   2
+  ],
+  [
+   "10.1155",
+   2
+  ],
+  [
+   "10.14202",
+   2
+  ],
+  [
+   "10.1093",
+   2
+  ],
+  [
+   "10.25165",
+   1
+  ],
+  [
+   "10.1590",
+   1
+  ],
+  [
+   "nodoi",
+   1
+  ],
+  [
+   "10.12669",
+   1
+  ],
+  [
+   "10.2478",
+   1
+  ],
+  [
+   "10.5897",
+   1
+  ],
+  [
+   "10.60692",
+   1
+  ],
+  [
+   "10.1002",
+   1
+  ],
+  [
+   "10.1088",
+   1
+  ],
+  [
+   "10.51411",
+   1
+  ],
+  [
+   "10.5588",
+   1
+  ],
+  [
+   "10.17113",
+   1
+  ],
+  [
+   "10.4314",
+   1
+  ],
+  [
+   "10.1128",
+   1
+  ],
+  [
+   "10.3390",
+   1
+  ]
+ ],
+ "rows": [
+  {
+   "gsis": "https://openalex.org/W6901584088",
+   "year": 2019,
+   "title": "A global atmospheric electricity monitoring network for climate and geophysical research",
+   "twins": [
+    [
+     "W2909121667",
+     "Journal of Atmospheric and Solar-Terrestrial Physics",
+     "10.1016/j.jastp.2019.01.003",
+     2019
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939154361",
+   "year": 2018,
+   "title": "Thermal resilience may shape population abundance of two sympatric congeneric Cotesia species (Hymen",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6976660222",
+   "year": 2018,
+   "title": "Research and development in agricultural robotics: A perspective of digital farming",
+   "twins": [
+    [
+     "W2885121946",
+     "International journal of agricultural and biological engineering",
+     "10.25165/j.ijabe.20181104.4278",
+     2018
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976666360",
+   "year": 2017,
+   "title": "Resveratrol regulates body weight in healthy and ovariectomized rats",
+   "twins": [
+    [
+     "W2606467547",
+     "Nutrition & Metabolism",
+     "10.1186/s12986-017-0183-5",
+     2017
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920733147",
+   "year": 2010,
+   "title": "N\u2032-[(2-n-Butyl-4-chloro-1H-imidazol-5-yl)methylidene]adamantane-1-carbohydrazide sesquihydrate ethan",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920259061",
+   "year": 2014,
+   "title": "The Multiple Roles of Hypothetical Gene BPSS1356 in Burkholderia pseudomallei",
+   "twins": [
+    [
+     "W2006667938",
+     "PLoS ONE",
+     "10.1371/journal.pone.0099218",
+     2014
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6958199918",
+   "year": 2020,
+   "title": "High-quality genome sequence assembly of R.A73 Enterococcus faecium isolated from freshwater fish mu",
+   "twins": [
+    [
+     "W3093648062",
+     "BMC Microbiology",
+     "10.1186/s12866-020-01980-8",
+     2020
+    ],
+    [
+     "W4254805955",
+     "Research Square",
+     "10.21203/rs.3.rs-25205/v4",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920143151",
+   "year": 2020,
+   "title": "A modelling study highlights the power of detecting and isolating asymptomatic or very mildly affect",
+   "twins": [
+    [
+     "W3109832507",
+     "BMC Public Health",
+     "10.1186/s12889-020-09843-7",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6957707319",
+   "year": 2021,
+   "title": "Cric searchable image database as a public platform for conventional pap smear cytology data",
+   "twins": [
+    [
+     "W3169873017",
+     "Scientific Data",
+     "10.1038/s41597-021-00933-8",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920203832",
+   "year": 2023,
+   "title": "Industrial, Collaborative and Mobile Robotics in Latin America: Review of Mechatronic Technologies f",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6939083845",
+   "year": 2022,
+   "title": "Sex-different interrelationships of rs945270, cerebral gray matter volumes, and attention deficit hy",
+   "twins": [
+    [
+     "W4281878499",
+     "Translational Psychiatry",
+     "10.1038/s41398-022-02007-8",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920231960",
+   "year": 2024,
+   "title": "Vanillin derivatives as antiamnesic agents in scopolamine-induced memory impairment in mice",
+   "twins": [
+    [
+     "W4391933594",
+     "Heliyon",
+     "10.1016/j.heliyon.2024.e26657",
+     2024
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976663013",
+   "year": 2022,
+   "title": "Zebrafish and Medaka as model organisms for climate change research: Global literature scientometric",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958219396",
+   "year": 2020,
+   "title": "Review and Investigation of Simplified Rules Fuzzy Logic Speed Controller of High Performance Induct",
+   "twins": [
+    [
+     "W3006912353",
+     "IEEE Access",
+     "10.1109/access.2020.2977115",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901704995",
+   "year": 2019,
+   "title": "Processing of nanomaterials in Layer-by-Layer films: Potential applications in (bio)sensing and ener",
+   "twins": [
+    [
+     "W2951566156",
+     "Anais da Academia Brasileira de Ci\u00eancias",
+     "10.1590/0001-3765201920181343",
+     2019
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6938625877",
+   "year": 2019,
+   "title": "Efficacy and improvement of lipid profile after switching to rilpivirine in resource limited setting",
+   "twins": [
+    [
+     "W2943716819",
+     "AIDS Research and Therapy",
+     "10.1186/s12981-019-0222-6",
+     2019
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939223634",
+   "year": 2023,
+   "title": "Surgical outcomes of gallbladder cancer: the OMEGA retrospective, multicentre, international cohort ",
+   "twins": [
+    [
+     "W7062294471",
+     "Utrecht University Repository (Utrecht University)",
+     null,
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920380643",
+   "year": 2023,
+   "title": "Novel solar simulated photocatalytic heterolysis of pharmaceutical wastewater via slag nanocomposite",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920588825",
+   "year": 2018,
+   "title": "An approach to optimize pre-annealing aging and anneal conditions to improve photovoltaic performanc",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6976560750",
+   "year": 2021,
+   "title": "Levels and socioeconomic correlates of nonmarital fertility in Ghana",
+   "twins": [
+    [
+     "W3131415371",
+     "PLoS ONE",
+     "10.1371/journal.pone.0247189",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976682472",
+   "year": 2021,
+   "title": "A Novel Non-Invasive Estimation of Respiration Rate From Motion Corrupted Photoplethysmograph Signal",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6901737865",
+   "year": 2022,
+   "title": "The influence of acoustic standards in construction: a case study of social housing in Argentina",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6976624557",
+   "year": 2024,
+   "title": "GROWTH REVIVAL OF GREY OYSTER (PLEUROTUS PULMONARIUS) POWDER CULTURE MUSHROOM FROM THE EFFECT OF SPR",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920505084",
+   "year": 2024,
+   "title": "Body and Mind in Virtual Dark Tourism Experiences and Artwork Creations: Embodied Cognition Reaction",
+   "twins": [
+    [
+     "W4396629103",
+     "Springer proceedings in business and economics",
+     "10.1007/978-3-031-58839-6_12",
+     2024
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901562145",
+   "year": 2024,
+   "title": "Emerging novel sequence types of Staphylococcus aureus in Pakistan",
+   "twins": [
+    [
+     "W4388210621",
+     "Journal of Infection and Public Health",
+     "10.1016/j.jiph.2023.10.036",
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920669064",
+   "year": 2019,
+   "title": "Association of faecal pH with childhood stunting: Results from a cross-sectional study",
+   "twins": [
+    [
+     "W2972910060",
+     "BMJ Paediatrics Open",
+     "10.1136/bmjpo-2019-000549",
+     2019
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901767018",
+   "year": 2018,
+   "title": "Stocks Discrimination in Lady Fish, Elops machnata (Forskal, 1775) from Southeast and Southwest Coas",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920292212",
+   "year": 2023,
+   "title": "A globally synthesised and flagged bee occurrence dataset and cleaning workflow",
+   "twins": [
+    [
+     "W4388224360",
+     "Scientific Data",
+     "10.1038/s41597-023-02626-w",
+     2023
+    ],
+    [
+     "W4382931841",
+     "bioRxiv (Cold Spring Harbor Laboratory)",
+     "10.1101/2023.06.30.547152",
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901716560",
+   "year": 2019,
+   "title": "Employment status of person with disability in Government Departments in Khyber Pakhtunkhwa Pakistan",
+   "twins": [
+    [
+     "W2966157690",
+     "Pakistan Journal of Medical Sciences",
+     "10.12669/pjms.35.5.239",
+     2019
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920623248",
+   "year": 2022,
+   "title": "Antimicrobial Usage in Smallholder Poultry Production in Nigeria",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6976563330",
+   "year": 2007,
+   "title": "Sequence variation and linkage disequilibrium in the GABA transporter-1 gene (SLC6A1) in five popula",
+   "twins": [
+    [
+     "W2066279944",
+     "BMC Genetics",
+     "10.1186/1471-2156-8-71",
+     2007
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976899378",
+   "year": 2021,
+   "title": "A 2D Convolutional Gating Mechanism for Mandarin Streaming Speech Recognition",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6901649343",
+   "year": 2024,
+   "title": "Analysis of the relationship between tourism, green technological innovation and environmental quali",
+   "twins": [
+    [
+     "W4391889389",
+     "Clean Technologies and Environmental Policy",
+     "10.1007/s10098-023-02708-8",
+     2024
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6957834541",
+   "year": 2020,
+   "title": "Role of social and other determinants of health in the effect of a multicomponent integrated care st",
+   "twins": [
+    [
+     "W3027066029",
+     "International Journal for Equity in Health",
+     "10.1186/s12939-020-01188-2",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901691720",
+   "year": 2022,
+   "title": "Physiological and Molecular Response of Wheat Cultivars to Titanium Dioxide or Zinc Oxide Nanopartic",
+   "twins": [
+    [
+     "W4210712997",
+     "International Journal of Agronomy",
+     "10.1155/2022/3806574",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6977387473",
+   "year": 2023,
+   "title": "Role of a Knowledge Leader to Strengthen Economy Through Project Success",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6976605210",
+   "year": 2023,
+   "title": "Chitosan nanoparticles modified TLC-densitometry for determination of imidacloprid and deltamethrin ",
+   "twins": [
+    [
+     "W4362523350",
+     "BMC Chemistry",
+     "10.1186/s13065-023-00941-2",
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976802970",
+   "year": 2010,
+   "title": "Alternative way to test the efficacy of swine FMD vaccines: measurement of pigs median infected dose",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6938958731",
+   "year": 2022,
+   "title": "The tibetan medicine Zuozhu-Daxi can prevent Helicobacter pylori induced-gastric mucosa inflammation",
+   "twins": [
+    [
+     "W4308639812",
+     "Chinese Medicine",
+     "10.1186/s13020-022-00682-9",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920457430",
+   "year": 2017,
+   "title": "Doubly committed subarterial ventricular septal defect with prolapsed right coronary cusp with moder",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958095385",
+   "year": 2022,
+   "title": "The willingness of parents to vaccinate their children younger than 12 years against COVID-19: a cro",
+   "twins": [
+    [
+     "W4283701564",
+     "BMC Public Health",
+     "10.1186/s12889-022-13682-z",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901665445",
+   "year": 2013,
+   "title": "Real-life effectiveness of budesonide/formoterol maintenance and reliever therapy in asthma patients",
+   "twins": [
+    [
+     "W2055324311",
+     "BMC Pulmonary Medicine",
+     "10.1186/1471-2466-13-22",
+     2013
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901550162",
+   "year": 2022,
+   "title": "Vitamin D and immunity: reality or phantasy?",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6939176585",
+   "year": 2023,
+   "title": "DESIGN OF BIO-INSPIRED HEURISTIC TECHNIQUE INTEGRATED WITH SEQUENTIAL QUADRATIC PROGRAMMING FOR NONL",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920529797",
+   "year": 2023,
+   "title": "Insinuation of Arrhenius Energy and Solar Radiation on Electrical Conducting Williamson Nano Fluids ",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6939232770",
+   "year": 2011,
+   "title": "Assessment Study of Using Online (CSRS) GPS-PPP Service for Mapping Applications in Egypt",
+   "twins": [
+    [
+     "W2067920365",
+     "Journal of Geodetic Science",
+     "10.2478/v10156-011-0001-3",
+     2011
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901659232",
+   "year": 2022,
+   "title": "Immunoinformatic design of a putative multi-epitope vaccine candidate against Trypanosoma brucei gam",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920417334",
+   "year": 2021,
+   "title": "A century of ongoing silicic volcanism at Cord\u00f3n Caulle, Chile: New constraints on the magmatic syst",
+   "twins": [
+    [
+     "W3204212125",
+     "Journal of Volcanology and Geothermal Research",
+     "10.1016/j.jvolgeores.2021.107406",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6957982778",
+   "year": 2020,
+   "title": "Recovery and stable persistence of chloroquine sensitivity in Plasmodium falciparum parasites after ",
+   "twins": [
+    [
+     "W3009529341",
+     "Malaria Journal",
+     "10.1186/s12936-020-03157-0",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920520316",
+   "year": 2014,
+   "title": "Effects of omega-3 fatty acids against Ehrlich carcinoma-induced hepatic dysfunction",
+   "twins": [
+    [
+     "W2154835297",
+     "Journal of Cancer Research and Experimental Oncology",
+     "10.5897/jcreo2013.0105",
+     2014
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939282742",
+   "year": 2020,
+   "title": "Room temperature synthesis of biocompatible nano Zn-MOF for the rapid and selective adsorption of cu",
+   "twins": [
+    [
+     "W3087232280",
+     "Journal of Science Advanced Materials and Devices",
+     "10.1016/j.jsamd.2020.09.009",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6958145192",
+   "year": 2019,
+   "title": "The Association Between the Incidence Risk of Peripheral Neuropathy and PD-1/PD-L1 Inhibitors in the",
+   "twins": [
+    [
+     "W2969593651",
+     "Frontiers in Oncology",
+     "10.3389/fonc.2019.00866",
+     2019
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976547119",
+   "year": 2019,
+   "title": "Perspectives for Ag2S NIR-II nanoparticles in biomedicine: from imaging to multifunctionality",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6938889968",
+   "year": 2018,
+   "title": "Translation of Earth observation data into sustainable development indicators: An analytical framewo",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958067819",
+   "year": 2021,
+   "title": "Improved multiobjective differential evolution with spherical pruning algorithm for optimizing 3D pr",
+   "twins": [
+    [
+     "W4235017511",
+     "Research Square",
+     "10.21203/rs.3.rs-557815/v1",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901738859",
+   "year": 2023,
+   "title": "The Role of Cultural and Institutional Distances in International Trade",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6957919596",
+   "year": 2010,
+   "title": "Insecticide Susceptibility of Phlebotomus argentipes in Visceral Leishmaniasis Endemic Districts in ",
+   "twins": [
+    [
+     "W2044210794",
+     "PLoS neglected tropical diseases",
+     "10.1371/journal.pntd.0000859",
+     2010
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939414891",
+   "year": 2011,
+   "title": "Using ultrafine particles from a coal washing plant in metallurgical coke production",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6939142421",
+   "year": 2021,
+   "title": "The N-terminus of an Ustilaginoidea virens Ser-Thr-rich glycosylphosphatidylinositol-anchored protei",
+   "twins": [
+    [
+     "W3157812776",
+     "Nature Communications",
+     "10.1038/s41467-021-22660-9",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6958305987",
+   "year": 2020,
+   "title": "Cohort study of neonatal resuscitation skill retention in frontline healthcare facilities in Bihar, ",
+   "twins": [
+    [
+     "W3020085558",
+     "BMJ Paediatrics Open",
+     "10.1136/bmjpo-2019-000628",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6957878967",
+   "year": 2023,
+   "title": "Three-year outcomes of a fracture liaison service model at a university-based tertiary care hospital",
+   "twins": [
+    [
+     "W4317838233",
+     "Archives of Osteoporosis",
+     "10.1007/s11657-023-01215-z",
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920480834",
+   "year": 2019,
+   "title": "Probabilistic Shaping Design Based on Reduced-Exponentiation Subset Indexing and Honeycomb-Structure",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6977203078",
+   "year": 2017,
+   "title": "Multiband Operation and Performance Enhancement of the PIFA Antenna by Using Particle Swarm Optimiza",
+   "twins": [
+    [
+     "W2587949353",
+     "Applied Computational Intelligence and Soft Computing",
+     "10.1155/2017/3481709",
+     2017
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6938854873",
+   "year": 2017,
+   "title": "Decreased Rivaroxaban Levels in a Patient with Cerebral Vein Thrombosis Receiving Phenytoin",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958196709",
+   "year": 2022,
+   "title": "An analysis of the success of fiscal adjustment in reducing public debt: Evidence from Pakistan",
+   "twins": [
+    [
+     "W4285614635",
+     "PLoS ONE",
+     "10.1371/journal.pone.0269536",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6957985621",
+   "year": 2017,
+   "title": "Structural uncertainty in air mass factor calculation for NO2 and HCHO satellite retrievals",
+   "twins": [
+    [
+     "W6939388521",
+     "Utrecht University Repository (Utrecht University)",
+     "10.60692/c4gqb-w0t28",
+     2017
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976395059",
+   "year": 2017,
+   "title": "Ecohydrological optimality in the Northeast China Transect",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920566876",
+   "year": 2023,
+   "title": "'Research is the last thing on our minds, we are in crisis': Experiences of Lagos state nurses towar",
+   "twins": [
+    [
+     "W4385850689",
+     "Nursing Open",
+     "10.1002/nop2.1967",
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976936787",
+   "year": 2021,
+   "title": "Fish can save energy via proprioceptive sensing",
+   "twins": [
+    [
+     "W3185343670",
+     "Bioinspiration & Biomimetics",
+     "10.1088/1748-3190/ac165e",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6958140796",
+   "year": 2023,
+   "title": "A cross-sectional survey for the assessment of biosecurity measures in small-scale duck farms in Qal",
+   "twins": [
+    [
+     "W4360977409",
+     "Veterinary World",
+     "10.14202/vetworld.2023.607-617",
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6938939665",
+   "year": 2020,
+   "title": "Chimeric flavivirus enables evaluation of antibodies against dengue virus envelope protein in vitro ",
+   "twins": [
+    [
+     "W3112072058",
+     "Scientific Reports",
+     "10.1038/s41598-020-78639-x",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920187059",
+   "year": 2011,
+   "title": "An agriculture and health inter-sectorial research process to reduce hazardous pesticide health impa",
+   "twins": [
+    [
+     "W2133168450",
+     "BMC International Health and Human Rights",
+     "10.1186/1472-698x-11-s2-s6",
+     2011
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901625440",
+   "year": 2023,
+   "title": "Alterations promoted by acid straightening and/or bleaching in hair microstructures",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958267574",
+   "year": 2011,
+   "title": "Polymorphic sites in the 5\u00b4-region of the porcine C8A gene",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920224337",
+   "year": 2020,
+   "title": "On the Feasibility and Enhancement of the Tuple Space Explosion Attack against Open vSwitch",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6938995349",
+   "year": 2021,
+   "title": "Performance enhancement of a Savonius turbine under effect of frontal guiding plates",
+   "twins": [
+    [
+     "W3203055056",
+     "Energy Reports",
+     "10.1016/j.egyr.2021.09.021",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6958146122",
+   "year": 2019,
+   "title": "PRODUCT INNOVATION PROCESS: A MODEL BASED ON MANUFACTURING READINESS LEVEL (MRL), DESIGN FOR MANUFAC",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6939040862",
+   "year": 2023,
+   "title": "Pregnancy outcomes after first-trimester treatment with artemisinin derivatives versus non-artemisin",
+   "twins": [
+    [
+     "W4309967344",
+     "The Lancet",
+     "10.1016/s0140-6736(22)01881-5",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939159090",
+   "year": 2024,
+   "title": "Enhancing Thermal Conductivity And Fire Resistance Of Polycotton Via Silica And Titanate Xerogel Coa",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6975959699",
+   "year": 2019,
+   "title": "\u0627\u0644\u0635\u0648\u0631 \u0627\u0644\u0645\u0639\u0627\u0635\u0631\u0629 \u0644\u0644\u0639\u0642\u064a\u062f\u0629 \u0627\u0644\u0634\u0631\u0643\u064a\u0629 \u0648\u0623\u062b\u0631\u0647\u0627 \u0641\u0649 \u0627\u0644\u062d\u064a\u0627\u0629 \u0627\u0644\u0639\u0645\u0644\u064a\u0629\u060c\u062f\u0631\u0627\u0633\u0629 \u062a\u062d\u0644\u064a\u0644\u064a\u0629 \u0641\u0649 \u0636\u0648\u0621 \u0627\u0644\u0642\u0631\u0622\u0646 \u0648\u0627\u0644\u0633\u0646\u0629 \u0627\u0644\u0646\u0628\u0648\u064a\u0629",
+   "twins": [
+    [
+     "W3118018042",
+     "Rahat-ul-Quloob",
+     "10.51411/rahat.3.2(2).2019.221",
+     2019
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6958071611",
+   "year": 2018,
+   "title": "Genotypic Diversity and Epidemiology of Human Rhinovirus Among Children With Severe Acute Respirator",
+   "twins": [
+    [
+     "W2885868840",
+     "Frontiers in Microbiology",
+     "10.3389/fmicb.2018.01836",
+     2018
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901797060",
+   "year": 2021,
+   "title": "Persistent chronic respiratory symptoms despite TB cure is poorly correlated with lung function",
+   "twins": [
+    [
+     "W3136083499",
+     "The International Journal of Tuberculosis and Lung Disease",
+     "10.5588/ijtld.20.0906",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901491491",
+   "year": 2017,
+   "title": "DNA Methylomes Reveal Biological Networks Involved in Human Eye Development, Functions and Associate",
+   "twins": [
+    [
+     "W2754078715",
+     "Scientific Reports",
+     "10.1038/s41598-017-12084-1",
+     2017
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920167088",
+   "year": 2023,
+   "title": "Better Existing Water, Sanitation, and Hygiene Can Reduce the Risk of Cholera in an Endemic Setting:",
+   "twins": [
+    [
+     "W4388871183",
+     "Open Forum Infectious Diseases",
+     "10.1093/ofid/ofad535",
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939260495",
+   "year": 2024,
+   "title": "AGN STORM 2. V. Anomalous Behavior of the C iv Light Curve of Mrk 817*",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6976949306",
+   "year": 2018,
+   "title": "Exogenous Cripto-1 Suppresses Self-Renewal of Cancer Stem Cell Model",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6976401941",
+   "year": 2014,
+   "title": "Extracting Information from Qubit-Environment Correlations",
+   "twins": [
+    [
+     "W2116017064",
+     "Scientific Reports",
+     "10.1038/srep07443",
+     2014
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901742639",
+   "year": 2013,
+   "title": "Drug Use and Sex Work: Competing Risk Factors for Newly Acquired HIV in Yunnan, China",
+   "twins": [
+    [
+     "W2052925941",
+     "PLoS ONE",
+     "10.1371/journal.pone.0059050",
+     2013
+    ],
+    [
+     "W4298010442",
+     "Carolina Digital Repository (University of North Carolina at Chapel Hill)",
+     "10.17615/85e7-ag28",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901655515",
+   "year": 2021,
+   "title": "Mental health in COVID-19 survivors from a general hospital: association with sociodemographic, clin",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6901733872",
+   "year": 2007,
+   "title": "Sequence and functional analyses of Haemophilus spp. genomic islands",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958437450",
+   "year": 2023,
+   "title": "Development of Cork-Bamboo-Latex as An Alternative Composite for Bottles Stoppers",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6901608929",
+   "year": 2018,
+   "title": "ETHANOL PRODUCTION FROM COCOYAM (\u0425anthosoma sagittifolium): APPLICATION OF THERMODYNAMIC-TOPOLOGICAL",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958108870",
+   "year": 2022,
+   "title": "Enzymatic Treatment of Spent Green Tea Leaves and Their Use in High-Fiber Cookie Production",
+   "twins": [
+    [
+     "W4285128653",
+     "Food Technology and Biotechnology",
+     "10.17113/ftb.60.03.22.7474",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6957891442",
+   "year": 2022,
+   "title": "Molecular characterization and comparisons of potato wart (Synchytrium endobioticum) in historic col",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6976726292",
+   "year": 2011,
+   "title": "Anti-Inflammatory and Antioxidant Effects of an Ethanolic Extract of the Aerial Parts of Hilleria la",
+   "twins": [
+    [
+     "W2019536108",
+     "African Journal of Traditional Complementary and Alternative Medicines",
+     "10.4314/ajtcam.v9i1.19",
+     2011
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920664212",
+   "year": 2022,
+   "title": "A novel method for life estimation of power transformers using fuzzy logic systems: An intelligent p",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6939214796",
+   "year": 2022,
+   "title": "Academic Stress of College Students and Sports Participation: Mediating Role of Social Intelligence",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6957955433",
+   "year": 2021,
+   "title": "DCET1 Controls Male Sterility Through Callose Regulation, Exine Formation, and Tapetal Programmed Ce",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958116930",
+   "year": 2021,
+   "title": "Governance of community health worker programs in a decentralized health system: a qualitative study",
+   "twins": [
+    [
+     "W3162512749",
+     "BMC Health Services Research",
+     "10.1186/s12913-021-06452-x",
+     2021
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976784356",
+   "year": 2022,
+   "title": "Factors associated with long-acting and short-acting reversible contraceptives use among 10\u201324-years",
+   "twins": [
+    [
+     "W4297905590",
+     "Frontiers in Reproductive Health",
+     "10.3389/frph.2022.949458",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939044629",
+   "year": 2022,
+   "title": "Palm oil extracts protected against cadmium chloride poisoning via inhibition of oxidative stress in",
+   "twins": [
+    [
+     "W4200109418",
+     "Research Square",
+     "10.21203/rs.3.rs-1142358/v1",
+     2021
+    ],
+    [
+     "W4206062334",
+     "Bulletin of the National Research Centre/Bulletin of the National Research Center",
+     "10.1186/s42269-021-00688-7",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6957711129",
+   "year": 2023,
+   "title": "Effects of Dehulling and Roasting on the Phytochemical Composition and Biological Activities of Sesa",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6939156773",
+   "year": 2021,
+   "title": "Measuring child functioning: Assessing correlation and agreement between caregiver and child respons",
+   "twins": [
+    [
+     "W3098298646",
+     "Disability and health journal",
+     "10.1016/j.dhjo.2020.101022",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920505542",
+   "year": 2008,
+   "title": "Status of the ATLAS Level-1 Central Trigger and Muon Barrel Trigger and First Results from Cosmic-Ra",
+   "twins": [
+    [
+     "W4233594456",
+     "2007 15th IEEE-NPSS Real-Time Conference",
+     "10.1109/rtc.2007.4382845",
+     2007
+    ],
+    [
+     "W2109966825",
+     "IEEE Transactions on Nuclear Science",
+     "10.1109/tns.2007.910676",
+     2008
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901868091",
+   "year": 2024,
+   "title": "Extended-spectrum beta-lactamase-producing Escherichia coli and Klebsiella pneumoniae : insights fro",
+   "twins": [
+    [
+     "W4399140319",
+     "Microbiology Spectrum",
+     "10.1128/spectrum.00213-24",
+     2024
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920400148",
+   "year": 2020,
+   "title": "Assessing the Immunochromatographic Test Strip for Serological Detection of Bovine Babesiosis in Uga",
+   "twins": [
+    [
+     "W3044515339",
+     "Microorganisms",
+     "10.3390/microorganisms8081110",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939288190",
+   "year": 2022,
+   "title": "Integrated weighted gene coexpression network analysis identifies Frizzled 2 (FZD2) as a key gene in",
+   "twins": [
+    [
+     "W4205144905",
+     "Journal of Translational Medicine",
+     "10.1186/s12967-021-03204-7",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901978375",
+   "year": 2016,
+   "title": "Quality controls for antimicrobial disk diffusion testing onLeptospiraVanaporn Wuthiekanun agar",
+   "twins": [
+    [
+     "W2561404400",
+     "Transactions of the Royal Society of Tropical Medicine and Hygiene",
+     "10.1093/trstmh/trw076",
+     2016
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6977160907",
+   "year": 2022,
+   "title": "Principle of evidentiary community in the General Organic Code of Processes",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920602855",
+   "year": 2023,
+   "title": "Comparative genomic and phenotypic analyses of pathogenic fungi Neoscytalidium dimidiatum and Bipola",
+   "twins": [
+    [
+     "W3157387559",
+     null,
+     "10.21203/rs.3.rs-96876/v1",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920531485",
+   "year": 2017,
+   "title": "Raptor regulates functional maturation of murine beta cells",
+   "twins": [
+    [
+     "W2624357844",
+     "Nature Communications",
+     "10.1038/ncomms15755",
+     2017
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6901666645",
+   "year": 2020,
+   "title": "Time trends, geographical, socio-economic, and gender disparities in neonatal mortality in Burundi: ",
+   "twins": [
+    [
+     "W3104435992",
+     "Archives of Public Health",
+     "10.1186/s13690-020-00501-3",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920405074",
+   "year": 2023,
+   "title": "Exclusive waterpipe smoking and the risk of nasopharynx cancer in Vietnamese men, a prospective coho",
+   "twins": [
+    [
+     "W4385800293",
+     "Scientific Reports",
+     "10.1038/s41598-023-40253-y",
+     2023
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6920358017",
+   "year": 2012,
+   "title": "Population Distribution, Settlement Patterns and Accessibility across Africa in 2010",
+   "twins": [
+    [
+     "W2052458288",
+     "PLoS ONE",
+     "10.1371/journal.pone.0031743",
+     2012
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6939306280",
+   "year": 2020,
+   "title": "ROP18-Mediated Transcriptional Reprogramming of HEK293T Cell Reveals New Roles of ROP18 in the Inter",
+   "twins": [
+    [
+     "W3109102615",
+     "Frontiers in Cellular and Infection Microbiology",
+     "10.3389/fcimb.2020.586946",
+     2020
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6958031546",
+   "year": 2013,
+   "title": "Consensus Analysis of Second-Order Multiagent Systems with General Topology and Time Delay",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6901705344",
+   "year": 2021,
+   "title": "3D-printed cell-free PCL\u2013MECM scaffold with biomimetic micro-structure and micro-environment to enha",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6920721665",
+   "year": 2022,
+   "title": "Psychological impact on dental students and professionals in a Lima population during COVID-19s wave",
+   "twins": [
+    [
+     "W4293567717",
+     "Scientific Reports",
+     "10.1038/s41598-022-18899-x",
+     2022
+    ]
+   ]
+  },
+  {
+   "gsis": "https://openalex.org/W6976995109",
+   "year": 2004,
+   "title": "Avalia\u00e7\u00e3o do enraizamento de p\u00e2mpanos de porta-enxertos de videira em diferentes substratos avaliado",
+   "twins": []
+  },
+  {
+   "gsis": "https://openalex.org/W6958245641",
+   "year": 2018,
+   "title": "Effect of different smoking methods on the quality of pork sausages",
+   "twins": [
+    [
+     "W2905993032",
+     "Veterinary World",
+     "10.14202/vetworld.2018.1712-1719",
+     2018
+    ]
+   ]
+  }
+ ]
+}

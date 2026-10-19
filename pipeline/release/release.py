@@ -71,8 +71,14 @@ def current() -> dict | None:
     return json.loads(m.read_text()) if m.exists() else None
 
 
-def build(gpu_wait: bool, resume: str | None = None) -> str:
-    """resume: the id of a build that stopped; its finished products are kept, the rest is built."""
+# Opt-in products (DATA.md "Paper identity"): off unless a build asks for them (release.py build --identity).
+IDENTITY = Path("/mnt/fast/scholarsreadinglist/identity/openalex-2026-09-23")
+RESCUE = Path("/mnt/fast/scholarsreadinglist/rescue/openalex-2026-09-23/r1")
+
+
+def build(gpu_wait: bool, resume: str | None = None, identity: bool = False) -> str:
+    """resume: the id of a build that stopped; its finished products are kept, the rest is built. identity: one row per
+    paper (paper versions), the rescued-abstracts corpus and its shards, and the author-identity overlay."""
     rid = resume or time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
     rel = ROOT / "releases" / rid
     rel.mkdir(parents=True, exist_ok=bool(resume))
@@ -99,8 +105,12 @@ def build(gpu_wait: bool, resume: str | None = None) -> str:
     else:
         with updates.locked("release rows"):
             corpora = [CORPUS] + ([updates.latest_corpus()] if updates.latest_corpus() else [])
+            extra = []
+            if identity:
+                corpora += [RESCUE / "corpus"]
+                extra = ["--versions", str(IDENTITY / "versions"), "--extra-groups", f"rescue-{RESCUE.name}"]
             secs["rows"] = step(SEARCH_PY, "pipeline/release/rows.py", "--out", str(rows), "--atlas", str(ATLAS),
-                               *[x for c in corpora for x in ("--corpus", str(c))])
+                               *[x for c in corpora for x in ("--corpus", str(c))], *extra)
     try:   # GPU step: best effort unless asked to wait (the map then shows what is placed)
         args = ["--atlas", str(ATLAS)] + ([] if gpu_wait else ["--min-free-mib", "2048", "--no-wait"])
         secs["positions"] = step(EMBED_PY, "pipeline/release/positions.py", *args, cwd=REPO / "pipeline" / "embeddings")
@@ -123,7 +133,9 @@ def build(gpu_wait: bool, resume: str | None = None) -> str:
            "paths": {"rows": str(rows), "index": str(index), "smr": str(smr), "tiles": str(tiles),
                      "positions": str(positions), "corpus": str(CORPUS), "atlas": str(ATLAS),
                      "citations": str(CITATIONS), "quantizer": str(quantizer()),
-                     **({"updates": str(corpora[1])} if len(corpora) > 1 else {})},
+                     **({"updates": str(corpora[1])} if len(corpora) > 1 and "updates" in str(corpora[1]) else {}),
+                     **({"rescue": str(RESCUE / "corpus"), "versions": str(IDENTITY / "versions"),
+                         "identity": str(IDENTITY / "authors")} if identity else {})},
            "embeddings": {"plan": rm["embedding_plan"], "rows": rm["rows"], "last_commit_utc": rm["last_commit_utc"]},
            "counts": {"publications": rm["publications"], "searchable": rm["kept"], "readable_on_site": rm["smr_kept"],
                       "on_map": tm["papers"], "kept_without_position": tm["kept_without_position"]},
@@ -140,16 +152,26 @@ def check(rid: str) -> dict:
     need = [p["rows"] / "meta.json", p["index"] / "manifest.json", p["index"] / "ivf.faiss",
             p["smr"] / "manifest.json", p["tiles"] / "index.json", p["corpus"] / "works.sqlite",
             p["atlas"] / "reference.npz", p["citations"] / "meta.json"]
-    if "updates" in p:
-        need += [p["updates"] / "DONE.json", p["updates"] / "works.sqlite", p["updates"] / "keywords" / "DONE.json"]
+    for c in ("updates", "rescue"):
+        if c in p:
+            need += [p[c] / "DONE.json", p[c] / "works.sqlite", p[c] / "keywords" / "DONE.json"]
+    if "versions" in p:
+        need += [p["versions"] / "versions.sqlite", p["versions"] / "rank.npy"]
+    if "identity" in p:
+        need += [p["identity"] / "meta.json", p["identity"] / "records.parquet", p["identity"] / "moves.parquet"]
     missing = [str(f) for f in need if not f.exists()]
     if missing:
         raise SystemExit(f"release {rid} incomplete: {missing}")
     cur = current()
     if cur and cur["id"] != rid:
+        # extra versions of a paper leave the index by design (paper versions): they are not a loss
+        dropped = lambda x: json.loads((Path(x["paths"]["rows"]) / "meta.json").read_text()).get("versions_dropped", 0)  # noqa: E731
         for k in ("searchable", "readable_on_site"):
-            if m["counts"][k] < 0.98 * cur["counts"][k]:
-                raise SystemExit(f"{k} fell from {cur['counts'][k]:,} to {m['counts'][k]:,}: refusing")
+            new, old_ = m["counts"][k], cur["counts"][k]
+            if k == "searchable":
+                new, old_ = new + dropped(m), old_ + dropped(cur)
+            if new < 0.98 * old_:
+                raise SystemExit(f"{k} fell from {old_:,} to {new:,} (versions counted back in): refusing")
     return m
 
 
@@ -246,6 +268,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build"); b.add_argument("--gpu-wait", action="store_true")
+    b.add_argument("--identity", action="store_true", help="paper versions, rescued abstracts and author identity")
     b.add_argument("--resume", metavar="ID", help="finish a build that stopped (keeps its finished products)")
     pb = sub.add_parser("publish"); pb.add_argument("id")
     sub.add_parser("rollback")
@@ -254,7 +277,7 @@ def main() -> None:
     g = sub.add_parser("gc"); g.add_argument("--keep", type=int, default=2); g.add_argument("--yes", action="store_true")
     a = ap.parse_args()
     if a.cmd == "build":
-        print(build(a.gpu_wait, a.resume))
+        print(build(a.gpu_wait, a.resume, a.identity))
     elif a.cmd == "publish":
         publish(a.id)
     elif a.cmd == "rollback":

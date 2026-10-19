@@ -1,0 +1,301 @@
+{
+ "records_2plus": [
+  [
+   353521,
+   9784,
+   2.77
+  ]
+ ],
+ "unrelated": [
+  [
+   9784,
+   3282
+  ]
+ ],
+ "by_bucket": [
+  [
+   "10+",
+   3109,
+   6.47
+  ],
+  [
+   "2",
+   233825,
+   2.4
+  ],
+  [
+   "3-4",
+   91985,
+   3.2
+  ],
+  [
+   "5-9",
+   24602,
+   4.19
+  ]
+ ],
+ "examples": [
+  [
+   "Wei Te Lei",
+   [
+    "Lei Wei",
+    "Wei Lei"
+   ],
+   7
+  ],
+  [
+   "Sanjeevikumar Padmanaban",
+   [
+    "Padmanaban Sanjeevikumar",
+    "Sanjeevikumar Padmanaban"
+   ],
+   3
+  ],
+  [
+   "L. Abdelmoula",
+   [
+    "L. Abdelmoula",
+    "Abdelmoula Leila",
+    "Leila Abdelmoula"
+   ],
+   6
+  ],
+  [
+   "Qin Ping Yu",
+   [
+    "Yu Qin",
+    "Qin Yu"
+   ],
+   4
+  ],
+  [
+   "Hans H. Cheng",
+   [
+    "Hans H. Cheng",
+    "Hans H Cheng",
+    "HH Cheng",
+    "Cheng Hans"
+   ],
+   4
+  ],
+  [
+   "Han Xiang Hu",
+   [
+    "Han, Heuisoo",
+    "Han Hu"
+   ],
+   3
+  ],
+  [
+   "Hatem Masmoudi",
+   [
+    "Masmoudi Hatem",
+    "H. Masmoudi"
+   ],
+   3
+  ],
+  [
+   "Ruiqing Liu",
+   [
+    "Ruiqing Liu",
+    "Xiujing Lin"
+   ],
+   3
+  ],
+  [
+   "Riccardo Giuseppe Bertolo",
+   [
+    "Riccardo Bertolo",
+    "Riccardo BERTOLO",
+    "Bertolo Riccardo",
+    "R. Bertolo"
+   ],
+   8
+  ],
+  [
+   "Thierry Roisnel",
+   [
+    "Thierry Roisnel",
+    "Roisnel Thierry"
+   ],
+   3
+  ],
+  [
+   "B. S. B. S. Manoj",
+   [
+    "Bharat Manoj",
+    "B. S. Manoj",
+    "Manoj BS"
+   ],
+   3
+  ],
+  [
+   "Christian A. Walter",
+   [
+    "Walter Christian",
+    "Christian Walter",
+    "Walter, Christian"
+   ],
+   8
+  ],
+  [
+   "Chen Ling",
+   [
+    "Chen Ling",
+    "Ling Chen"
+   ],
+   3
+  ],
+  [
+   "Manel Mart\u00ednez",
+   [
+    "Manel Martinez",
+    "M. Mart\u00ednez",
+    "M. Mart\u0131\u0301nez"
+   ],
+   4
+  ],
+  [
+   "Susana Gilaverte",
+   [
+    "Susana Gilaverte",
+    "Susana Gilaverte Hentz"
+   ],
+   3
+  ],
+  [
+   "\u041a. \u041b. \u041c\u0443\u0440\u0430\u0442\u0438\u043a\u043e\u0432",
+   [
+    "Muratikov K. L.",
+    "Kyrill Muratikov",
+    "K. L. Muratikov"
+   ],
+   3
+  ],
+  [
+   "Yang Hui Guo",
+   [
+    "Yang Guo",
+    "Guo Hui Yang"
+   ],
+   3
+  ],
+  [
+   "Luis Felipe Callado",
+   [
+    "L.F. Callado",
+    "Koldo Callado Hernando",
+    "Luis F. Callado"
+   ],
+   4
+  ],
+  [
+   "Zhong Shi",
+   [
+    "Shi Zhong",
+    "Z. Shi",
+    "Zhong Shi"
+   ],
+   3
+  ],
+  [
+   "Silvia Antol\u00edn",
+   [
+    "Silvia Antol\u00edn Novoa",
+    "S. Antolin",
+    "Silvia Antolin",
+    "S Antol\u00edn"
+   ],
+   5
+  ],
+  [
+   "Alastair D Hay",
+   [
+    "Alastair Hay Leyland",
+    "Alastair D Hay"
+   ],
+   4
+  ],
+  [
+   "Subramanian Yashonath",
+   [
+    "S. Yashonath",
+    "Yashonath Subramanian"
+   ],
+   3
+  ],
+  [
+   "S. P. S\u00f8rensen",
+   [
+    "S. P. S\u00f8rensen",
+    "Sorensen, S. P.",
+    "S. Sorensen"
+   ],
+   3
+  ],
+  [
+   "Philip L. McCarthy",
+   [
+    "Philip L McCarthy",
+    "Philip L. McCarthy",
+    "Philip McCarthy",
+    "P McCarthy Jr"
+   ],
+   6
+  ],
+  [
+   "Teodoro Lasanta Mart\u00ednez",
+   [
+    "Teodoro Lasanta Mart\u00ednez",
+    "Teodoro Lasanta",
+    "T. Lasanta"
+   ],
+   4
+  ],
+  [
+   "Kiljae K. Lee",
+   [
+    "Kiljae Lee",
+    "Lee Kil-Jae"
+   ],
+   3
+  ],
+  [
+   "Mina C. Hosseinipour",
+   [
+    "Hosseinipour, Mina C.",
+    "Mina Hosseinipour",
+    "Hosseinipour, Mina",
+    "Hosseinipour, Mina C",
+    "M. C. Hosseinipour"
+   ],
+   9
+  ],
+  [
+   "Gnanasekaran Aghila",
+   [
+    "G Aghila",
+    "Aghila Gnanasekaran",
+    "G. Aghila"
+   ],
+   3
+  ],
+  [
+   "He Zhang",
+   [
+    "Zhang He",
+    "He Zhang"
+   ],
+   3
+  ],
+  [
+   "Yang Li",
+   [
+    "Yang Li",
+    "Li Chun Yang",
+    "Li Yang"
+   ],
+   3
+  ]
+ ]
+}

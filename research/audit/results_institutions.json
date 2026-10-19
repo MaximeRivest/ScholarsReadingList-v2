@@ -1,0 +1,247 @@
+{
+ "checked": 19800,
+ "no_name_overlap": 984,
+ "pct": 4.97,
+ "examples": [
+  [
+   "Population and Quantitative Health Sciences, UMass Medical School, Worcester, MA",
+   "University of Massachusetts Chan Medical School",
+   "US",
+   "education"
+  ],
+  [
+   "Biotechnology and Nanotechnology Research Centre, MARDI HQ, Persiaran MARDI-UPM, 43400 Serdang, Selangor, Malaysia",
+   "Malaysian Agricultural Research and Development Institute",
+   "MY",
+   "government"
+  ],
+  [
+   "Chemistry Department, Faculty of Science, Albaha University, P.O. Box 1988, Albaha 65799, Saudi Arabia",
+   "Al Baha University",
+   "SA",
+   "education"
+  ],
+  [
+   "ENEA, Dipartimento Sviluppo Tecnologie di Punta, PO Box 65, 00044 Frascati, Italy",
+   "National Agency for New Technologies, Energy and Sustainable Economic Development",
+   "IT",
+   "government"
+  ],
+  [
+   "Department of Surgery, RIPAS Hospital, Bandar Seri Begawan BA 1710, Brunei Darussalam",
+   "Raja Isteri Pengiran Anak Saleha Hospital",
+   "BN",
+   "healthcare"
+  ],
+  [
+   "CSIRO Division of Animal Production, Private Bag, P.O. Wembley, W.A. 6014, Australia",
+   "Commonwealth Scientific and Industrial Research Organisation",
+   "AU",
+   "government"
+  ],
+  [
+   "Venezuelan Institute for Scientific Research",
+   "Instituto Venezolano de Investigaciones Cient\u00edficas",
+   "VE",
+   "facility"
+  ],
+  [
+   "Instituto de Astronom\u00eda y F\u00edsica del Espacio (IAFE), CONICET-UBA, Buenos Aires, Argentina",
+   "Institute of Astronomy and Space Physics",
+   "AR",
+   "facility"
+  ],
+  [
+   "P\u00e4dagogische Hochschule Luzern",
+   "University of Teacher Education Lucerne",
+   "CH",
+   "education"
+  ],
+  [
+   "C\u00e1tedra de Toxicolog\u00eda Farmacolog\u00eda y Bioqu\u00edmica Legal, FBCB-UNL, CONICET, Ciudad Universitaria, Paraje El Pozo S/N (300",
+   "Consejo Nacional de Investigaciones Cient\u00edficas y T\u00e9cnicas",
+   "AR",
+   "government"
+  ],
+  [
+   "Department of Nursing, Da-Yeh University, Changhua, Taiwan",
+   "Dayeh University",
+   "TW",
+   "education"
+  ],
+  [
+   "Instytut Bada\u0144 Literackich Polskiej Akademii Nauk, Pracownia Literatury Renesansu i Baroku",
+   "Institute of Literary Research of the Polish Academy of Sciences",
+   "PL",
+   "facility"
+  ],
+  [
+   "SVTC, Austin, Texas 77841, USA",
+   "SVT Associates (United States)",
+   "US",
+   "company"
+  ],
+  [
+   "Observatoire Astronomique de l'Universit\u00e9 de Gen\u00e8ve",
+   "University of Geneva",
+   "CH",
+   "education"
+  ],
+  [
+   "MicroSilicon Inc",
+   "MicroVision (United States)",
+   "US",
+   "company"
+  ],
+  [
+   "Institute of Chemistry and technology of Polymers, ICTP-CSIC, Juan de la Cierva 3, 28000 Madrid, Spain",
+   "Instituto de Ciencia y Tecnolog\u00eda de Pol\u00edmeros",
+   "ES",
+   "facility"
+  ],
+  [
+   "Department of Public Finance and Infrastructure Policy, Vienna University of Technology, Vienna, Austria;",
+   "TU Wien",
+   "AT",
+   "education"
+  ],
+  [
+   "Dep. Appl. Sci., Guwahati Univ., Guwahati 781 014, India",
+   "Gauhati University",
+   "IN",
+   "education"
+  ],
+  [
+   "Psychiatric Department III, University of G\u00f6teborg, Sweden",
+   "University of Gothenburg",
+   "SE",
+   "education"
+  ],
+  [
+   "Universidad del Pa\u00eds Vasco",
+   "University of the Basque Country",
+   "ES",
+   "education"
+  ],
+  [
+   "AGH University of Science and Technology, Poland",
+   "AGH University of Krakow",
+   "PL",
+   "education"
+  ],
+  [
+   "Institute of Immunohematology (ICMR), 13th Floor, New Multi-Storeyed Building, KEM Hospital Campus, Parel, Mumbai - 400 ",
+   "Indian Council of Medical Research",
+   "IN",
+   "government"
+  ],
+  [
+   "Groupement National de Physique des Hautes Energies, Focal point, LabUFR-PHE, Rabat, Morocco",
+   "National School of Mineral Industry",
+   "MA",
+   "education"
+  ],
+  [
+   "Central Research and Development, E.I. du Pont de Nemours and Co., Wilmington, USA",
+   "DuPont (United States)",
+   "US",
+   "company"
+  ],
+  [
+   "National University of the Littoral",
+   "Universidad Nacional del Litoral",
+   "AR",
+   "education"
+  ],
+  [
+   "Institute of Clinical Pharmacology, University of Berne, Berne, Switzerland",
+   "University of Bern",
+   "CH",
+   "education"
+  ],
+  [
+   "Associazione EURATOM-ENEA sulla Fusione, Centro Ricerche Frascati, CP. 65-00044\u2009Frascati (Rome), Italy",
+   "National Agency for New Technologies, Energy and Sustainable Economic Development",
+   "IT",
+   "government"
+  ],
+  [
+   "ICAR-CAZRI, Jodhpur 342 003, India",
+   "Central Arid Zone Research Institute",
+   "IN",
+   "government"
+  ],
+  [
+   "MDACC, Houston,TX, USA",
+   "Mississippi Delta Community College",
+   "US",
+   "education"
+  ],
+  [
+   "Department of Public Medicine, Second University of Naples, Naples, Italy",
+   "University of Campania \"Luigi Vanvitelli\"",
+   "IT",
+   "education"
+  ],
+  [
+   "Ground Systems Group, Hughes Aircraft Company, Fullerton, CA, USA",
+   "HRL Laboratories (United States)",
+   "US",
+   "company"
+  ],
+  [
+   "Uniklinik Saarland, Klinik f\u00fcr diagnostische und interventionelle Radiologie, Homburg",
+   "Universit\u00e4tsklinikum des Saarlandes",
+   "DE",
+   "healthcare"
+  ],
+  [
+   "Bangabandhu Sheikh Mujib Medical University",
+   "Bangladesh Medical University",
+   "BD",
+   "education"
+  ],
+  [
+   "Semenenko Institute of Geochemistry , Mineralogy and Ore Formation of the National Academy of Sciences of Ukraine 03142 ",
+   "Palladin Institute of Biochemistry",
+   "UA",
+   "facility"
+  ],
+  [
+   "CNR-IMM, Stradale Primosole 50, 95121 Catania, Italy",
+   "Institute for Microelectronics and Microsystems",
+   "IT",
+   "facility"
+  ],
+  [
+   "NSF\u2019s National Optical-Infrared Astronomy Research Laboratory, Tucson, AZ, USA",
+   "NSF NOIRLab",
+   "US",
+   "facility"
+  ],
+  [
+   "Bangabandhu Sheikh Mujib Medical University",
+   "Bangladesh Medical University",
+   "BD",
+   "education"
+  ],
+  [
+   "CNR-ISTI, HIIS Laboratory, Via Moruzzi 1, 56124, Pisa, Italy",
+   "Istituto di Scienza e Tecnologie dell'Informazione \"Alessandro Faedo\"",
+   "IT",
+   "facility"
+  ],
+  [
+   "Unidad de Genomica de Poblaciones Aplicada a la Salud, Facultad de Quimica, UNAM/Instituto Nacional de Medicina Genomica",
+   "National Institute of Genomic Medicine",
+   "MX",
+   "government"
+  ],
+  [
+   "AGH University of Science and Technology, al. Mickiewicza 30, 30-059, Poland",
+   "AGH University of Krakow",
+   "PL",
+   "education"
+  ]
+ ]
+}

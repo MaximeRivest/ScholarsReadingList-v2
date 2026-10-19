@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="692" font-family="Helvetica, Arial, sans-serif" font-size="14">
+<rect width="1100" height="692" fill="white"/>
+<text x="20" y="28" font-size="18" font-weight="bold">Where the paper database is weak — defect rates measured on a 1M-work sample, 2026-10-18 (percent)</text>
+<text x="460" y="67" text-anchor="end">Authorships with no author record (site corpus)</text>
+<rect x="470" y="50" width="95.7" height="24" fill="#c0392b" rx="3"/>
+<text x="573.7" y="67" font-weight="bold">16.5%</text>
+<text x="460" y="101" text-anchor="end">Prolific ORCID authors split over several records</text>
+<rect x="470" y="84" width="209.4" height="24" fill="#c0392b" rx="3"/>
+<text x="687.4" y="101" font-weight="bold">36.1%</text>
+<text x="460" y="135" text-anchor="end">ORCID authors (seen 2+) split over several records</text>
+<rect x="470" y="118" width="23.5" height="24" fill="#c0392b" rx="3"/>
+<text x="501.5" y="135" font-weight="bold">4.05%</text>
+<text x="460" y="169" text-anchor="end">Author records that merge two people (est.)</text>
+<rect x="470" y="152" width="1.2" height="24" fill="#c0392b" rx="3"/>
+<text x="479.2" y="169" font-weight="bold">0.2%</text>
+<text x="460" y="203" text-anchor="end">OpenAlex subfield wrong vs experts, disciplinary journals</text>
+<rect x="470" y="186" width="307.4" height="24" fill="#8e44ad" rx="3"/>
+<text x="785.4" y="203" font-weight="bold">53%</text>
+<text x="460" y="237" text-anchor="end">OpenAlex subfield wrong vs experts, multidisciplinary</text>
+<rect x="470" y="220" width="440.8" height="24" fill="#8e44ad" rx="3"/>
+<text x="918.8" y="237" font-weight="bold">76%</text>
+<text x="460" y="271" text-anchor="end">Primary topic score < 0.5 (site corpus)</text>
+<rect x="470" y="254" width="72.5" height="24" fill="#8e44ad" rx="3"/>
+<text x="550.5" y="271" font-weight="bold">12.5%</text>
+<text x="460" y="305" text-anchor="end">Publications in the junk topic 'Military Technology'</text>
+<rect x="470" y="288" width="26.7" height="24" fill="#8e44ad" rx="3"/>
+<text x="504.7" y="305" font-weight="bold">4.6%</text>
+<text x="460" y="339" text-anchor="end">Elsevier articles without abstract</text>
+<rect x="470" y="322" width="498.2" height="24" fill="#2980b9" rx="3"/>
+<text x="976.2" y="339" font-weight="bold">85.9%</text>
+<text x="460" y="373" text-anchor="end">Springer articles without abstract</text>
+<rect x="470" y="356" width="511.0" height="24" fill="#2980b9" rx="3"/>
+<text x="989.0" y="373" font-weight="bold">88.1%</text>
+<text x="460" y="407" text-anchor="end">Expert-set articles missing from the site corpus</text>
+<rect x="470" y="390" width="156.6" height="24" fill="#2980b9" rx="3"/>
+<text x="634.6" y="407" font-weight="bold">27%</text>
+<text x="460" y="441" text-anchor="end">Site corpus that is 'Greater South' mirror copies</text>
+<rect x="470" y="424" width="28.4" height="24" fill="#16a085" rx="3"/>
+<text x="506.4" y="441" font-weight="bold">4.9%</text>
+<text x="460" y="475" text-anchor="end">Preprints with a same-title published twin</text>
+<rect x="470" y="458" width="226.2" height="24" fill="#16a085" rx="3"/>
+<text x="704.2" y="475" font-weight="bold">39%</text>
+<text x="460" y="509" text-anchor="end">Articles since 2000 with zero references (site corpus)</text>
+<rect x="470" y="492" width="200.1" height="24" fill="#7f8c8d" rx="3"/>
+<text x="678.1" y="509" font-weight="bold">34.5%</text>
+<text x="460" y="543" text-anchor="end">Conference papers without a venue</text>
+<rect x="470" y="526" width="226.2" height="24" fill="#7f8c8d" rx="3"/>
+<text x="704.2" y="543" font-weight="bold">39%</text>
+<text x="460" y="577" text-anchor="end">Affiliation strings not linked to an institution</text>
+<rect x="470" y="560" width="27.3" height="24" fill="#7f8c8d" rx="3"/>
+<text x="505.3" y="577" font-weight="bold">4.7%</text>
+<text x="460" y="611" text-anchor="end">Retracted-looking titles not flagged</text>
+<rect x="470" y="594" width="139.2" height="24" fill="#7f8c8d" rx="3"/>
+<text x="617.2" y="611" font-weight="bold">24%</text>
+<text x="460" y="645" text-anchor="end">'English' records that are not English</text>
+<rect x="470" y="628" width="5.8" height="24" fill="#7f8c8d" rx="3"/>
+<text x="483.8" y="645" font-weight="bold">1%</text>
+<text x="20" y="680" font-size="12" fill="#555">red = authors · purple = topics · blue = abstracts/coverage · green = duplicates · grey = other. Details: research/audit/README.md</text>
+</svg>

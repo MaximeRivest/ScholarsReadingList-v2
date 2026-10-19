@@ -221,3 +221,24 @@ door allows both. The site identifies a tapped study with an 8-byte HTTP range o
 in flight so taps are not stuck behind them (a tap: 2-3 s while tiles load, 0.1-0.4 s otherwise). Opening the map
 from a cold cache: sharp image 2.5-3.6 s (GitHub Pages), live map ~11 s. The structural fix is to serve the
 immutable `v2/` files from somewhere with real bandwidth (the relay's own disk, or a CDN), not through the tunnel.
+
+## Paper identity, rescued abstracts, author identity (2026-10-19, built, not live)
+
+Steps 1-3 of `research/audit/RECOMMENDATIONS.md` (measurements: `research/audit/README.md`). All three are derived
+per snapshot and **opt-in**: the nightly release does not use them until `release.py build --identity` (or the
+nightly) is switched on; the public API ignores them unless its release manifest names them.
+
+| Product | Where | Built by | What it changes |
+|---|---|---|---|
+| paper versions | `/mnt/fast/scholarsreadinglist/identity/<snapshot>/versions/` | `pipeline/identity/build_versions.py` + `versions_lookup.py` (~35 min) | rows.py `--versions`: one row per paper in the semantic index; API: a paper listed once with its `versions` |
+| authorships, flat | `.../identity/<snapshot>/authorships/` (1.32B rows, 33 GB) | `pipeline/identity/extract_authorships.py` (~50 min, HDD) | input of author identity |
+| author identity | `.../identity/<snapshot>/authors/` (records, moves, eval, scores) | `pipeline/identity/authors.py` (~15 min), `evaluate.py` | API (`SRL_IDENTITY` / manifest `identity`): a person's ORCID records as one page, moved and attached authorships, non-people out of people search |
+| PubMed, parsed | `/mnt/bulk/pubmed/` (baseline + updates, 70 GB; `pubmed.parquet`: 41.3M PMIDs, 29.5M abstracts) | `pipeline/pubmed/download.py`, `parse.py` | input of the rescue |
+| rescued abstracts | `/mnt/fast/scholarsreadinglist/rescue/<snapshot>/<run>/` (`corpus/` like the updates corpus; `sources.parquet`) | `pipeline/rescue/build.py` | a third corpus (`--corpus`), its vectors in shard groups `rescue-<run>` (`pipeline/rescue/embed.py`, GPU 1, 3 GiB) taken only with rows.py `--extra-groups` |
+
+Rescue shards live in the backfill's shard tree under `year=*/rescue-<run>/`: every existing reader globs
+`year=*/rg-*/` and does not see them. A test release is built under `RELEASE_ROOT=/mnt/fast/scholarsreadinglist/release-identity`
+(positions and quantizer linked from the real root), so the nightly's gc never touches it. The private API on the
+`identity` branch of `search/` runs with `search-identity/identity-dev.sh up [RELEASE_DIR]` (127.0.0.1:8812).
+Publishing checks: `publish` refuses a release whose searchable count fell > 2 %; one with versions falls ~3.5 % by
+design (duplicates removed), so the check compares searchable + versions_dropped (release.py check).

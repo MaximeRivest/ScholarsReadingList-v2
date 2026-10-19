@@ -1,0 +1,163 @@
+{
+ "top_sources_articles": [
+  [
+   null,
+   47714,
+   7.26,
+   1800,
+   2026,
+   35.5,
+   65.4,
+   2.48,
+   12.6
+  ],
+  [
+   "PubMed",
+   36550,
+   5.56,
+   1785,
+   2026,
+   34.4,
+   87.8,
+   6.93,
+   9.6
+  ],
+  [
+   "Greater South Information System",
+   21728,
+   3.31,
+   1937,
+   2024,
+   100.0,
+   93.1,
+   0.02,
+   0.0
+  ],
+  [
+   "CyberLeninK (CyberLeninka)",
+   12627,
+   1.92,
+   1990,
+   2025,
+   7.6,
+   0.6,
+   0.01,
+   0.3
+  ],
+  [
+   "RePEc: Research Papers in Economics",
+   8071,
+   1.23,
+   1941,
+   2025,
+   96.2,
+   7.4,
+   0.52,
+   2.7
+  ],
+  [
+   "DOAJ (DOAJ: Directory of Open Access Journals)",
+   7142,
+   1.09,
+   1919,
+   2026,
+   95.5,
+   51.8,
+   1.04,
+   8.5
+  ],
+  [
+   "Medical Entomology and Zoology",
+   6610,
+   1.01,
+   1809,
+   2021,
+   0.8,
+   16.7,
+   1.36,
+   0.9
+  ],
+  [
+   "Institutional Digital Library (Federal Senate)",
+   5854,
+   0.89,
+   1918,
+   2025,
+   33.6,
+   0.8,
+   0.0,
+   0.0
+  ],
+  [
+   "Zenodo (CERN European Organization for Nuclear Research)",
+   5574,
+   0.85,
+   1852,
+   2028,
+   88.4,
+   59.1,
+   0.38,
+   1.3
+  ],
+  [
+   "ChemInform",
+   4835,
+   0.74,
+   1972,
+   2016,
+   77.2,
+   70.8,
+   0.28,
+   88.2
+  ],
+  [
+   "Dialnet (Universidad de la Rioja)",
+   4045,
+   0.62,
+   1895,
+   2026,
+   42.2,
+   18.3,
+   0.88,
+   4.8
+  ],
+  [
+   "Acta Scientiarum Naturalium Universitatis Sunyatseni",
+   3756,
+   0.57,
+   1978,
+   2021,
+   76.9,
+   15.0,
+   0.23,
+   0.3
+  ]
+ ],
+ "gsis_examples": [
+  [
+   "Experimental Study on the Mechanical Properties of Biomass Briquettes from a Mixture of Rice Husk and Pine Sawdust",
+   2020,
+   "https://doi.org/10.60692/5g9dc-x7955"
+  ],
+  [
+   "Speciation of common Gram-negative pathogens using a highly multiplexed high resolution melt curve assay",
+   2018,
+   "https://doi.org/10.60692/xc0eq-8c058"
+  ],
+  [
+   "Partitioning no-take marine reserve (NTMR) and benthic habitat effects on density of small and large-bodied tropical wrasses",
+   2017,
+   "https://doi.org/10.60692/xmr37-88z05"
+  ],
+  [
+   "Experimental Determination of the Effect of Time of Exposure to Heat on Erosion Development in Different Soil Types",
+   2022,
+   "https://doi.org/10.60692/7b88m-qz312"
+  ],
+  [
+   "Noise prediction of axial piston pump based on different valve materials using a modified artificial neural network model",
+   2019,
+   "https://doi.org/10.60692/p4yb8-c7h18"
+  ]
+ ]
+}

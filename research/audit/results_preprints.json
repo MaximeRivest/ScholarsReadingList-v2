@@ -1,0 +1,1636 @@
+{
+ "checked": 150,
+ "with_published_twin": 58,
+ "rows": [
+  {
+   "preprint": "https://openalex.org/W6966875630",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "Probabilistic Synchronization of Pinning Control",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4200311948",
+   "year": 2021,
+   "source": "ScienceOpen",
+   "title": "Crosstalk among strenuous exercise, IL-6, and S-Protein Based Vaccines for COVID-19 may explain the ",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6929126141",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Orbital radius during the grazing envelope evolution",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2785968046",
+     "article",
+     "The Astrophysical Journal",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W6891951864",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "Dynamics of the Wigner Crystal of Composite Particles",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2768086906",
+     "article",
+     "Physical review. B./Physical review. B",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2920215067",
+   "year": 2018,
+   "source": "HAL (Le Centre pour la Communication Scientifique Directe)",
+   "title": "Community mills and women's empowerment in Burkina Faso",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6929667611",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Icosahedral quasicrystal, 1/1 and 2/1 approximants in Zn-based ternary alloys containing Au and Yb/T",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2982472836",
+     "article",
+     "Philosophical Magazine Letters",
+     2019
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3084615956",
+   "year": 2020,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Refining pairwise sequence alignments of membrane proteins by the incorporation of anchors",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3157095598",
+     "article",
+     "PLoS ONE",
+     2021
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4288874903",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Band selection for oxygenation estimation with multispectral/hyperspectral imaging",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6910334832",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Nonlinear Schr\u00f6dinger Equations for Bose-Einstein Condensates",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4295122159",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "Soliton-effect self-compressed single-cycle 9.6-W mid-IR pulses from a 21-W OPCPA at 3.25 \u03bcm and 160",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4289644944",
+   "year": 2022,
+   "source": "arXiv (Cornell University)",
+   "title": "Geometric model for module categories of Dynkin quivers via hearts of total stability conditions",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4387252713",
+     "article",
+     "Journal of Algebra",
+     2023
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2766659369",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "Belykh attractor in Zaslavsky map and its transformation under smoothing",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2963803980",
+     "article",
+     "Izvestiya VUZ Applied Nonlinear Dynamics",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W6910814788",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Estimation of Relationship between Stimulation Current and Force Exerted during Isometric Contractio",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3206023333",
+   "year": 2021,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Chemical inhibition of auxin inactivation pathway uncovers the metabolic turnover of auxin homeostas",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3161386186",
+   "year": 2019,
+   "source": "SSRN Electronic Journal",
+   "title": "Management Approach of Small and Medium Food Processing Business for Success in Franchise System",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3128331443",
+   "year": 2020,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Clinal and seasonal change are correlated in Drosophila melanogaster natural populations",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6948171433",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Unitary Entanglement Construction in Hierarchical Networks",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2888019118",
+     "article",
+     "Physical Review A",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4230338492",
+   "year": 2020,
+   "source": null,
+   "title": "Assimilation of chlorophyll data into a stochastic ensemble simulation for the North Atlantic ocean",
+   "same_title_other_records": 2,
+   "published_twin": [
+    [
+     "W3009928321",
+     "article",
+     "Ocean science",
+     2020
+    ],
+    [
+     "W3107430315",
+     "conference-abstract",
+     null,
+     2020
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2745589504",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "A formal proof of a slight variant of Lindel\\\"of's hypothesis",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3126750930",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Open Bandit Dataset and Pipeline: Towards Realistic and Reproducible Off-Policy Evaluation",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6967095944",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "Entropy production and correlation spreading in the interaction between particle detector and therma",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6929478887",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "Exclusive diffractive production of $\u03c0^{+}\u03c0^{-}\u03c0^{+}\u03c0^{-}$ via the intermediate $\u03c3\u03c3$ and $\u03c1\u03c1$ states",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3108425711",
+   "year": 2020,
+   "source": null,
+   "title": "Mushroom thrombus\u201d A unique post transcatheter mitral valve replacement (Valve in valve) early compl",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4200382085",
+   "year": 2021,
+   "source": "ChemRxiv",
+   "title": "Heterogeneous Catalysts in Grammar School",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2604774050",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "Ramsey Theory for Binary Trees and the Separation of Tree-chromatic Number from Path-chromatic Numbe",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4300856765",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Mesoscopic electron transport and atomic gases, a review of Frank W. J. Hekking's scientific work",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3103882038",
+     "article",
+     "HAL (Le Centre pour la Communication Scientifique Directe)",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3206494379",
+   "year": 2021,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "A Proposed Unified Interphase Nucleus Chromosome Structure: Preliminary Preponderance of Evidence",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4283379403",
+     "article",
+     "Proceedings of the National Academy of Sciences",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3125774197",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "The role of the nominal iron content in the structural, compositional and physical properties of BaF",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2942159452",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Stability and bifurcations of two-dimensional systems with distributed delay and applications to a W",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4214597721",
+   "year": 2022,
+   "source": "medRxiv",
+   "title": "Longitudinal analysis of UK Biobank participants suggests age and APOE-dependent alterations of ener",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2747148117",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "VQS: Linking Segmentations to Questions and Answers for Supervised Attention in VQA and Question-Foc",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2963705779",
+     "conference-paper",
+     "2017 IEEE International Conference on Computer Vision (ICCV)",
+     2017
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4234424465",
+   "year": 2019,
+   "source": null,
+   "title": "The phylogenetic origin and evolution of acellular bone in teleost fishes: insights into osteocyte f",
+   "same_title_other_records": 2,
+   "published_twin": [
+    [
+     "W2909860944",
+     "review",
+     "Biological reviews/Biological reviews of the Cambridge Philosophical Society",
+     2019
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2593995686",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "Behavior of Oil under Breaking Waves by a Two-phase SPH Model",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3099326880",
+   "year": 2020,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Multistep mechanism of DNA replication-coupled G-quadruplex resolution",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3122266299",
+   "year": 2017,
+   "source": "RePEc: Research Papers in Economics",
+   "title": "Policy experiments in an agent-based model with credit networks",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2765639927",
+     "article",
+     "Economics",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4210266936",
+   "year": 2022,
+   "source": "medRxiv",
+   "title": "Detection of prevalent SARS-CoV-2 variant lineages in wastewater and clinical sequences from cities ",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4240557011",
+   "year": 2019,
+   "source": "ChemRxiv",
+   "title": "Fast Surface Immobilization of Native Proteins through Metal-Free Amino-yne Click Bioconjugation",
+   "same_title_other_records": 1,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2965419212",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "A construction of dynamical antropy on CAR algebras",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4281290782",
+   "year": 2022,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Purified cytosolic crystals from Bacillus thuringiensis as a novel active pharmaceutical ingredient ",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2788841485",
+   "year": 2018,
+   "source": null,
+   "title": "Low resolution accelerometers can be used to develop time-energy budgets of wild fur seals from capt",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4237608211",
+   "year": 2021,
+   "source": null,
+   "title": "Ecological Momentary Assessment: A Meta-Analysis on Designs, Samples, and Compliance across Research",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3037631014",
+   "year": 2020,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Interplay between UNG and AID governs intratumoral heterogeneity in mature B cell lymphoma",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3117716439",
+     "article",
+     "PLoS Genetics",
+     2020
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3094890970",
+   "year": 2020,
+   "source": null,
+   "title": "Existence of global weak solutions for the high frequency and small displacement oscillation fluid-s",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2964146303",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Local hidden-variable model for a recent experimental test of quantum nonlocality and local contextu",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2615053762",
+     "article",
+     "Physics Letters A",
+     2017
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3094611741",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Starlike Functions associated with a Petal Shaped Domain",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4287636198",
+     "article",
+     "Warwick Research Archive Portal (University of Warwick)",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2758256014",
+   "year": 2017,
+   "source": "TUbilio (Technical University of Darmstadt)",
+   "title": "Optical computing by injection-locked lasers",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4308693165",
+   "year": 2022,
+   "source": null,
+   "title": "Neglecting model parametric uncertainty can drastically underestimate flood risks",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4311514858",
+     "article",
+     "Earth s Future",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3139118617",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "Electrooptics of mm-scale polar domains in the ferroelectric splay nematic phase",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2529274494",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "Floquet Topological Phases Driven by $\\mathcal{PT}$ Symmetric Nonunitary Time Evolution",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4284679508",
+   "year": 2022,
+   "source": "Research Square",
+   "title": "Transcriptome profile of skeletal muscle using different sources of dietary fatty acids in male pigs",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4254162945",
+   "year": 2016,
+   "source": null,
+   "title": "Detection of a Yersinia pestis gene homologue in rodent samples",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W6962698330",
+     "article",
+     "Universit\u00e4tsbibliothek der FU Berlin Hochschulschriftenstelle u. Dokumentenserver",
+     2016
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2942670659",
+   "year": 2018,
+   "source": "SSRN Electronic Journal",
+   "title": "An Intersectional Critique of Protections for Indigenous Rape Victims in Court",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4223939811",
+   "year": 2022,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Olfactory Sensitivity Aligns with Caste Revealing Multipotential Minors and Specialized Soldier Majo",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4206220064",
+   "year": 2020,
+   "source": "Research Square",
+   "title": "Intravenous immunoglobulin treatment for patients with severe COVID-19: a retrospective multi-center",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6891841012",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Asteroid migration due to the Yarkovsky effect and the distribution of the Eos family",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3003308043",
+     "article",
+     "Monthly Notices of the Royal Astronomical Society",
+     2020
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3114524248",
+   "year": 2020,
+   "source": "medRxiv",
+   "title": "Association Between the Swallowing Reflex and the Development of Aspiration Pneumonia in Patients wi",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3081858383",
+   "year": 2020,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Iodoacetic acid disrupts mouse oocyte maturation by inducing oxidative stress and spindle abnormalit",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6929433175",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Intermediate scattering function of an anisotropic Brownian circle swimmer",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2751075612",
+     "article",
+     "Soft Matter",
+     2017
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4210737022",
+   "year": 2022,
+   "source": null,
+   "title": "The Samurai physician. Negotiation styles for informed consent and conflict mediation",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4286901808",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "Expectation Distance-based Distributional Clustering for Noise-Robustness",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4394862906",
+     "article",
+     "IEEE Transactions on Knowledge and Data Engineering",
+     2024
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2949435408",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "The Ramified Analytical Hierarchy using Extended Logics",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2885065647",
+     "article",
+     "Bulletin of Symbolic Logic",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2896263027",
+   "year": 2017,
+   "source": "RePEc: Research Papers in Economics",
+   "title": "Dualism, Poverty Exits and Growth Accelerations",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2613207246",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "Arity of universal quadratic forms over real quadratic fields",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2951126549",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Star Coloring of the Cartesian Product of Cycles",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3172227437",
+   "year": 2021,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "A dual allosteric pathway drives human mitochondrial Lon",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6891852136",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "Signatures of non-trivial pairing in the quantum walk of two-component bosons",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2436010377",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "Rate of convergence of attractors for semilinear singularly perturbed problems: scalar parabolic equ",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6910615913",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "Lack of a thermodynamic finite-temperature spin-glass phase in the two-dimensional randomly-coupled ",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2340099120",
+     "article",
+     "Physical review. B./Physical review. B",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W6910535446",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Giant enhancement of cryogenic thermopower by polar structural instability in the pressurized semime",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6910538309",
+   "year": 2022,
+   "source": "arXiv (Cornell University)",
+   "title": "3D Detection and Characterisation of ALMA Sources through Deep Learning",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2887577512",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "The Geometric M\\\"obius function and quadratic character sums",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4240536091",
+   "year": 2016,
+   "source": null,
+   "title": "Contribution of previous year\u2019s leaf N and soil N uptake to current year\u2019s leaf growth in sessile oa",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2274867936",
+     "article",
+     "Biogeosciences",
+     2016
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3004314202",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Murphy's law for toric vector bundles on smooth projective toric varieties",
+   "same_title_other_records": 1,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6891730486",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Searches for light sterile neutrinos with multitrack displaced vertices",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2809955384",
+   "year": 2018,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Rab1b and ARF5 are novel RNA-binding proteins involved in IRES-driven RNA localization",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4281385121",
+   "year": 2022,
+   "source": "Research Square",
+   "title": "The barriers dentists face to communicate cancer diagnosis: self-assessment based on SPIKES protocol",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4312129040",
+     "article",
+     "Medicina oral, patolog\u00eda oral y cirug\u00eda bucal",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3034170328",
+   "year": 2020,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "The Zinc Finger Antiviral Protein restricts SARS-CoV-2",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2418435064",
+   "year": 2016,
+   "source": "SSRN Electronic Journal",
+   "title": "A Critical Evaluation of Volatility in Indian Currency Market",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3122584999",
+     "article",
+     "Journals & Books Hosting (International Knowledge Sharing Platform)",
+     2016
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4238305673",
+   "year": 2018,
+   "source": null,
+   "title": "High Summertime Aerosol Organic Functional Group Concentrations from Marine and Seabird Sources at R",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2783181407",
+     "article",
+     "Atmospheric chemistry and physics",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4240257800",
+   "year": 2020,
+   "source": null,
+   "title": "Effect of Post-Treatment Fluvastatin for Hemorrhagic Shock in Rats",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4307355057",
+   "year": 2022,
+   "source": "Research Square",
+   "title": "Antiviral Therapy Inhibited HBV-reactivation and Improved Long-term Outcomes in Patients Who Underwe",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4319868336",
+     "article",
+     "World Journal of Surgical Oncology",
+     2023
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W6929434537",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Revisiting Transmission Scheduling in RF Energy Harvesting Wireless Communications",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2962731821",
+     "conference-paper",
+     "Proceedings of the Eighteenth ACM International Symposium on Mobile Ad Hoc Networking and Computing",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3215172661",
+   "year": 2021,
+   "source": "Preprints.org",
+   "title": "On the Potential of a Poly(Vinylidenefluoride-Co-hexafluoropropylene) Polymer Inclusion Membrane Con",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4225080946",
+     "article",
+     "Membranes",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4230774281",
+   "year": 2016,
+   "source": null,
+   "title": "Ecuadorian Glass Frogs: Current state of knowledge, new research trends and conservation",
+   "same_title_other_records": 1,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3196915175",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Direct observation of deterministic macroscopic entanglement",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3036322816",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Efficient Spatially Adaptive Convolution and Correlation",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3129913732",
+   "year": 2021,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "A framework for selectively breeding corals for assisted evolution",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6947927596",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Single Channel ECG for Obstructive Sleep Apnea Severity Detection using a Deep Learning Approach",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3158139420",
+   "year": 2020,
+   "source": null,
+   "title": "Validation of Differentially Expressed Brain-Enriched microRNAs in the Plasma of Parkinson\u2019s Disease",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3159346677",
+   "year": 2021,
+   "source": "Preprints.org",
+   "title": "A Socio-Technical Perspective on the Application of Green Ergonomics to Open-Plan Offices",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3039484671",
+   "year": 2020,
+   "source": "medRxiv",
+   "title": "Low-Impact Social Distancing Interventions to Mitigate Local Epidemics of SARS-CoV-2",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6967041215",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "Dynamical critical scaling of long-range interacting quantum magnets",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2799055644",
+     "article",
+     "Physical Review Letters",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4282961470",
+   "year": 2022,
+   "source": null,
+   "title": "Effect of Tocovid - a Tocotrienol-rich Vitamin E - in Mitigating Post-Operative Atrial Fibrillation ",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4206095646",
+   "year": 2020,
+   "source": null,
+   "title": "Disparities in Video and Telephone Visits Among Older Adults During the COVID-19 Pandemic: Cross-Sec",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6967006446",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "An Integral Spectral Representation of the Massive Dirac Propagator in the Kerr Geometry in Eddingto",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3100867249",
+     "article",
+     "University of Regensburg Publication Server (University of Regensburg)",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4238657466",
+   "year": 2019,
+   "source": null,
+   "title": "Quality-of-life Profile Of The Elderly Residing In A Very Low Population Density Rural Area",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6910574480",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Positive Scalar Curvature due to the Cokernel of the Classifying Map",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3037792548",
+     "article",
+     "Symmetry Integrability and Geometry Methods and Applications",
+     2020
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3104546837",
+   "year": 2020,
+   "source": "medRxiv",
+   "title": "The iHealth-T2D study: Statistical analysis plan for a cluster randomised controlled trial with inte",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2946031855",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Learning phase transitions: comparing PCA and SVM",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2915984970",
+   "year": 2019,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Genetic inhibition of PCSK9 , atherogenic lipoprotein concentrations, and calcific aortic valve sten",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2885970904",
+   "year": 2018,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Length-independent telomere damage drives cardiomyocyte senescence",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6947987871",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Mechanoradicals in tensed tendon collagen as a new source of oxidative stress",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4200267405",
+   "year": 2021,
+   "source": "Research Square",
+   "title": "Ultrasensitive and rapid identification of ESRI developer- and piperacillin/tazobactam-resistant Esc",
+   "same_title_other_records": 2,
+   "published_twin": [
+    [
+     "W4291954679",
+     "article",
+     "Emerging Microbes & Infections",
+     2022
+    ],
+    [
+     "W6921032668",
+     "article",
+     "Figshare",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W6929326794",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "CMB anomalies and the effects of local features of the inflaton potential",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2563971319",
+     "article",
+     "The European Physical Journal C",
+     2017
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4307934439",
+   "year": 2022,
+   "source": "arXiv (Cornell University)",
+   "title": "Circuit Solutions towards Broadband Piezoelectric Energy Harvesting: An Impedance Analysis",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6910539955",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "Bell's Inequality and Entanglement in Qubits",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2616368873",
+     "article",
+     "Journal of High Energy Physics",
+     2017
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4200634962",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "Multi-wavelength quasi-periodic pulsations in a stellar superflare",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4283831652",
+   "year": 2022,
+   "source": "Research Square",
+   "title": "Secondary systemic AL-amyloidosis associated with multiple myeloma: Clinical case and literature rev",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4283025097",
+   "year": 2022,
+   "source": "medRxiv",
+   "title": "DNA methylation analysis of archival lymphoreticular tissues in Creutzfeldt-Jakob disease and the pr",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2903409816",
+   "year": 2017,
+   "source": "RePEc: Research Papers in Economics",
+   "title": "The Credit Default Swap market contagion during recent crises: International evidence",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3103420081",
+   "year": 2016,
+   "source": "http://arxiv.org/pdf/1112.4249.pdf",
+   "title": "Lie group analysis for multi-scale plasma dynamics",
+   "same_title_other_records": 2,
+   "published_twin": [
+    [
+     "W1997224536",
+     "conference-abstract",
+     "Journal of Nonlinear Mathematical Physics",
+     2011
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3119511058",
+   "year": 2020,
+   "source": null,
+   "title": "Spanish Marine National Parks: Priority areas for the conservation of a vulnerable family of fishes",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2767610585",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "A Highly-Sensitive Cryogenic Phased Array Feed for the Green Bank Telescope",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2962840679",
+     "conference-paper",
+     "2017 XXXIInd General Assembly and Scientific Symposium of the International Union of Radio Science (URSI GASS)",
+     2017
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W6947792829",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "Tracing the first stars and galaxies of the Milky Way",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2546625522",
+     "article",
+     "Monthly Notices of the Royal Astronomical Society",
+     2017
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3168981369",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "DEWPython: A Python Implementation of the Deep Earth Water Model and Application to Ocean Worlds",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W7055776187",
+     "article",
+     "CaltechAUTHORS (California Institute of Technology)",
+     2021
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3123539906",
+   "year": 2021,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Dynamics and turnover of memory CD8 T cell responses following yellow fever vaccination",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3205879335",
+     "article",
+     "PLoS Computational Biology",
+     2021
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2953926287",
+   "year": 2019,
+   "source": "EasyChair preprint",
+   "title": "Frequency Sweep Based Sensing Technology for Non-destructive Electrical Resistivity Measurement of C",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2911240113",
+     "conference-paper",
+     "Proceedings of the ... ISARC",
+     2019
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2949082450",
+   "year": 2018,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "INSaFLU: an automated open web-based bioinformatics suite \u201cfrom-reads\u201d for influenza whole-genome-se",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2786692372",
+     "article",
+     "Genome Medicine",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3113014240",
+   "year": 2020,
+   "source": null,
+   "title": "Do Laboratory Biomarkers Predict Survival in Severe COVID-19? A Cross-sectional Study",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4308598353",
+     "article",
+     "Journal of Ayub Medical College Abbottabad",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3044039235",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "A Canonical Architecture For Predictive Analytics on Longitudinal Patient Records",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4237625405",
+   "year": 2021,
+   "source": "ChemRxiv",
+   "title": "Dimensional control over metal halide perovskite crystallization guided by active learning",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4220683808",
+     "article",
+     "Chemistry of Materials",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2948891890",
+   "year": 2019,
+   "source": "arXiv (Cornell University)",
+   "title": "Unsupervised Representation Learning of DNA Sequences",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4206339983",
+   "year": 2022,
+   "source": "Research Square",
+   "title": "The Lateral Tarsal Strip Procedure: Reflections by a Specialist With 20 Years of Experience in a Ter",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W2610497824",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "Adaptive estimation of the rank of the coefficient matrix in high dimensional multivariate response ",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2982589482",
+     "article",
+     "The Annals of Statistics",
+     2019
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3134803621",
+   "year": 2021,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "AIM-CICs: automatic identification method for Cell-in-cell structures based on convolutional neural ",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4286895411",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "Using Flare-Induced Modulation of Three- and Five-Minute Oscillations for Studying Wave Propagation ",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4246196016",
+   "year": 2020,
+   "source": null,
+   "title": "Reform and Practice of Medical Fundamental Curriculum System Based on \u201cThree-Early Education\u201d: A Cas",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3176442315",
+   "year": 2021,
+   "source": "medRxiv",
+   "title": "Statistical tests for heterogeneity of clusters and composite endpoints",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6929256303",
+   "year": 2018,
+   "source": "arXiv (Cornell University)",
+   "title": "The z=0.54 LoBAL Quasar SDSS J085053.12+445122.5: II. The Nature of Partial Covering in the Broad-Ab",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2953418954",
+     "article",
+     "The Astrophysical Journal",
+     2019
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4239261328",
+   "year": 2020,
+   "source": "Research Square",
+   "title": "Evaluating Implementation of the Diabetes Perioperative Passport: A qualitative focus group study",
+   "same_title_other_records": 2,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6948419808",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Study of Saharan dust influence on PM10 measures in Sicily from 2013 to 2015",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3111586156",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "MEDUSA: Minkowski functionals estimated from Delaunay tessellations of the three-dimensional large-s",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3202297016",
+     "article",
+     "Monthly Notices of the Royal Astronomical Society",
+     2021
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4221145609",
+   "year": 2022,
+   "source": "arXiv (Cornell University)",
+   "title": "Deploying in-network caches in support of distributed scientific data sharing",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6948303214",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "The full spectral radiative properties of Proxima Centauri",
+   "same_title_other_records": 2,
+   "published_twin": [
+    [
+     "W2610503233",
+     "article",
+     "Astronomy and Astrophysics",
+     2017
+    ],
+    [
+     "W3105558614",
+     "article",
+     "Civil War Book Review",
+     2017
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4252568640",
+   "year": 2019,
+   "source": null,
+   "title": "PERSEPSI GURU DALAM MENINGKATKAN MUTU PENDIDIKAN BERBASIS SISTEM INFORMASI MANAJEMEN DI SEKOLAH DASA",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W3122649311",
+   "year": 2020,
+   "source": "Preprints.org",
+   "title": "Finding New Molecular Targets of Familiar Natural Products Using In Silico Target Prediction",
+   "same_title_other_records": 2,
+   "published_twin": [
+    [
+     "W6910478672",
+     "article",
+     "Open Access CRIS of the University of Bern",
+     2020
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3128950307",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "On the Convexity of Level-sets of Probability Functions",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4252518249",
+   "year": 2020,
+   "source": "ARPHA Preprints",
+   "title": "A new species, a new combination, and a new record of Crossotarsus Chapuis, 1865 (Coleoptera: Curcul",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3140120965",
+     "article",
+     "ZooKeys",
+     2021
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2756050759",
+   "year": 2022,
+   "source": "arXiv (Cornell University)",
+   "title": "Implementation of FGPA based Channel Sounder for Large scale antenna systems using RFNoC on USRP Pla",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4287178863",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "Mechanical Properties of 3D-Printed Pentadiamond",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W3165468153",
+     "article",
+     "Journal of Physics D Applied Physics",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3113188972",
+   "year": 2020,
+   "source": "arXiv (Cornell University)",
+   "title": "Rediscussion of eclipsing binaries. Paper I. The totally-eclipsing B-type system zeta Phoenicis",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W4226369195",
+   "year": 2022,
+   "source": "Research Square",
+   "title": "Modeling Grid Erosion in the NEXT Ion Thruster Using the CEX2D and CEX3D Codes",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4365151375",
+     "article",
+     "Journal of Electric Propulsion",
+     2023
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4221157946",
+   "year": 2022,
+   "source": "arXiv (Cornell University)",
+   "title": "OTFace: Hard Samples Guided Optimal Transport Loss for Deep Face Representation",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4312472762",
+     "article",
+     "IEEE Transactions on Multimedia",
+     2022
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W2740681402",
+   "year": 2017,
+   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
+   "title": "Serial representation of items during working memory maintenance at letter-selective cortical sites",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W2952438722",
+     "article",
+     "PLoS Biology",
+     2018
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W3183633744",
+   "year": 2021,
+   "source": "arXiv (Cornell University)",
+   "title": "Bitcoin option pricing: A market attention approach",
+   "same_title_other_records": 1,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6966823455",
+   "year": 2017,
+   "source": "arXiv (Cornell University)",
+   "title": "MUSE Illuminates Channels for Lyman Continuum Escape in the Halo of SBS 0335-52E",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6966879151",
+   "year": 2016,
+   "source": "arXiv (Cornell University)",
+   "title": "Tagged spectator deep-inelastic scattering off the deuteron as a tool to study neutron structure",
+   "same_title_other_records": 2,
+   "published_twin": [
+    [
+     "W3101245693",
+     "article",
+     "Springer Link (Chiba Institute of Technology)",
+     2016
+    ],
+    [
+     "W2300526284",
+     "conference-paper",
+     "EPJ Web of Conferences",
+     2016
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4312089610",
+   "year": 2022,
+   "source": "arXiv (Cornell University)",
+   "title": "Dynamical Black Hole Entropy in Effective Field Theory",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4368376269",
+     "article",
+     "Journal of High Energy Physics",
+     2023
+    ]
+   ]
+  },
+  {
+   "preprint": "https://openalex.org/W4235165996",
+   "year": 2021,
+   "source": "Preprints.org",
+   "title": "Withdrawn: Design and Applications of Multi-Frequency Holographic Subsurface Radar: Review and Case ",
+   "same_title_other_records": 0,
+   "published_twin": []
+  },
+  {
+   "preprint": "https://openalex.org/W6929654957",
+   "year": 2022,
+   "source": "arXiv (Cornell University)",
+   "title": "Understanding AR Activism: An Interview Study with Creators of Augmented Reality Experiences for Soc",
+   "same_title_other_records": 1,
+   "published_twin": [
+    [
+     "W4224903597",
+     "conference-paper",
+     "CHI Conference on Human Factors in Computing Systems",
+     2022
+    ]
+   ]
+  }
+ ]
+}

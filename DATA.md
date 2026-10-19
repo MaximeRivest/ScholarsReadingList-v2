@@ -222,11 +222,11 @@ in flight so taps are not stuck behind them (a tap: 2-3 s while tiles load, 0.1-
 from a cold cache: sharp image 2.5-3.6 s (GitHub Pages), live map ~11 s. The structural fix is to serve the
 immutable `v2/` files from somewhere with real bandwidth (the relay's own disk, or a CDN), not through the tunnel.
 
-## Paper identity, rescued abstracts, author identity (2026-10-19, built, not live)
+## Paper identity, rescued abstracts, author identity (live since 2026-10-19, release 20261019T095113Z)
 
 Steps 1-3 of `research/audit/RECOMMENDATIONS.md` (measurements: `research/audit/README.md`). All three are derived
-per snapshot and **opt-in**: the nightly release does not use them until `release.py build --identity` (or the
-nightly) is switched on; the public API ignores them unless its release manifest names them.
+per snapshot; `release.py build --identity` uses them and the nightly does so since 2026-10-19 (the API reads them
+from the release manifest: `versions`, `rescue`, `identity`). Rebuild all three for a new OpenAlex snapshot.
 
 | Product | Where | Built by | What it changes |
 |---|---|---|---|
@@ -236,9 +236,10 @@ nightly) is switched on; the public API ignores them unless its release manifest
 | PubMed, parsed | `/mnt/bulk/pubmed/` (baseline + updates, 70 GB; `pubmed.parquet`: 41.3M PMIDs, 29.5M abstracts) | `pipeline/pubmed/download.py`, `parse.py` | input of the rescue |
 | rescued abstracts | `/mnt/fast/scholarsreadinglist/rescue/<snapshot>/<run>/` (`corpus/` like the updates corpus; `sources.parquet`) | `pipeline/rescue/build.py` | a third corpus (`--corpus`), its vectors in shard groups `rescue-<run>` (`pipeline/rescue/embed.py`, GPU 1, 3 GiB) taken only with rows.py `--extra-groups` |
 
-Rescue shards live in the backfill's shard tree under `year=*/rescue-<run>/`: every existing reader globs
-`year=*/rg-*/` and does not see them. A test release is built under `RELEASE_ROOT=/mnt/fast/scholarsreadinglist/release-identity`
-(positions and quantizer linked from the real root), so the nightly's gc never touches it. The private API on the
-`identity` branch of `search/` runs with `search-identity/identity-dev.sh up [RELEASE_DIR]` (127.0.0.1:8812).
+Rescue shards live in the backfill's shard tree under `year=*/rescue-<run>/`: every other reader globs
+`year=*/rg-*/` and does not see them. The rescue corpus *yields* (rows.py `--yielding-corpus`): once the daily updates
+hold a work (OpenAlex now has its abstract), the rescued copy steps aside. Only the 2M most cited rescued papers are
+embedded so far (`pipeline/rescue/embed.py --limit`); the other 5.8M are searchable by words, not yet by meaning
+(~5.5 h of GPU 1 to finish: run embed.py again, then positions.py --shards for the new rescue shards).
 Publishing checks: `publish` refuses a release whose searchable count fell > 2 %; one with versions falls ~3.5 % by
 design (duplicates removed), so the check compares searchable + versions_dropped (release.py check).

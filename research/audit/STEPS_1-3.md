@@ -42,6 +42,26 @@ Details and rules: `pipeline/identity/README.md`, DATA.md "Paper identity, rescu
 - Hand checks of the rules: 40 merges only the lenient name test allows: ~38 right; 25 moves: 25 right; 40 records
   flagged as not people: ~36 right (catalogue names with links were the misses, fixed since).
 
+## The test release (built 2026-10-19 08:27, not published)
+
+`/mnt/fast/scholarsreadinglist/release-identity/releases/20261019T095113Z` (`release.py build --identity`, its own root):
+
+| | live (20261019T073900Z) | test |
+|---|---:|---:|
+| publications | 130.07M | 132.07M |
+| searchable by meaning (one row per paper) | 125.21M | 122.71M (−4.46M versions, +2.0M rescued) |
+| readable on the site | 3,904,979 | 3,901,529 (each paper still readable: the 3,450 gone are second readable copies) |
+| on the map | 125.21M | 122.71M |
+
+Publish check (counts with versions counted back in): passes. Smoke tests of the promote script (search by
+meaning with map, keyword, works, MCP, citation walk, paper context, author page): pass. The fast index's recall
+against exact search was not re-measured (3 hours of CPU); same centres and method as every release, only the rows
+changed. Rescued papers found by their own first abstract sentence: live 0 of 6, test 4 at rank 1, 1 at rank 14.
+Of the 27 expert-set papers rescued, 10 are in the meaning index now (the 2M most cited were embedded); all 27 are
+found by keyword. Rescued papers' junk score: median 0.06 (PubMed-indexed papers already in the index: 0.10).
+Preview: the identity branch API on that release, `search-identity/identity-dev.sh up <release dir>`
+(127.0.0.1:8812, https://lambda.tail69222b.ts.net:18812).
+
 ## Mistake corrected
 
 The audit said one paper (Vaccine 2023, 10.1016/j.vaccine.2023.02.054) was only findable through its mirror copy.

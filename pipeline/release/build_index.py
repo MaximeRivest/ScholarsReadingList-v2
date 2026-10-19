@@ -74,7 +74,8 @@ def main() -> None:
         if not (a.out / name).exists():
             os.link(a.rows / src, a.out / name)
     sizes = np.array([index.invlists.list_size(i) for i in range(index.nlist)])
-    dates = sorted(s["dir"].split("/")[-1][5:15] for s in shards)
+    # dates are in the regular shards' names (part-<date>-...); extra groups (rescue-*) are named by work number
+    dates = sorted(s["dir"].split("/")[-1][5:15] for s in shards if s["dir"].split("/")[1].startswith("rg-"))
     doc = {"created_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
            "min_date": dates[0], "papers": int(index.ntotal), "rows": rows_meta["rows"],
            "shards": [{"dir": s["dir"], "rows": s["rows"]} for s in shards],
